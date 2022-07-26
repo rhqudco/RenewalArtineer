@@ -10,6 +10,6 @@ import org.springframework.stereotype.Controller;
 public class MemberController {
 
     private final MemberService memberService;
-    private WebSecurityConfig webSecurityConfig;
+    private final WebSecurityConfig webSecurityConfig;
 
 }
