@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 class MemberServiceImplTest {
+
     @Autowired
     WebSecurityConfig webSecurityConfig;
     @Autowired
