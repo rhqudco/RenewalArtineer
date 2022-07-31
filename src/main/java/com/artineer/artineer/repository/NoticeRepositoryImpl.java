@@ -38,7 +38,7 @@ public class NoticeRepositoryImpl implements NoticeRepository{
     }
 
     @Override
-    public void delete(Long no) {
+    public void remove(Long no) {
         em.remove(em.find(Notice.class, no));
     }
 }

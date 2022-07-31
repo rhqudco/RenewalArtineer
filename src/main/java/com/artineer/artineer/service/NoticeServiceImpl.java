@@ -29,7 +29,7 @@ public class NoticeServiceImpl implements NoticeService{
     @Override
     @Transactional
     public void deleteNotice(Long no) {
-        noticeRepository.delete(no);
+        noticeRepository.remove(no);
     }
 
     @Override

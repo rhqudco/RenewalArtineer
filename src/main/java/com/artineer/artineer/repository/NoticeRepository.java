@@ -11,5 +11,5 @@ public interface NoticeRepository {
     void save(Notice notice);
 
     List<Notice> findByTitle(String title);
-    void delete(Long no);
+    void remove(Long no);
 }
