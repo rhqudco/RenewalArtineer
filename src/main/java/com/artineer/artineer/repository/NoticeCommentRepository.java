@@ -11,4 +11,6 @@ public interface NoticeCommentRepository {
     void remove(Long no);
 
     List<NoticeComment> findAll();
+
+    List<NoticeComment> findByNo(Long no);
 }

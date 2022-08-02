@@ -33,4 +33,11 @@ public class NoticeCommentRepositoryImpl implements NoticeCommentRepository{
         return em.createQuery("Select n From NoticeComment n", NoticeComment.class)
                 .getResultList();
     }
+
+    @Override
+    public List<NoticeComment> findByNo(Long no) {
+        return em.createQuery("Select n From NoticeComment n Where n.no =: no", NoticeComment.class)
+                .setParameter("no", no)
+                .getResultList();
+    }
 }

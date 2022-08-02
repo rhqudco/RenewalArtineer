@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class NoticeComment {
     @Id @GeneratedValue
     private Long no;
+
     private Long noticeNo;
     private Long parentCommentNo;
     private String writer;
