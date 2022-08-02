@@ -2,10 +2,11 @@ package com.artineer.artineer.service;
 
 import com.artineer.artineer.domain.NoticeComment;
 import com.artineer.artineer.repository.NoticeCommentRepository;
-import com.artineer.artineer.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +25,10 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
     @Transactional
     public void deleteNoticeComment(Long no) {
         noticeCommentRepository.remove(no);
+    }
+
+    @Override
+    public List<NoticeComment> findAllComment() {
+        return noticeCommentRepository.findAll();
     }
 }

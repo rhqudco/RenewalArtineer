@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,5 +26,11 @@ public class NoticeCommentRepositoryImpl implements NoticeCommentRepository{
     @Override
     public void remove(Long no) {
         em.remove(em.find(NoticeComment.class, no));
+    }
+
+    @Override
+    public List<NoticeComment> findAll() {
+        return em.createQuery("Select n From NoticeComment n", NoticeComment.class)
+                .getResultList();
     }
 }
