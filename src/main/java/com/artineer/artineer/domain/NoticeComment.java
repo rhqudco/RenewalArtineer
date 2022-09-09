@@ -3,21 +3,35 @@ package com.artineer.artineer.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class NoticeComment {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
+    @Column(name = "noticeComment_no")
     private Long no;
 
-    private Long noticeNo;
-    private Long parentCommentNo;
-    private String writer;
-    private LocalDateTime writeDate;
-    private String generation;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     private String detail;
+    private LocalDateTime writeDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notice_no")
+    private Notice notice;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_no")
+    private NoticeComment parentComment;
+
+    @OneToOne(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    private NoticeComment subComments;
 }
