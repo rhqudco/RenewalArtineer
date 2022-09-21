@@ -1,12 +1,14 @@
 package com.artineer.artineer.domain;
 
+import com.artineer.artineer.domain.embeddable.Birth;
+import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "Member")
+@Table(name = "Member")
 @Getter @Setter
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,10 +41,5 @@ public class Member {
         this.gender = gender;
         this.generation = generation;
         this.level = level;
-    }
-
-    public Member(String id, String name) {
-        this.id = id;
-        this.name = name;
     }
 }

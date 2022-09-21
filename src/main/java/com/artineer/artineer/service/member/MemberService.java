@@ -1,4 +1,4 @@
-package com.artineer.artineer.service;
+package com.artineer.artineer.service.member;
 
 import com.artineer.artineer.domain.Member;
 

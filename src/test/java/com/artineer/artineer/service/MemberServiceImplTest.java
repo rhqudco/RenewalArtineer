@@ -2,6 +2,7 @@ package com.artineer.artineer.service;
 
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.domain.Member;
+import com.artineer.artineer.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

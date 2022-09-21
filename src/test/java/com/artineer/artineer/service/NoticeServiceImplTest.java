@@ -1,7 +1,6 @@
 package com.artineer.artineer.service;
 
-import com.artineer.artineer.domain.Notice;
-import org.assertj.core.api.Assertions;
+import com.artineer.artineer.service.notice.NoticeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

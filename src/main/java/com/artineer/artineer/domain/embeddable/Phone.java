@@ -1,4 +1,4 @@
-package com.artineer.artineer.domain;
+package com.artineer.artineer.domain.embeddable;
 
 import lombok.Getter;
 

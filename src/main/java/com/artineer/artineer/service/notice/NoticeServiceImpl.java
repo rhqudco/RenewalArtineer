@@ -1,7 +1,7 @@
-package com.artineer.artineer.service;
+package com.artineer.artineer.service.notice;
 
 import com.artineer.artineer.domain.Notice;
-import com.artineer.artineer.repository.NoticeRepository;
+import com.artineer.artineer.repository.notice.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

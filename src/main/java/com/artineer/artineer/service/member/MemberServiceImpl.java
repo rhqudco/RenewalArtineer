@@ -1,8 +1,8 @@
-package com.artineer.artineer.service;
+package com.artineer.artineer.service.member;
 
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.domain.Member;
-import com.artineer.artineer.repository.MemberRepository;
+import com.artineer.artineer.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

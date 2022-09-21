@@ -1,4 +1,4 @@
-package com.artineer.artineer.service;
+package com.artineer.artineer.service.notice;
 
 import com.artineer.artineer.domain.Notice;
 
