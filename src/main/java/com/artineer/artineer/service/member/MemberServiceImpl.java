@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,14 +20,15 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public void join(Member member) {
+    public Member join(Member member) {
         validateDuplicateMemberId(member);
         memberRepository.save(member);
+        return member;
     }
 
     @Override
-    public Member findOne(Long memberNo) {
-        return memberRepository.findOne(memberNo);
+    public List<Member> findMember(Long no) {
+        return memberRepository.findByNo(no);
     }
 
     @Override

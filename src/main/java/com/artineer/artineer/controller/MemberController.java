@@ -5,6 +5,7 @@ import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -14,4 +15,7 @@ public class MemberController {
     private final MemberService memberService;
     private final WebSecurityConfig webSecurityConfig;
 
+    @GetMapping("/members/join")
+    public void save() {
+    }
 }

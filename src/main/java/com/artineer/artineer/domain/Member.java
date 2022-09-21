@@ -1,5 +1,6 @@
 package com.artineer.artineer.domain;
 
+import com.artineer.artineer.controller.dto.MemberSaveDto;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
@@ -30,8 +31,7 @@ public class Member {
     protected Member() {
     }
 
-    public Member(long no, String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, String level) {
-        this.no = no;
+    public Member(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, String level) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -41,5 +41,17 @@ public class Member {
         this.gender = gender;
         this.generation = generation;
         this.level = level;
+    }
+
+    public Member(MemberSaveDto dto) {
+        this.id = dto.getId();
+        this.password = dto.getPassword();
+        this.name = dto.getName();
+        this.birth = dto.getBirth();
+        this.email = dto.getEmail();
+        this.phone = dto.getPhone();
+        this.gender = dto.getGender();
+        this.generation = dto.getGeneration();
+        this.level = dto.getLevel();
     }
 }
