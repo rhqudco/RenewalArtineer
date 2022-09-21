@@ -7,16 +7,16 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Getter
 public class Phone {
-    private String first;
-    private String middle;
-    private String last;
+    private String firstNumber;
+    private String middleNumber;
+    private String lastNumber;
 
     protected Phone() {
     }
 
-    public Phone(String first, String middle, String last) {
-        this.first = first;
-        this.middle = middle;
-        this.last = last;
+    public Phone(String firstNumber, String middleNumber, String lastNumber) {
+        this.firstNumber = firstNumber;
+        this.middleNumber = middleNumber;
+        this.lastNumber = lastNumber;
     }
 }

@@ -28,10 +28,10 @@ public class NoticeComment {
     @JoinColumn(name = "notice_no")
     private Notice notice;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parentComment_no")
     private NoticeComment parentComment;
 
-    @OneToOne(mappedBy = "parentComment", cascade = CascadeType.ALL)
-    private NoticeComment subComments;
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    private List<NoticeComment> childComments;
 }

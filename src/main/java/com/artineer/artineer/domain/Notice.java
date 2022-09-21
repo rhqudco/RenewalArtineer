@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 public class Notice {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_no")
     private Long no;
 
@@ -24,6 +24,7 @@ public class Notice {
     private String detail;
     private String fileName;
     private String imageName;
+    private Long view;
 
     @OneToMany(mappedBy = "notice")
     private List<NoticeComment> comments = new ArrayList<>();

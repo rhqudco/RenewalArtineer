@@ -6,11 +6,12 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+//@Table(name = "Member")
 @Getter @Setter
 public class Member {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_no")
-    private long no;
+    private Long no;
 
     private String id;
     private String password;
@@ -38,5 +39,10 @@ public class Member {
         this.gender = gender;
         this.generation = generation;
         this.level = level;
+    }
+
+    public Member(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }

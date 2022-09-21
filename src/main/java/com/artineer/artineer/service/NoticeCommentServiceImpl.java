@@ -34,6 +34,7 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 
     @Override
     public Long findByNo(Long no) {
-        return noticeCommentRepository.findByNo(no).get(0).getNoticeNo();
+//        return noticeCommentRepository.findByNo(no).get(0).getNoticeNo();
+        return 1L;
     }
 }

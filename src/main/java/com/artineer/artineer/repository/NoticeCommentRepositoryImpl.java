@@ -15,12 +15,12 @@ public class NoticeCommentRepositoryImpl implements NoticeCommentRepository{
 
     @Override
     public void save(NoticeComment noticeComment) {
-        if (noticeComment.getNoticeNo() == null) {
+//        if (noticeComment.getNoticeNo() == null) {
             em.persist(noticeComment);
-        }
-        else {
-            em.merge(noticeComment);
-        }
+//        }
+//        else {
+//            em.merge(noticeComment);
+//        }
     }
 
     @Override
