@@ -5,11 +5,9 @@ import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Embedded;
-
 @Getter
 @Setter
-public class MemberSaveDto {
+public class MemberSaveForm {
     private String id;
     private String password;
     private String name;

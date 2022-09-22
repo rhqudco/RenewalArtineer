@@ -2,6 +2,7 @@ package com.artineer.artineer.service.member;
 
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.domain.Member;
+import com.artineer.artineer.repository.member.MemberJpaRepository;
 import com.artineer.artineer.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,15 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService{
 
-    private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository; // 스프링 데이터 JPA
+    private final MemberJpaRepository memberJpaRepository; // 순수 JPA
     private final WebSecurityConfig webSecurityConfig;
 
     @Override
     @Transactional
     public Member join(Member member) {
         validateDuplicateMemberId(member);
-        memberRepository.save(member);
+        memberJpaRepository.save(member);
         return member;
     }
 
@@ -42,6 +44,11 @@ public class MemberServiceImpl implements MemberService{
         else {
             return null;
         }
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
     @Override

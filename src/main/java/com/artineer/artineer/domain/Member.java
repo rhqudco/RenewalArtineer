@@ -1,12 +1,13 @@
 package com.artineer.artineer.domain;
 
-import com.artineer.artineer.controller.dto.MemberSaveDto;
+import com.artineer.artineer.controller.dto.MemberSaveForm;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Member")
@@ -16,16 +17,25 @@ public class Member {
     @Column(name = "member_no")
     private Long no;
 
+    @NotBlank
     private String id;
+    @NotBlank
     private String password;
+    @NotBlank
     private String name;
+    @NotBlank
     @Embedded
     private Birth birth;
+    @NotBlank
     private String email;
+    @NotBlank
     @Embedded
     private Phone phone;
+    @NotBlank
     private String gender;
+    @NotBlank
     private String generation;
+    @NotBlank
     private String level;
 
     protected Member() {
@@ -43,7 +53,7 @@ public class Member {
         this.level = level;
     }
 
-    public Member(MemberSaveDto dto) {
+    public Member(MemberSaveForm dto) {
         this.id = dto.getId();
         this.password = dto.getPassword();
         this.name = dto.getName();

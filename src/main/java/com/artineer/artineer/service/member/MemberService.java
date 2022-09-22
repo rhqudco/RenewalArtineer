@@ -11,4 +11,5 @@ public interface MemberService {
     List<Member> findMember(Long no);
     Member validLogin(String id, String password);
     boolean validateEqualPassword(String rawPassword, String encodedPassword);
+    List<Member> findAll();
 }

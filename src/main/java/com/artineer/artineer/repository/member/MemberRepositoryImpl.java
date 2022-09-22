@@ -11,4 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberJpaRepository{
 
+    private final EntityManager em;
+
+    @Override
+    public void save(Member member) {
+        em.persist(member);
+    }
 }
