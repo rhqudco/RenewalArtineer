@@ -1,6 +1,6 @@
 package com.artineer.artineer.domain;
 
-import com.artineer.artineer.controller.dto.MemberSaveForm;
+import com.artineer.artineer.controller.dto.MemberSaveDto;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
@@ -16,26 +16,16 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_no")
     private Long no;
-
-    @NotBlank
     private String id;
-    @NotBlank
     private String password;
-    @NotBlank
     private String name;
-    @NotBlank
     @Embedded
     private Birth birth;
-    @NotBlank
     private String email;
-    @NotBlank
     @Embedded
     private Phone phone;
-    @NotBlank
     private String gender;
-    @NotBlank
     private String generation;
-    @NotBlank
     private String level;
 
     protected Member() {
@@ -53,7 +43,7 @@ public class Member {
         this.level = level;
     }
 
-    public Member(MemberSaveForm dto) {
+    public Member(MemberSaveDto dto) {
         this.id = dto.getId();
         this.password = dto.getPassword();
         this.name = dto.getName();

@@ -1,7 +1,7 @@
 package com.artineer.artineer.service;
 
 import com.artineer.artineer.common.WebSecurityConfig;
-import com.artineer.artineer.controller.dto.MemberSaveForm;
+import com.artineer.artineer.controller.dto.MemberSaveDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
@@ -26,7 +26,7 @@ class MemberServiceImplTest {
 
     @Test
     void saveTest() {
-        MemberSaveForm memberDTO = new MemberSaveForm();
+        MemberSaveDto memberDTO = new MemberSaveDto();
         Birth birth = new Birth("2022", "09", "21");
         Phone phone = new Phone("010", "1111", "1111");
         memberDTO.setId("artineer");
@@ -53,7 +53,7 @@ class MemberServiceImplTest {
 
     @Test
     void findAllTest() {
-        MemberSaveForm memberDTO = new MemberSaveForm();
+        MemberSaveDto memberDTO = new MemberSaveDto();
         Birth birth = new Birth("2022", "09", "21");
         Phone phone = new Phone("010", "1111", "1111");
         memberDTO.setId("artineer");

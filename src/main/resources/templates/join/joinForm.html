@@ -22,7 +22,7 @@
         <h2 th:text="#{page.join}">회원 가입</h2>
     </div>
 
-    <form th:action="/member/join" th:object="${form}" method="post">
+    <form action="joinForm.html" th:action th:object="${form}" method="post">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 메시지</p>
         </div>
@@ -34,16 +34,86 @@
             </div>
         </div>
         <div>
-            <label for="price" th:text="#{label.item.price}">가격</label>
-            <input type="text" id="price" th:field="*{price}" class="form-control" th:errorclass="field-error" placeholder="가격을 입력하세요">
-            <div class="field-error" th:errors="*{price}">
-                가격 오류
+            <label for="password" >Password</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" th:errorclass="field-error" placeholder="가격을 입력하세요">
+            <div class="field-error" th:errors="*{password}">
+                비밀번호 조건에 맞지 않습니다.
             </div>
         </div>
         <div>
-            <label for="quantity" th:text="#{label.item.quantity}">수량</label>
-            <input type="text" id="quantity" th:field="*{quantity}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
-            <div class="field-error" th:errors="*{quantity}">
+            <label for="name" >이름</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{name}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="birth.year" >생년월일</label>
+            <input type="text" id="birth.year" th:field="*{birth.year}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{birth.year}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="birth.month" >생년월일</label>
+            <input type="text" id="birth.month" th:field="*{birth.month}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{birth.month}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="birth.day" >생년월일</label>
+            <input type="text" id="birth.day" th:field="*{birth.day}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{birth.day}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="email" >이메일</label>
+            <input type="text" id="email" th:field="*{email}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{email}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="phone1" >연락처</label>
+            <input type="text" id="phone1" th:field="*{phone.firstNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{phone.firstNumber}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="phone2" >연락처</label>
+            <input type="text" id="phone2" th:field="*{phone.middleNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{phone.middleNumber}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="phone3" >연락처</label>
+            <input type="text" id="phone3" th:field="*{phone.lastNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{phone.lastNumber}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="gender" >성별</label>
+            <input type="text" id="gender" th:field="*{gender}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{gender}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="generation" >기수</label>
+            <input type="text" id="generation" th:field="*{generation}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{generation}">
+                수량 오류
+            </div>
+        </div>
+        <div>
+            <label for="level" >등급</label>
+            <input type="text" id="level" th:field="*{level}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+            <div class="field-error" th:errors="*{level}">
                 수량 오류
             </div>
         </div>
@@ -57,7 +127,7 @@
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='items.html'"
-                        th:onclick="|location.href='@{/validation/v4/items}'|"
+                        th:onclick="|location.href='@{/members/join}'|"
                         type="button" th:text="#{button.member.saveCnacel}">취소</button>
             </div>
         </div>
