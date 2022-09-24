@@ -55,4 +55,8 @@ public class Member {
         this.generation = dto.getGeneration();
         this.level = dto.getLevel();
     }
+
+    public static Member createMember(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, String level) {
+        return new Member(id, password, name, birth, email, phone, gender, generation, level);
+    }
 }
