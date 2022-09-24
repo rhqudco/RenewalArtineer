@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -48,7 +49,7 @@ public class Member {
         this.password = dto.getPassword();
         this.name = dto.getName();
         this.birth = dto.getBirth();
-        this.email = dto.getEmail();
+        this.email = dto.getEmailId();
         this.phone = dto.getPhone();
         this.gender = dto.getGender();
         this.generation = dto.getGeneration();

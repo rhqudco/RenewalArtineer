@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <script type="text/javascript" th:src="@{/js/joinForm.js}"
+            src="../js/joinForm.js" ></script>
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -44,76 +46,82 @@
             <label for="name" >이름</label>
             <input type="text" id="name" th:field="*{name}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{name}">
-                수량 오류
+                필수 값 입니다.
             </div>
         </div>
         <div>
             <label for="birth.year" >생년월일</label>
             <input type="text" id="birth.year" th:field="*{birth.year}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{birth.year}">
-                수량 오류
+                필수 값 입니다.
             </div>
         </div>
         <div>
             <label for="birth.month" >생년월일</label>
             <input type="text" id="birth.month" th:field="*{birth.month}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{birth.month}">
-                수량 오류
+                필수 값 입니다.
             </div>
         </div>
         <div>
             <label for="birth.day" >생년월일</label>
             <input type="text" id="birth.day" th:field="*{birth.day}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{birth.day}">
-                수량 오류
+                필수 값 입니다.
             </div>
         </div>
         <div>
             <label for="email" >이메일</label>
-            <input type="text" id="email" th:field="*{email}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
-            <div class="field-error" th:errors="*{email}">
+            <input type="text" id="email" th:field="*{emailId}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
+            <div class="field-error" th:errors="*{emailId}">
+                필수 값 입니다.
+            </div>
+            @
+            <input type="text" id="emailDomain" th:field="*{emailDomain}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
+<!--            <select class="form-control" id="emailDomainSelect" th:field="*{emailDomain}">-->
+<!--                <option value="type">&#45;&#45;직접 입력&#45;&#45;</option>-->
+<!--                <option value="naver.com">naver.com</option>-->
+<!--                <option value="google.com">google.com</option>-->
+<!--                <option value="hanmail.net">hanmail.net</option>-->
+<!--                <option value="nate.com">nate.com</option>-->
+<!--                <option value="kakao.com">kakao.com</option>-->
+<!--            </select>-->
+            <div class="field-error" th:errors="*{emailDomain}">
                 수량 오류
             </div>
         </div>
         <div>
-            <label for="phone1" >연락처</label>
-            <input type="text" id="phone1" th:field="*{phone.firstNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
-            <div class="field-error" th:errors="*{phone.firstNumber}">
-                수량 오류
-            </div>
-        </div>
-        <div>
-            <label for="phone2" >연락처</label>
+            <label for="phone" >연락처</label>
+            <select name="pets" id="phone" th:field="*{phone.firstNumber}" class="form-control" th:errorclass="field-error">
+                <option value="">--선택해 주세요.--</option>
+                <option value="010">010</option>
+                <option value="011">011</option>
+                <option value="016">016</option>
+            </select>
             <input type="text" id="phone2" th:field="*{phone.middleNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{phone.middleNumber}">
-                수량 오류
+                필수 값 입니다.
             </div>
-        </div>
-        <div>
-            <label for="phone3" >연락처</label>
             <input type="text" id="phone3" th:field="*{phone.lastNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{phone.lastNumber}">
-                수량 오류
+                필수 값 입니다.
             </div>
         </div>
         <div>
             <label for="gender" >성별</label>
-            <input type="text" id="gender" th:field="*{gender}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
+<!--            <input type="text" id="gender" th:field="*{gender}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">-->
+            <select class="form-control" id="gender" th:field="*{gender}" th:errorclass="field-error">
+                <option value="남성">남성</option>
+                <option value="여성">여성</option>
+            </select>
             <div class="field-error" th:errors="*{gender}">
-                수량 오류
+                선택해 주세요.
             </div>
         </div>
         <div>
             <label for="generation" >기수</label>
             <input type="text" id="generation" th:field="*{generation}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
             <div class="field-error" th:errors="*{generation}">
-                수량 오류
-            </div>
-        </div>
-        <div>
-            <label for="level" >등급</label>
-            <input type="text" id="level" th:field="*{level}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
-            <div class="field-error" th:errors="*{level}">
                 수량 오류
             </div>
         </div>
@@ -128,7 +136,7 @@
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='items.html'"
                         th:onclick="|location.href='@{/members/join}'|"
-                        type="button" th:text="#{button.member.saveCnacel}">취소</button>
+                        type="button" th:text="#{button.member.saveCancel}">취소</button>
             </div>
         </div>
 

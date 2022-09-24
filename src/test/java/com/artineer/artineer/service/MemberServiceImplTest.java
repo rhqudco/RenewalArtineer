@@ -33,7 +33,8 @@ class MemberServiceImplTest {
         memberDTO.setPassword(webSecurityConfig.getPasswordEncoder().encode("admin"));
         memberDTO.setName("artineer");
         memberDTO.setBirth(birth);
-        memberDTO.setEmail("rhqudco1204@naver.com");
+        memberDTO.setEmailId("rhqudco1204");
+        memberDTO.setEmailDomain("@naver.com");
         memberDTO.setPhone(phone);
         memberDTO.setGender("1");
         memberDTO.setGeneration("3");
@@ -60,7 +61,8 @@ class MemberServiceImplTest {
         memberDTO.setPassword(webSecurityConfig.getPasswordEncoder().encode("admin"));
         memberDTO.setName("artineer");
         memberDTO.setBirth(birth);
-        memberDTO.setEmail("rhqudco1204@naver.com");
+        memberDTO.setEmailId("rhqudco1204");
+        memberDTO.setEmailDomain("@naver.com");
         memberDTO.setPhone(phone);
         memberDTO.setGender("1");
         memberDTO.setGeneration("3");

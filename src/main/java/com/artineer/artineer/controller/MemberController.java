@@ -33,7 +33,13 @@ public class MemberController {
     }
 
     @PostMapping("/members/join")
-    public String join(@Validated @ModelAttribute("member") MemberSaveDto dto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String join(@Validated @ModelAttribute("form") MemberSaveDto dto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(dto.getEmailId());
+        sb.append("@");
+        sb.append(dto.getEmailDomain());
+        String email = sb.toString();
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
@@ -41,17 +47,20 @@ public class MemberController {
         }
 
         log.info("id = {}", dto.getId());
+        log.info("email = {}", email);
 
         Birth birth = new Birth(dto.getBirth().getYear(), dto.getBirth().getMonth(), dto.getBirth().getDay());
-        log.info("year = {} month = {} day = {}", dto.getBirth().getYear(), dto.getBirth().getMonth(), dto.getBirth().getDay());
         Phone phone = new Phone(dto.getPhone().getFirstNumber(), dto.getPhone().getMiddleNumber(), dto.getPhone().getLastNumber());
 
         // 성공 로직
         Member saveMember = new Member(dto.getId(),
                 webSecurityConfig.getPasswordEncoder().encode(dto.getPassword()),
-                dto.getName(), birth, dto.getEmail(),
-                phone, dto.getGender(), dto.getGeneration(), dto.getLevel());
+                dto.getName(), birth, email, phone,
+                dto.getGender(), dto.getGeneration(), "1");
         Member member = memberService.join(saveMember);
+
+        String s = member.toString();
+        System.out.println("s = " + s);
 
         return "redirect:/";
     }
