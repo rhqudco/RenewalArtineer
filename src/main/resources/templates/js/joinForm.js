@@ -1,9 +1,11 @@
 window.onload = function () {
+    console.log('123');
+    alert('123');
 // 도메인 직접 입력 or domain option 선택
-    const domainListEl = document.querySelector('#emailDomainSelect')
-    const domainInputEl = document.querySelector('#emailDomain')
+    const domainListEl = document.getElementById('emailDomainSelect')
+    const domainInputEl = document.getElementById('emailDomain')
 // select 옵션 변경 시
-    domainListEl.addEventListener('change', (event) => {
+    domainListEl.addEventListener('change', function (event) {
         // option에 있는 도메인 선택 시
         if (event.target.value !== "type") {
             // 선택한 도메인을 input에 입력하고 disabled
@@ -16,3 +18,16 @@ window.onload = function () {
         }
     });
 }
+
+$(function (){
+    alert("123");
+    $("#emailDomainSelect").change(function (){
+        let value = $("#emailDomainSelect").val();
+        if(value === "type"){
+            $("#emailDomain").val("");
+        }
+        else {
+            $("#emailDomain").val(value);
+        }
+    })
+})

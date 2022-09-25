@@ -6,6 +6,8 @@ import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import com.artineer.artineer.service.member.MemberService;
+import com.artineer.artineer.validator.BirthValidator;
+import com.artineer.artineer.validator.PhoneValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class MemberController {
 
     private final MemberService memberService;
     private final WebSecurityConfig webSecurityConfig;
+    private final BirthValidator birthValidator;
+    private final PhoneValidator phoneValidator;
 
     @GetMapping("/members/join")
     public String save(Model model) {
@@ -37,6 +41,8 @@ public class MemberController {
                        BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 
+        birthValidator.validate(dto.getBirth(), bindingResult);
+        phoneValidator.validate(dto.getPhone(), bindingResult);
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
@@ -47,14 +53,16 @@ public class MemberController {
         sb.append(dto.getEmailId());
         sb.append("@");
         sb.append(dto.getEmailDomain());
-        String email = sb.toString();
-        Birth birth = new Birth(dto.getBirth().getYear(), dto.getBirth().getMonth(), dto.getBirth().getDay());
-        Phone phone = new Phone(dto.getPhone().getFirstNumber(), dto.getPhone().getMiddleNumber(), dto.getPhone().getLastNumber());
+        String memberEmail = sb.toString();
+
+        Birth memberBirth = new Birth(dto.getBirth().getYear(), dto.getBirth().getMonth(), dto.getBirth().getDay());
+
+        Phone memberPhone = new Phone(dto.getPhone().getFirstNumber(), dto.getPhone().getMiddleNumber(), dto.getPhone().getLastNumber());
 
         // 성공 로직
         Member savedMember = Member.createMember(dto.getId(),
                 webSecurityConfig.getPasswordEncoder().encode(dto.getPassword()),
-                dto.getName(), birth, email, phone,
+                dto.getName(), memberBirth, memberEmail, memberPhone,
                 dto.getGender(), dto.getGeneration(), "1");
 //        Member saveMember = new Member(dto.getId(),
 //                webSecurityConfig.getPasswordEncoder().encode(dto.getPassword()),
