@@ -22,4 +22,8 @@ public class Birth {
         this.month = month;
         this.day = day;
     }
+
+    public static Birth createBirth(String year, String month, String day) {
+        return new Birth(year, month, day);
+    }
 }

@@ -2,6 +2,7 @@ package com.artineer.artineer.domain.embeddable;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.parameters.P;
 
 import javax.persistence.Embeddable;
 
@@ -20,5 +21,9 @@ public class Phone {
         this.firstNumber = firstNumber;
         this.middleNumber = middleNumber;
         this.lastNumber = lastNumber;
+    }
+
+    public static Phone createPhone(String firstNumber, String middleNumber, String lastNumber) {
+        return new Phone(firstNumber, middleNumber, lastNumber);
     }
 }

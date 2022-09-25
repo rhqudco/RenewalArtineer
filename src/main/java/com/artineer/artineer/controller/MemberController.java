@@ -49,29 +49,24 @@ public class MemberController {
             return "join/joinForm";
         }
 
+        // 이메일 조합
         StringBuffer sb = new StringBuffer();
         sb.append(dto.getEmailId());
         sb.append("@");
         sb.append(dto.getEmailDomain());
         String memberEmail = sb.toString();
 
-        Birth memberBirth = new Birth(dto.getBirth().getYear(), dto.getBirth().getMonth(), dto.getBirth().getDay());
+        Birth memberBirth = Birth.createBirth(dto.getBirth().getYear(), dto.getBirth().getMonth(), dto.getBirth().getDay());
 
-        Phone memberPhone = new Phone(dto.getPhone().getFirstNumber(), dto.getPhone().getMiddleNumber(), dto.getPhone().getLastNumber());
+        Phone memberPhone = Phone.createPhone(dto.getPhone().getFirstNumber(), dto.getPhone().getMiddleNumber(), dto.getPhone().getLastNumber());
 
         // 성공 로직
-        Member savedMember = Member.createMember(dto.getId(),
+        Member saveMember = Member.createMember(dto.getId(),
                 webSecurityConfig.getPasswordEncoder().encode(dto.getPassword()),
                 dto.getName(), memberBirth, memberEmail, memberPhone,
                 dto.getGender(), dto.getGeneration(), "1");
-//        Member saveMember = new Member(dto.getId(),
-//                webSecurityConfig.getPasswordEncoder().encode(dto.getPassword()),
-//                dto.getName(), birth, email, phone,
-//                dto.getGender(), dto.getGeneration(), "1");
-        Member member = memberService.join(savedMember);
 
-        String s = member.toString();
-        System.out.println("s = " + s);
+        memberService.join(saveMember);
 
         return "redirect:/";
     }

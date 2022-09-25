@@ -1,7 +1,6 @@
 package com.artineer.artineer.controller;
 
-import com.artineer.artineer.controller.dto.NoticeSaveDto;
-import com.artineer.artineer.domain.Notice;
+import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.service.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-
 @Controller
 @RequiredArgsConstructor
 public class NoticeController {
@@ -23,11 +20,12 @@ public class NoticeController {
 
     @GetMapping("/notice/write")
     public void writeNotice(Model model) {
-        model.addAttribute("form", new NoticeSaveDto());
+        model.addAttribute("form", new WriteSaveDto());
     }
 
     @PostMapping("/notice/write")
-    public void saveNotice(@Validated @ModelAttribute("form") NoticeSaveDto dto,
+    public void saveNotice(@Validated @ModelAttribute("form") WriteSaveDto dto,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
     }
 }
