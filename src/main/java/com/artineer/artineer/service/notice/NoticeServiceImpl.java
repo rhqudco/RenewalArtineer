@@ -1,7 +1,7 @@
 package com.artineer.artineer.service.notice;
 
 import com.artineer.artineer.domain.Notice;
-import com.artineer.artineer.repository.notice.NoticeRepository;
+import com.artineer.artineer.repository.notice.NoticeJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,27 +13,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class NoticeServiceImpl implements NoticeService{
 
-    private final NoticeRepository noticeRepository;
+    private final NoticeJpaRepository noticeJpaRepository;
 
     @Override
     @Transactional
-    public void saveNotice(Notice notice) {
-        noticeRepository.save(notice);
-    }
-
-    @Override
-    public List<Notice> findAllNotice() {
-        return noticeRepository.findAll();
-    }
-
-    @Override
-    @Transactional
-    public void deleteNotice(Long no) {
-        noticeRepository.remove(no);
-    }
-
-    @Override
-    public List<Notice> findByTitle(String title) {
-        return noticeRepository.findByTitle(title);
+    public Notice saveNotice(Notice notice) {
+        return noticeJpaRepository.save(notice);
     }
 }

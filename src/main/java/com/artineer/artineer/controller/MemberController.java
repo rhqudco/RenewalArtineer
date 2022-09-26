@@ -9,8 +9,6 @@ import com.artineer.artineer.domain.embeddable.Phone;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.validator.BirthValidator;
 import com.artineer.artineer.validator.PhoneValidator;
-import com.artineer.artineer.validator.marker.SignInMarker;
-import com.artineer.artineer.validator.marker.SignUpMarker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -33,6 +31,8 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class MemberController {
 
+    private static final Long adminLevel  = 2L;
+
     private final MemberService memberService;
     private final WebSecurityConfig webSecurityConfig;
     private final BirthValidator birthValidator;
@@ -45,8 +45,8 @@ public class MemberController {
     }
 
     @PostMapping("/members/join")
-    public String join(@Validated(SignUpMarker.class) @ModelAttribute("form") MemberSaveDto dto,
-                       BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String join(@Validated @ModelAttribute("form") MemberSaveDto dto,
+                       BindingResult bindingResult) {
 
 
         birthValidator.validate(dto.getBirth(), bindingResult);
@@ -86,7 +86,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/login")
-    public String login(@Validated(SignInMarker.class) @ModelAttribute("form") MemberSaveDto dto,
+    public String login(@Validated @ModelAttribute("form") MemberLoginDto dto,
                       BindingResult bindingResult, HttpServletRequest request) {
 
         // 빈값 검증
@@ -108,7 +108,8 @@ public class MemberController {
         session.setAttribute("memberNo", loginMember.getNo());
         session.setAttribute("memberId", loginMember.getId());
         session.setAttribute("memberName", loginMember.getName());
-        return "redirect:/";
 
+        log.info("session memberNo = {}", session.getAttribute("memberNo"));
+        return "redirect:/";
     }
 }
