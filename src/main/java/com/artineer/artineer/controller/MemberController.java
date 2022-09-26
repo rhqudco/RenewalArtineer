@@ -1,6 +1,7 @@
 package com.artineer.artineer.controller;
 
 import com.artineer.artineer.common.WebSecurityConfig;
+import com.artineer.artineer.controller.dto.MemberLoginDto;
 import com.artineer.artineer.controller.dto.MemberSaveDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.embeddable.Birth;
@@ -8,8 +9,12 @@ import com.artineer.artineer.domain.embeddable.Phone;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.validator.BirthValidator;
 import com.artineer.artineer.validator.PhoneValidator;
+import com.artineer.artineer.validator.marker.SignInMarker;
+import com.artineer.artineer.validator.marker.SignUpMarker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +24,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +45,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/join")
-    public String join(@Validated @ModelAttribute("form") MemberSaveDto dto,
+    public String join(@Validated(SignUpMarker.class) @ModelAttribute("form") MemberSaveDto dto,
                        BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 
@@ -69,5 +77,38 @@ public class MemberController {
         memberService.join(saveMember);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/members/login")
+    public String loginForm(Model model) {
+        model.addAttribute("form", new MemberLoginDto());
+        return "login/loginForm";
+    }
+
+    @PostMapping("/members/login")
+    public String login(@Validated(SignInMarker.class) @ModelAttribute("form") MemberSaveDto dto,
+                      BindingResult bindingResult, HttpServletRequest request) {
+
+        // 빈값 검증
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "login/loginForm";
+        }
+
+        Member loginMember = memberService.validLogin(dto.getId(), dto.getPassword());
+
+        // 아이디 비밀번호 검증
+        if (loginMember == null) {
+            bindingResult.reject("checkIdPw", null);
+            return "login/loginForm";
+        }
+
+        // 성공 로직
+        HttpSession session = request.getSession();
+        session.setAttribute("memberNo", loginMember.getNo());
+        session.setAttribute("memberId", loginMember.getId());
+        session.setAttribute("memberName", loginMember.getName());
+        return "redirect:/";
+
     }
 }

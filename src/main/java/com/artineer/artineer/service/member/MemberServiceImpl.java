@@ -7,6 +7,7 @@ import com.artineer.artineer.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,11 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Member validLogin(String id, String password) {
-        validateExistentId(id);
+        try {
+            validateExistentId(id);
+        } catch (IllegalStateException e) {
+            return null;
+        }
         List<Member> findMember = memberRepository.findById(id);
         Member member = findMember.get(0);
         if (validateEqualPassword(password, member.getPassword())) {
