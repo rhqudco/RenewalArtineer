@@ -1,5 +1,6 @@
 package com.artineer.artineer.controller;
 
+import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.controller.dto.MemberLoginDto;
 import com.artineer.artineer.controller.dto.MemberSaveDto;
@@ -11,17 +12,11 @@ import com.artineer.artineer.validator.BirthValidator;
 import com.artineer.artineer.validator.PhoneValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -87,7 +82,8 @@ public class MemberController {
 
     @PostMapping("/members/login")
     public String login(@Validated @ModelAttribute("form") MemberLoginDto dto,
-                      BindingResult bindingResult, HttpServletRequest request) {
+                      BindingResult bindingResult, HttpServletRequest request,
+                      @RequestParam(defaultValue = "/") String redirectURL) {
 
         // 빈값 검증
         if (bindingResult.hasErrors()) {
@@ -104,12 +100,11 @@ public class MemberController {
         }
 
         // 성공 로직
+        // 세션이 있으면 세션 반환
         HttpSession session = request.getSession();
-        session.setAttribute("memberNo", loginMember.getNo());
-        session.setAttribute("memberId", loginMember.getId());
-        session.setAttribute("memberName", loginMember.getName());
+        // 없으면 신규 세션 생성
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-        log.info("session memberNo = {}", session.getAttribute("memberNo"));
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 }

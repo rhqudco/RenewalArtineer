@@ -5,7 +5,7 @@ $(function (){
             $("#emailDomain").val("");
         }
         else {
-            $("#emailDomain").val(value);
+            $("#emailDomain").val(value).attr("readonly", true);
         }
     })
 })

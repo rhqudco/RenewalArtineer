@@ -1,4 +1,4 @@
-package com.artineer.artineer.argumentresolver;
+package com.artineer.artineer.loginCheck;
 
 
 import com.artineer.artineer.domain.Member;

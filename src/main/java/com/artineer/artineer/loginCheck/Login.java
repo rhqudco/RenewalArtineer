@@ -1,4 +1,4 @@
-package com.artineer.artineer.argumentresolver;
+package com.artineer.artineer.loginCheck;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
