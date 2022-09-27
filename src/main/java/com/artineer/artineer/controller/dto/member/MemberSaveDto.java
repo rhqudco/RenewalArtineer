@@ -1,4 +1,4 @@
-package com.artineer.artineer.controller.dto;
+package com.artineer.artineer.controller.dto.member;
 
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;

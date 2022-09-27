@@ -1,7 +1,7 @@
 package com.artineer.artineer.service;
 
 import com.artineer.artineer.common.WebSecurityConfig;
-import com.artineer.artineer.controller.dto.MemberSaveDto;
+import com.artineer.artineer.controller.dto.member.MemberSaveDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;

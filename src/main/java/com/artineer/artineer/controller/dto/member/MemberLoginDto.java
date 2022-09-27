@@ -1,4 +1,4 @@
-package com.artineer.artineer.controller.dto;
+package com.artineer.artineer.controller.dto.member;
 
 import lombok.Getter;
 import lombok.Setter;

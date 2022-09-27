@@ -1,14 +1,12 @@
 package com.artineer.artineer.domain;
 
-import com.artineer.artineer.controller.dto.MemberSaveDto;
+import com.artineer.artineer.controller.dto.member.MemberSaveDto;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Member")

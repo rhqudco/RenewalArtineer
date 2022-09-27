@@ -57,6 +57,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public Member findAccountId(String name, String email) {
+        List<Member> members = memberRepository.findByNameAndEmail(name, email);
+        if (members.isEmpty()) {
+            return null;
+        }
+        return members.get(0);
+    }
+
+    @Override
     public boolean validateEqualPassword(String rawPassword, String encodedPassword) {
         return webSecurityConfig.getPasswordEncoder().matches(rawPassword, encodedPassword);
 

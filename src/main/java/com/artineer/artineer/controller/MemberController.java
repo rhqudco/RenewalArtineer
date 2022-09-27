@@ -1,9 +1,10 @@
 package com.artineer.artineer.controller;
 
+import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.common.WebSecurityConfig;
-import com.artineer.artineer.controller.dto.MemberLoginDto;
-import com.artineer.artineer.controller.dto.MemberSaveDto;
+import com.artineer.artineer.controller.dto.member.MemberLoginDto;
+import com.artineer.artineer.controller.dto.member.MemberSaveDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotBlank;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,14 +35,15 @@ public class MemberController {
     private final BirthValidator birthValidator;
     private final PhoneValidator phoneValidator;
 
+    // 회원가입
     @GetMapping("/members/join")
-    public String save(Model model) {
+    public String memberJoinForm(Model model) {
         model.addAttribute("form", new MemberSaveDto());
-        return "join/joinForm";
+        return "member/joinForm";
     }
 
     @PostMapping("/members/join")
-    public String join(@Validated @ModelAttribute("form") MemberSaveDto dto,
+    public String memberJoin(@Validated @ModelAttribute("form") MemberSaveDto dto,
                        BindingResult bindingResult) {
 
 
@@ -49,7 +52,7 @@ public class MemberController {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "join/joinForm";
+            return "member/joinForm";
         }
 
         // 이메일 조합
@@ -77,7 +80,7 @@ public class MemberController {
     @GetMapping("/members/login")
     public String loginForm(Model model) {
         model.addAttribute("form", new MemberLoginDto());
-        return "login/loginForm";
+        return "member/loginForm";
     }
 
     @PostMapping("/members/login")
@@ -88,7 +91,7 @@ public class MemberController {
         // 빈값 검증
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "login/loginForm";
+            return "member/loginForm";
         }
 
         Member loginMember = memberService.validLogin(dto.getId(), dto.getPassword());
@@ -96,7 +99,7 @@ public class MemberController {
         // 아이디 비밀번호 검증
         if (loginMember == null) {
             bindingResult.reject("checkIdPw", null);
-            return "login/loginForm";
+            return "member/loginForm";
         }
 
         // 성공 로직
@@ -106,5 +109,35 @@ public class MemberController {
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         return "redirect:" + redirectURL;
+    }
+
+    @GetMapping("/members/find/account")
+    public String findAccountForm(Model model) {
+        model.addAttribute("form", new MemberFindDto());
+        return "member/findAccountForm";
+    }
+
+
+    @ResponseBody
+    @PostMapping("/members/find/account/id")
+    public String findAccount(@Validated @RequestParam("memberName") @NotBlank String memberName,
+                              @RequestParam("emailId") @NotBlank String emailId,
+                              @RequestParam("emailDomain") @NotBlank String emailDomain) {
+
+        if (memberName.equals("") || emailId.equals("") || emailDomain.equals("")) {
+            return "";
+        }
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(emailId);
+        sb.append("@");
+        sb.append(emailDomain);
+        String memberEmail = sb.toString();
+
+        Member member = memberService.findAccountId(memberName, memberEmail);
+        if (member == null) {
+            return "위 정보로 찾을 수 없습니다.";
+        }
+        return member.getId();
     }
 }
