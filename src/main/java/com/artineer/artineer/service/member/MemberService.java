@@ -12,6 +12,7 @@ public interface MemberService {
     Member validLogin(String id, String password);
     boolean validateEqualPassword(String rawPassword, String encodedPassword);
     List<Member> findAll();
-
     Member findAccountId(String name, String email);
+    Member findAccountPw(String id, String email);
+    void updatePassword(Long no, String password);
 }

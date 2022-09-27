@@ -29,8 +29,8 @@
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 메시지</p>
         </div>
         <div>
-            <label for="memberId" >ID</label>
-            <input type="text" id="memberId" th:field="*{id}" class="form-control" th:errorclass="field-error" placeholder="아이디를 입력하세요">
+            <label for="member-id" >ID</label>
+            <input type="text" id="member-id" th:field="*{id}" class="form-control" th:errorclass="field-error" placeholder="아이디를 입력하세요">
             <div class="field-error" th:errors="*{id}">
                 중복된 아이디 입니다.
             </div>
@@ -71,8 +71,8 @@
                 필수 값 입니다.
             </div>
             @
-            <input type="text" id="emailDomain" th:field="*{emailDomain}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
-            <select class="form-control" id="emailDomainSelect">
+            <input type="text" id="email-domain" th:field="*{emailDomain}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
+            <select class="form-control" id="email-domain-select">
                 <option value="type">--직접 입력--</option>
                 <option value="naver.com">naver.com</option>
                 <option value="google.com">google.com</option>

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 //@Configuration
-public class WebConfig  implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberArgumentResolver());
@@ -21,7 +21,7 @@ public class WebConfig  implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/members/logout", "/members/join", "/members/login",
+                .excludePathPatterns("/", "/members/logout", "/members/join", "/members/login", "/members/find/**",
                         "/css/**", "/js/**", "/*.ico", "/error");
     }
 }

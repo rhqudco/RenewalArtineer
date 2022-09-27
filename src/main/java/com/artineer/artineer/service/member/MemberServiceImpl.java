@@ -66,6 +66,23 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public Member findAccountPw(String id, String email) {
+        List<Member> members = memberRepository.findByIdAndEmail(id, email);
+        if (members.isEmpty()) {
+            return null;
+        }
+        return members.get(0);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long no, String password) {
+        List<Member> members = memberRepository.findByNo(no);
+        Member findMember = members.get(0);
+        findMember.changePassword(password);
+    }
+
+    @Override
     public boolean validateEqualPassword(String rawPassword, String encodedPassword) {
         return webSecurityConfig.getPasswordEncoder().matches(rawPassword, encodedPassword);
 

@@ -28,13 +28,53 @@
         <h2>아아디 찾기</h2>
     </div>
     <div>
-        <label for="memberName">이름</label>
-        <input type="text" id="memberName" th:field="${form.name}" class="form-control" th:errorclass="field-error" placeholder="이름을 입력하세요">
+        <label for="member-name">이름</label>
+        <input type="text" id="member-name" th:field="${form.name}" class="form-control" th:errorclass="field-error" placeholder="이름을 입력하세요">
+    </div>
+    <div>
+        <label for="email-id" >이메일</label>
+        <input type="text" id="email-id" th:field="${form.emailId}" class="form-control" th:errorclass="field-error" placeholder="이메일을 입력하세요">
+
+        @
+        <input type="text" id="email-domain" th:field="${form.emailDomain}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
+        <select class="form-control" id="email-domain-select">
+            <option value="type">--직접 입력--</option>
+            <option value="naver.com">naver.com</option>
+            <option value="google.com">google.com</option>
+            <option value="hanmail.net">hanmail.net</option>
+            <option value="nate.com">nate.com</option>
+            <option value="kakao.com">kakao.com</option>
+        </select>
+    </div>
+
+    <span class="result-info-id" id="result-info-id">
+        <h3 class="result-text-id" id="result-text-id"></h3>
+    </span>
+
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg" id="find-id">아이디 찾기</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='findAccountForm.html'"
+                    th:onclick="|location.href='@{/members/find/account}'|"
+                    type="button" >취소</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="py-5 text-center">
+        <h2>비밀번호 찾기</h2>
+    </div>
+    <div>
+        <label for="member-id">ID</label>
+        <input type="text" id="member-id" th:field="${form.id}" class="form-control" th:errorclass="field-error" placeholder="ID를 입력하세요">
     </div>
     <div>
         <label for="emailId" >이메일</label>
         <input type="text" id="emailId" th:field="${form.emailId}" class="form-control" th:errorclass="field-error" placeholder="이메일을 입력하세요">
-
         @
         <input type="text" id="emailDomain" th:field="${form.emailDomain}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
         <select class="form-control" id="emailDomainSelect">
@@ -51,11 +91,9 @@
         <h3 class="result-text" id="result-text"></h3>
     </span>
 
-    <hr class="my-4">
-
     <div class="row">
         <div class="col">
-            <button class="w-100 btn btn-primary btn-lg" id="find-id">아이디 찾기</button>
+            <button class="w-100 btn btn-primary btn-lg" id="find-pw">비밀번호 찾기</button>
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
@@ -64,9 +102,6 @@
                     type="button" >취소</button>
         </div>
     </div>
-
-
-
 
 </div> <!-- /container -->
 </body>

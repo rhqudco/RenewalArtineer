@@ -1,5 +1,6 @@
 package com.artineer.artineer.controller;
 
+import com.artineer.artineer.common.MailService;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.common.WebSecurityConfig;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class MemberController {
     private final WebSecurityConfig webSecurityConfig;
     private final BirthValidator birthValidator;
     private final PhoneValidator phoneValidator;
+    private final MailService mailService;
 
     // 회원가입
     @GetMapping("/members/join")
@@ -120,9 +124,9 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/members/find/account/id")
-    public String findAccount(@Validated @RequestParam("memberName") @NotBlank String memberName,
-                              @RequestParam("emailId") @NotBlank String emailId,
-                              @RequestParam("emailDomain") @NotBlank String emailDomain) {
+    public String findAccountId(@RequestParam("memberName") String memberName,
+                                @RequestParam("emailId") String emailId,
+                                @RequestParam("emailDomain") String emailDomain) {
 
         if (memberName.equals("") || emailId.equals("") || emailDomain.equals("")) {
             return "";
@@ -136,8 +140,41 @@ public class MemberController {
 
         Member member = memberService.findAccountId(memberName, memberEmail);
         if (member == null) {
-            return "위 정보로 찾을 수 없습니다.";
+            return "위 정보로 가입된 회원을 찾을 수 없습니다.";
         }
+        return member.getId();
+    }
+
+    @ResponseBody
+    @PostMapping("/members/find/account/pw")
+    public String findAccountPw(@RequestParam("memberId") String memberId,
+                                @RequestParam("emailId") String emailId,
+                                @RequestParam("emailDomain") String emailDomain) {
+        // 빈 값 입력시
+        if (memberId.equals("") || emailId.equals("") || emailDomain.equals("")) {
+            return "";
+        }
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(emailId);
+        sb.append("@");
+        sb.append(emailDomain);
+        String memberEmail = sb.toString();
+
+        // 정보 없을 때
+        Member member = memberService.findAccountPw(memberId, memberEmail);
+        if (member == null) {
+            return "위 정보로 가입된 회원을 찾을 수 없습니다.";
+        }
+
+        // 성공 했을 때
+        List<String> userMail = new ArrayList<>();
+        userMail.add(memberEmail);
+        // 임시 비밀번호
+        String temporaryPassword = mailService.sendMail(userMail, memberId);
+        // 비밀번호 바꾸기
+        String encodePassword = webSecurityConfig.getPasswordEncoder().encode(temporaryPassword);
+        memberService.updatePassword(member.getNo(), encodePassword);
         return member.getId();
     }
 }

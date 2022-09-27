@@ -9,6 +9,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findByNo(Long no);
     List<Member> findById(String id);
     List<Member> findAll();
-
-    List<Member> findByNameAndEmail(String name, String email);
+    List<Member> findByNameAndEmail(String id, String email);
+    List<Member> findByIdAndEmail(String id, String email);
 }
