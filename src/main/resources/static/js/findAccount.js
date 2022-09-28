@@ -57,6 +57,10 @@ $(document).ready(function(){
                     $('#result-info').css({'display': 'inline'});
                     $('#result-text').text(result);
                 }
+                else if(result === "위 정보로 가입된 회원을 찾을 수 없습니다."){
+                    $('#result-info').css({'display': 'inline'});
+                    $('#result-text').text(result);
+                }
                 else {
                     $('#result-info').css({'display': 'inline'});
                     $('#result-text').text("입력하신  " + result + "으로 임시 비밀번호를 발송하였습니다.");

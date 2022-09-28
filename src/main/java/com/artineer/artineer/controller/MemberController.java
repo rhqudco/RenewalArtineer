@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
@@ -167,14 +168,20 @@ public class MemberController {
             return "위 정보로 가입된 회원을 찾을 수 없습니다.";
         }
 
-        // 성공 했을 때
-        List<String> userMail = new ArrayList<>();
-        userMail.add(memberEmail);
-        // 임시 비밀번호
-        String temporaryPassword = mailService.sendMail(userMail, memberId);
-        // 비밀번호 바꾸기
-        String encodePassword = webSecurityConfig.getPasswordEncoder().encode(temporaryPassword);
-        memberService.updatePassword(member.getNo(), encodePassword);
-        return member.getId();
+        try {
+            // 성공 했을 때
+            // temporaryPassword = 임시 비밀번호, mailService.sendMessage(memberId, memberEmail = 메일 보내는 메소드
+            String temporaryPassword = mailService.sendMessage(memberId, memberEmail);
+            // 비밀번호 바꾸기
+            String encodePassword = webSecurityConfig.getPasswordEncoder().encode(temporaryPassword);
+            memberService.updatePassword(member.getNo(), encodePassword);
+            return member.getId();
+        } catch (MessagingException e) {
+            return "잠시 후 다시 시도해 주세요.";
+        }
+        
+        // 텍스트만 보내는 메소드
+        //List<String> userMail = new ArrayList<>();
+        //userMail.add(memberEmail);
     }
 }
