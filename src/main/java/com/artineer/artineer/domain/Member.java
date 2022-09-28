@@ -30,6 +30,13 @@ public class Member {
     protected Member() {
     }
 
+    // 테스트용 데이터 위한 생성자
+    public Member(String id, String password, String email) {
+        this.id = id;
+        this.password = password;
+        this.email = email;
+    }
+
     public Member(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, String level) {
         this.id = id;
         this.password = password;

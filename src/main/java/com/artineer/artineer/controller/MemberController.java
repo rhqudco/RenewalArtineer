@@ -179,7 +179,7 @@ public class MemberController {
         } catch (MessagingException e) {
             return "잠시 후 다시 시도해 주세요.";
         }
-        
+
         // 텍스트만 보내는 메소드
         //List<String> userMail = new ArrayList<>();
         //userMail.add(memberEmail);
