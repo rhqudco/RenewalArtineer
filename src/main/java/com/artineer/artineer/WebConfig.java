@@ -2,9 +2,11 @@ package com.artineer.artineer;
 
 import com.artineer.artineer.loginCheck.LoginCheckInterceptor;
 import com.artineer.artineer.loginCheck.LoginMemberArgumentResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -22,6 +24,16 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/members/logout", "/members/join", "/members/login", "/members/find/**",
-                        "/css/**", "/js/**", "/*.ico", "/error");
+                        "/css/**", "/js/**", "/ckeditor/**", "/post/**" , "/*.ico", "/error");
+    }
+
+    @Value("${resource.handler}")
+    private String resourceHandler;
+    @Value("${resource.location}")
+    private String resourceLocation;
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(resourceHandler)
+                .addResourceLocations(resourceLocation);
     }
 }

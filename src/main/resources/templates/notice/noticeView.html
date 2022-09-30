@@ -20,6 +20,7 @@
     <table>
         <tr th:each="notice : ${item}">
             <td th:text="${item.title}"></td>
+            <td th:text="${item.detail}"></td>
             <div style="white-space: pre;" th:value="${item.detail}"></div>
         </tr>
     </table>
