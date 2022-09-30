@@ -57,7 +57,7 @@ $(document).ready(function(){
                     $('#result-info').css({'display': 'inline'});
                     $('#result-text').text(result);
                 }
-                else if(result === "위 정보로 가입된 회원을 찾을 수 없습니다."){
+                else if(result === "잠시 후 다시 시도해 주세요."){
                     $('#result-info').css({'display': 'inline'});
                     $('#result-text').text(result);
                 }

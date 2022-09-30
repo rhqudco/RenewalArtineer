@@ -2,6 +2,7 @@ package com.artineer.artineer.controller;
 
 import com.artineer.artineer.common.MailService;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
+import com.artineer.artineer.domain.Level;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.controller.dto.member.MemberLoginDto;
@@ -75,7 +76,7 @@ public class MemberController {
         Member saveMember = Member.createMember(dto.getId(),
                 webSecurityConfig.getPasswordEncoder().encode(dto.getPassword()),
                 dto.getName(), memberBirth, memberEmail, memberPhone,
-                dto.getGender(), dto.getGeneration(), "1");
+                dto.getGender(), dto.getGeneration(), Level.USER);
 
         memberService.join(saveMember);
 

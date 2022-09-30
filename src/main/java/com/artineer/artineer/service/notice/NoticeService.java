@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface NoticeService {
     Notice saveNotice(Notice notice);
+    List<Notice> lookUpNotice(Long no);
 }

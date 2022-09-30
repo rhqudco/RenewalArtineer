@@ -1,10 +1,13 @@
 package com.artineer.artineer.controller;
 
 import com.artineer.artineer.controller.dto.WriteSaveDto;
+import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
+import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.service.notice.NoticeService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,23 +43,32 @@ public class NoticeController {
                              BindingResult bindingResult, RedirectAttributes redirectAttributes,
                              HttpSession session) {
 
-        if (bindingResult.hasErrors()) {
-            log.info("errors = {}", bindingResult);
-            return "notice/noticeWriteForm";
-        }
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors = {}", bindingResult);
+//            return "notice/noticeWriteForm";
+//        }
 
-        Long memberNo = (Long) session.getAttribute("memberNo");
-
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberNo = member.getNo();
         Member loginMember = memberService.findMember(memberNo).get(0);
 
-
-        Notice writeNotice = Notice.writeNotice(loginMember, LocalDateTime.now(), dto.getTitle(),
-                dto.getDetail(), dto.getFileName(), dto.getImageName(), 0L);
-
-        Notice saveNotice = noticeService.saveNotice(writeNotice);
-
-        redirectAttributes.addAttribute("noticeNo", saveNotice.getNo());
+//        Notice writeNotice = Notice.writeNotice(loginMember, LocalDateTime.now(), dto.getTitle(),
+//                dto.getDetail(), 0L);
+//
+//        Notice saveNotice = noticeService.saveNotice(writeNotice);
+//
+//        redirectAttributes.addAttribute("noticeNo", saveNotice.getNo());
 
         return "redirect:/notice/noticeView/{noticeNo}";
     }
+
+    @GetMapping("/notice/noticeView/{noticeNo}")
+    public String viewNotice(@PathVariable("noticeNo") Long no, Model model) {
+        List<Notice> notices = noticeService.lookUpNotice(no);
+        Notice notice = notices.get(0);
+        model.addAttribute("item", notice);
+        return "notice/noticeView";
+    }
 }
+
+//    ALTER TABLE NOTICE ALTER column DETAIL TEXT;

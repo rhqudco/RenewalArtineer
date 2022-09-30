@@ -25,7 +25,9 @@ public class Member {
     private Phone phone;
     private String gender;
     private String generation;
-    private String level;
+
+    @Enumerated(EnumType.STRING)
+    private Level level;
 
     protected Member() {
     }
@@ -37,7 +39,7 @@ public class Member {
         this.email = email;
     }
 
-    public Member(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, String level) {
+    public Member(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, Level level) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -61,7 +63,7 @@ public class Member {
         this.level = dto.getLevel();
     }
 
-    public static Member createMember(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, String level) {
+    public static Member createMember(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, Level level) {
         return new Member(id, password, name, birth, email, phone, gender, generation, level);
     }
 

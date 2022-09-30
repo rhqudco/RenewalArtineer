@@ -22,8 +22,11 @@ public class Notice {
     private LocalDateTime writeDate;
     private String title;
     private String detail;
-    private String fileName;
-    private String imageName;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uploadFile_no")
+    private UploadFile fileName;
+    @OneToMany(mappedBy = "notice")
+    private List<UploadFile> imageName = new ArrayList<>();
     private Long view;
 
     @OneToMany(mappedBy = "notice")
@@ -32,7 +35,7 @@ public class Notice {
     protected Notice() {
     }
 
-    public Notice(Member member, LocalDateTime writeDate, String title, String detail, String fileName, String imageName, Long view) {
+    public Notice(Member member, LocalDateTime writeDate, String title, String detail, UploadFile fileName, List<UploadFile> imageName, Long view) {
         this.member = member;
         this.writeDate = writeDate;
         this.title = title;
@@ -43,7 +46,7 @@ public class Notice {
     }
 
     public static Notice writeNotice(Member member, LocalDateTime writeDate, String title,
-                                     String detail, String fileName, String imageName, Long view) {
+                                     String detail, UploadFile fileName, List<UploadFile> imageName, Long view) {
         return new Notice(member, writeDate, title, detail, fileName, imageName, view);
     }
 }

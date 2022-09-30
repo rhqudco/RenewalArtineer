@@ -2,6 +2,7 @@ package com.artineer.artineer.service;
 
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.controller.dto.member.MemberSaveDto;
+import com.artineer.artineer.domain.Level;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
@@ -38,7 +39,7 @@ class MemberServiceImplTest {
         memberDTO.setPhone(phone);
         memberDTO.setGender("1");
         memberDTO.setGeneration("3");
-        memberDTO.setLevel("1");
+        memberDTO.setLevel(Level.USER);
 
         Member member = new Member(memberDTO);
         Member createMember = memberService.join(member);
@@ -66,7 +67,7 @@ class MemberServiceImplTest {
         memberDTO.setPhone(phone);
         memberDTO.setGender("1");
         memberDTO.setGeneration("3");
-        memberDTO.setLevel("1");
+        memberDTO.setLevel(Level.USER);
 
         Member member = new Member(memberDTO);
         memberService.join(member);

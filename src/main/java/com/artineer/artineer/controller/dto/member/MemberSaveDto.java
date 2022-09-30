@@ -1,5 +1,6 @@
 package com.artineer.artineer.controller.dto.member;
 
+import com.artineer.artineer.domain.Level;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
@@ -34,5 +35,5 @@ public class MemberSaveDto {
     @NotBlank
     private String generation;
 
-    private String level;
+    private Level level;
 }
