@@ -41,19 +41,22 @@ $(function (){
             $.ajax({
                 type: 'post',
                 enctype: 'multipart/form-data',
-                url: '/board/register/imageUpload',
+                url: '/post/imageUpload',
                 data: formData,
                 processData: false,
                 contentType: false,
-                dataType: 'json',
+                dataType: 'text',
                 success: function (data) {
+                    console.log(data);
+                    console.log("Success");
                     const range = quill.getSelection(); // 사용자가 선택한 에디터 범위
-                    data.uploadPath = data.uploadPath.replace(/\\/g, '/');
+                    // data.uploadPath = data.uploadPath.replace(/\\/g, '/');
                     quill.insertEmbed(range.index, 'image', "/board/display?fileName=" + data.uploadPath +"/"+ data.uuid +"_"+ data.fileName);
 
                 },
                 error: function (err) {
                     console.log(err);
+                    console.log("Error");
                 }
             });
 

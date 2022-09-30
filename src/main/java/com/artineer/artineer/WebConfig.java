@@ -24,16 +24,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/members/logout", "/members/join", "/members/login", "/members/find/**",
-                        "/css/**", "/js/**", "/ckeditor/**", "/post/**" , "/*.ico", "/error");
-    }
-
-    @Value("${resource.handler}")
-    private String resourceHandler;
-    @Value("${resource.location}")
-    private String resourceLocation;
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(resourceHandler)
-                .addResourceLocations(resourceLocation);
+                        "/css/**", "/js/**", "/ckeditor/**", "/post/**", "/display", "/*.ico", "/error");
     }
 }
