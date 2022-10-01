@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-//@Component
+@Component
 public class FileStore {
 
     @Value("${file.dir}")
@@ -38,10 +38,10 @@ public class FileStore {
             return null;
         }
 
-        String originalFilename = multipartFile.getOriginalFilename();
-        String storeFileName = createStoreFileName(originalFilename);
+        String uploadFileName = multipartFile.getOriginalFilename();
+        String storeFileName = createStoreFileName(uploadFileName);
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
-        return new UploadFile(originalFilename, storeFileName);
+        return new UploadFile(uploadFileName, storeFileName);
     }
 
     private String createStoreFileName(String originalFilename) {

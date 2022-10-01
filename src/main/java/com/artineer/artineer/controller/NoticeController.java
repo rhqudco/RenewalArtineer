@@ -1,5 +1,6 @@
 package com.artineer.artineer.controller;
 
+import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.domain.Member;
@@ -44,6 +45,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
     private final MemberService memberService;
+    private final FileStore fileStore;
 
     @GetMapping("/notice/write")
     public String writeNotice(Model model) {
@@ -54,18 +56,18 @@ public class NoticeController {
     @PostMapping("/notice/write")
     public String saveNotice(@Validated @ModelAttribute("form") WriteSaveDto dto,
                              BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                             HttpSession session) {
+                             HttpSession session) throws IOException {
 
-//        if (bindingResult.hasErrors()) {
-//            log.info("errors = {}", bindingResult);
-//            return "notice/noticeWriteForm";
-//        }
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "notice/noticeWriteForm";
+        }
 
         Member sessionLogin = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberNo = sessionLogin.getNo();
         Member loginMember = memberService.findMember(memberNo).get(0);
 
-        UploadFile uploadFile = UploadFile.createUploadFile("asd", "SD");
+        UploadFile uploadFile = fileStore.storeFile(dto.getUploadFile());
 
         Notice writeNotice = Notice.writeNotice(loginMember, LocalDateTime.now(), dto.getTitle(),
                 dto.getDetail(), uploadFile, 0L);

@@ -20,7 +20,7 @@ public class UploadFile {
     // 같은 이름의 파일을 업로드 했을 때 파일이 덮어짐.
     // 그래서 파일 이름을 구분 시켰다.
 
-    @OneToOne(mappedBy = "fileName", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "uploadFile", fetch = FetchType.LAZY)
     @JsonIgnore
     private Notice notice;
 

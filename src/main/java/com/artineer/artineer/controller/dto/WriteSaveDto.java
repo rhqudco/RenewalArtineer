@@ -4,6 +4,7 @@ import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.UploadFile;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -21,6 +22,6 @@ public class WriteSaveDto {
     @NotBlank
     private String detail;
 
-    private UploadFile fileName;
+    private MultipartFile uploadFile;
     private Long view;
 }

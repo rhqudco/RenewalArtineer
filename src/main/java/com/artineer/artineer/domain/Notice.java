@@ -22,9 +22,10 @@ public class Notice {
     private LocalDateTime writeDate;
     private String title;
     private String detail;
-    @OneToOne(fetch = FetchType.LAZY)
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "uploadFile_no")
-    private UploadFile fileName;
+    private UploadFile uploadFile;
     private Long view;
 
     @OneToMany(mappedBy = "notice")
@@ -33,16 +34,27 @@ public class Notice {
     protected Notice() {
     }
 
-    public Notice(Member member, LocalDateTime writeDate, String title, String detail, UploadFile fileName, Long view) {
+    public Notice(Member member, LocalDateTime writeDate, String title, String detail, Long view) {
         this.member = member;
         this.writeDate = writeDate;
         this.title = title;
         this.detail = detail;
+//        this.uploadFile = uploadFile;
         this.view = view;
     }
 
-    public static Notice writeNotice(Member member, LocalDateTime writeDate, String title,
-                                     String detail, UploadFile fileName, Long view) {
-        return new Notice(member, writeDate, title, detail, fileName, view);
+    // 연관관계 편의 메소드
+    public void setUploadFile(UploadFile uploadFile) {
+        this.uploadFile = uploadFile;
+        uploadFile.setNotice(this);
     }
+
+    public static Notice writeNotice(Member member, LocalDateTime writeDate, String title,
+                                     String detail, UploadFile uploadFile, Long view) {
+        Notice notice = new Notice(member, writeDate, title, detail, view);
+        notice.setUploadFile(uploadFile);
+        return notice;
+    }
+
+
 }
