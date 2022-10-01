@@ -4,6 +4,7 @@ import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
+import com.artineer.artineer.domain.UploadFile;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.service.notice.NoticeService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -59,16 +61,18 @@ public class NoticeController {
 //            return "notice/noticeWriteForm";
 //        }
 
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Long memberNo = member.getNo();
+        Member sessionLogin = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberNo = sessionLogin.getNo();
         Member loginMember = memberService.findMember(memberNo).get(0);
 
-//        Notice writeNotice = Notice.writeNotice(loginMember, LocalDateTime.now(), dto.getTitle(),
-//                dto.getDetail(), 0L);
-//
-//        Notice saveNotice = noticeService.saveNotice(writeNotice);
-//
-//        redirectAttributes.addAttribute("noticeNo", saveNotice.getNo());
+        UploadFile uploadFile = UploadFile.createUploadFile("asd", "SD");
+
+        Notice writeNotice = Notice.writeNotice(loginMember, LocalDateTime.now(), dto.getTitle(),
+                dto.getDetail(), uploadFile, 0L);
+
+        Notice saveNotice = noticeService.saveNotice(writeNotice);
+
+        redirectAttributes.addAttribute("noticeNo", saveNotice.getNo());
 
         return "redirect:/notice/noticeView/{noticeNo}";
     }
@@ -83,7 +87,9 @@ public class NoticeController {
 
     @ResponseBody
     @PostMapping("/post/imageUpload")
-    public void postImage(MultipartFile[] uploadFile){
+    public File postImage(MultipartFile[] uploadFile){
+
+        File result = null;
 
         String uploadFolder = "/Users/gobyeongchae/Desktop/fileUploadV1";
 
@@ -110,7 +116,10 @@ public class NoticeController {
             uploadFileName = uuid + "_" + uploadFileName;
 
             File saveFile = new File(uploadPath, uploadFileName);
+            log.info("saveFile = {}", saveFile);
             /*.................*/
+            result = saveFile;
+
 
             try {
                 multipartFile.transferTo(saveFile);
@@ -118,6 +127,7 @@ public class NoticeController {
                 e.printStackTrace();
             }
         }
+        return result;
     }
 
     @ResponseBody
@@ -125,9 +135,11 @@ public class NoticeController {
     public ResponseEntity<byte[]> showImageGET(@RequestParam("fileName") String fileName) {
         log.info("Controller showImageGET");
 
-        log.info("fileName" + fileName);
+        log.info("fileName = {}", fileName);
 
-        File file = new File("/Users/gobyeongchae/Desktop/fileUploadV1/" + fileName);
+        File file = new File(fileName);
+
+        log.info("file = {}", file);
 
         ResponseEntity<byte[]> result = null;
 

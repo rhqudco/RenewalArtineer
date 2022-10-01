@@ -20,8 +20,8 @@
     <table>
         <tr th:each="notice : ${item}">
             <td th:text="${item.title}"></td>
-            <td th:text="${item.detail}"></td>
-            <div style="white-space: pre;" th:value="${item.detail}"></div>
+            <td th:utext="${item.detail}"></td>
+            <div style="white-space: pre;" th:utext="${item.detail}"></div>
         </tr>
     </table>
 </div> <!-- /container -->

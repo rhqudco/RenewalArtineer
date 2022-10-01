@@ -1,6 +1,7 @@
 package com.artineer.artineer.controller.dto;
 
 import com.artineer.artineer.domain.Member;
+import com.artineer.artineer.domain.UploadFile;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +14,13 @@ import java.time.LocalDateTime;
 public class WriteSaveDto {
     private Member member;
     private LocalDateTime writeDate;
+
     @NotBlank
     private String title;
+
     @NotBlank
     private String detail;
-    private String fileName;
-    private String imageName;
+
+    private UploadFile fileName;
     private Long view;
 }
