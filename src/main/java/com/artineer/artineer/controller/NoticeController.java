@@ -1,6 +1,7 @@
 package com.artineer.artineer.controller;
 
 import com.artineer.artineer.common.FileStore;
+import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.domain.Member;
@@ -46,6 +47,7 @@ public class NoticeController {
     private final NoticeService noticeService;
     private final MemberService memberService;
     private final FileStore fileStore;
+    private final WritingShowImage writingShowImage;
 
     @GetMapping("/notice/write")
     public String writeNotice(Model model) {
@@ -90,80 +92,13 @@ public class NoticeController {
     @ResponseBody
     @PostMapping("/post/imageUpload")
     public File postImage(MultipartFile[] uploadFile){
-
-        File result = null;
-
-        String uploadFolder = "/Users/gobyeongchae/Desktop/fileUploadV1";
-
-        /* 추가된 부분 ......... */
-        SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String formatDate = sdt.format(date);
-
-        String datePath = formatDate.replace("-", File.separator);
-
-        File uploadPath = new File(uploadFolder);
-
-        if (uploadPath.exists() == false) {
-            uploadPath.mkdirs();
-        }
-        /*..........*/
-
-        for (MultipartFile multipartFile : uploadFile) {
-
-            String uploadFileName = multipartFile.getOriginalFilename();
-
-            /* 변경 위치 ............. */
-            String uuid = UUID.randomUUID().toString();
-            uploadFileName = uuid + "_" + uploadFileName;
-
-            File saveFile = new File(uploadPath, uploadFileName);
-            log.info("saveFile = {}", saveFile);
-            /*.................*/
-            result = saveFile;
-
-
-            try {
-                multipartFile.transferTo(saveFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+        return writingShowImage.imagePost(uploadFile);
     }
 
     @ResponseBody
     @GetMapping("/display")
     public ResponseEntity<byte[]> showImageGET(@RequestParam("fileName") String fileName) {
-        log.info("Controller showImageGET");
-
-        log.info("fileName = {}", fileName);
-
-        File file = new File(fileName);
-
-        log.info("file = {}", file);
-
-        ResponseEntity<byte[]> result = null;
-
-        try {
-
-            HttpHeaders header = new HttpHeaders();
-
-        /*
-        Files.probeContentType() 해당 파일의 Content 타입을 인식(image, text/plain ...)
-        없으면 null 반환
-
-        file.toPath() -> file 객체를 Path객체로 변환
-
-        */
-            header.add("Content-type", Files.probeContentType(file.toPath()));
-
-            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
+        return writingShowImage.displayImage(fileName);
     }
 }
 
