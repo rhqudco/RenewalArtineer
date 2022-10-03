@@ -4,6 +4,7 @@ import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.loginCheck.Login;
 import com.artineer.artineer.domain.Member;
+import com.artineer.artineer.service.notice.NoticeCommentService;
 import com.artineer.artineer.service.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.HttpServletRequest;

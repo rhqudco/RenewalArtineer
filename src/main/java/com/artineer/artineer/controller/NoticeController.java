@@ -6,9 +6,11 @@ import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
+import com.artineer.artineer.domain.NoticeComment;
 import com.artineer.artineer.domain.UploadFile;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.service.member.MemberService;
+import com.artineer.artineer.service.notice.NoticeCommentService;
 import com.artineer.artineer.service.notice.NoticeService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +50,7 @@ public class NoticeController {
     private final MemberService memberService;
     private final FileStore fileStore;
     private final WritingShowImage writingShowImage;
+    private final NoticeCommentService noticeCommentService;
 
     @GetMapping("/notice/write")
     public String writeNotice(Model model) {
@@ -85,7 +88,9 @@ public class NoticeController {
     public String viewNotice(@PathVariable("noticeNo") Long no, Model model) {
         List<Notice> notices = noticeService.lookUpNotice(no);
         Notice notice = notices.get(0);
-        model.addAttribute("item", notice);
+        List<NoticeComment> comments = noticeCommentService.findAllCommentOfNotice(no);
+        model.addAttribute("notice", notice);
+        model.addAttribute("comments", comments);
         return "notice/noticeView";
     }
 
@@ -99,6 +104,12 @@ public class NoticeController {
     @GetMapping("/display")
     public ResponseEntity<byte[]> showImageGET(@RequestParam("fileName") String fileName) {
         return writingShowImage.displayImage(fileName);
+    }
+
+    @ResponseBody
+    @PostMapping("/writeComment")
+    public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comments") String comments) {
+        
     }
 }
 

@@ -34,4 +34,18 @@ public class NoticeComment {
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     private List<NoticeComment> childComments = new ArrayList<>();
+
+    protected NoticeComment() {
+    }
+
+    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
+        this.member = member;
+        this.detail = detail;
+        this.writeDate = writeDate;
+        this.notice = notice;
+    }
+
+//    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
+//
+//    }
 }

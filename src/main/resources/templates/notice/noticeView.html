@@ -17,14 +17,23 @@
 <body>
 
 <div class="container">
-    <table>
-        <tr th:each="notice : ${item}">
-            <td th:text="${item.title}"></td>
-            <td th:utext="${item.detail}"></td>
-            첨부파일: <a th:if="${item.uploadFile}" th:href="|/attach/${item.getNo}|" th:text="${item.getUploadFile().getUploadFileName()}" /><br/>
-        </tr>
-    </table>
-</div> <!-- /container -->
+    <input type="hidden" th:field="${notice.no}" id="notice-no">
+    <p th:text="${notice.title}"></p>
+    <div th:utext="${notice.detail}"></div>
+    첨부파일: <a th:if="${notice.uploadFile}" th:href="|/attach/${notice.getNo}|" th:text="${notice.getUploadFile().getUploadFileName()}" /><br/>
+    <hr>
+    댓글 :
+    <div th:if="${comments}">
+        <div th:each="item : ${comments}">
+            <p th:utext="${item.detail}"></p>
+            <hr>
+        </div>
+    </div>
+    <label for="comment">
+        <input type="text" id="comment">
+    </label>
+    <input type="button" id="write-comment" value="댓글 작성">
+</div>
 
 </body>
 </html>

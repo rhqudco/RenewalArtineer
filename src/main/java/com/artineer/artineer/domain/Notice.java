@@ -45,16 +45,18 @@ public class Notice {
 
     // 연관관계 편의 메소드
     public void setUploadFile(UploadFile uploadFile) {
-        this.uploadFile = uploadFile;
-        uploadFile.setNotice(this);
+        if (uploadFile != null) {
+            this.uploadFile = uploadFile;
+            uploadFile.setNotice(this);
+        }
     }
 
     public static Notice writeNotice(Member member, LocalDateTime writeDate, String title,
                                      String detail, UploadFile uploadFile, Long view) {
         Notice notice = new Notice(member, writeDate, title, detail, view);
-        notice.setUploadFile(uploadFile);
+        if (uploadFile != null) {
+            notice.setUploadFile(uploadFile);
+        }
         return notice;
     }
-
-
 }
