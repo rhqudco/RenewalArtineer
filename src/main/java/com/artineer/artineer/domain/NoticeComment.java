@@ -38,14 +38,22 @@ public class NoticeComment {
     protected NoticeComment() {
     }
 
-    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
+    protected void setNotice(Notice notice) {
+        if (notice != null) {
+            this.notice = notice;
+        }
+    }
+    private NoticeComment(Member member, String detail, LocalDateTime writeDate) {
         this.member = member;
         this.detail = detail;
         this.writeDate = writeDate;
-        this.notice = notice;
     }
 
-//    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
-//
-//    }
+    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
+        NoticeComment noticeComment = new NoticeComment(member, detail, writeDate);
+        if (notice != null) {
+            noticeComment.setNotice(notice);
+        }
+        return noticeComment;
+    }
 }

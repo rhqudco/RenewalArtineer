@@ -44,6 +44,12 @@ public class Notice {
     }
 
     // 연관관계 편의 메소드
+    public void addComments(NoticeComment noticeComment) {
+        comments.add(noticeComment);
+        noticeComment.setNotice(this);
+    }
+
+    // 연관관계 편의 메소드
     public void setUploadFile(UploadFile uploadFile) {
         if (uploadFile != null) {
             this.uploadFile = uploadFile;
