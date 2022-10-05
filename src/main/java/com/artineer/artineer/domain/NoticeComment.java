@@ -38,11 +38,13 @@ public class NoticeComment {
     protected NoticeComment() {
     }
 
-    protected void setNotice(Notice notice) {
-        if (notice != null) {
-            this.notice = notice;
-        }
+
+    // 연관관계 편의 메소드
+    public void addChildComment(NoticeComment noticeComment, NoticeComment parent) {
+        childComments.add(noticeComment);
+        parentComment.setParentComment(parent);
     }
+
     private NoticeComment(Member member, String detail, LocalDateTime writeDate) {
         this.member = member;
         this.detail = detail;
@@ -55,5 +57,15 @@ public class NoticeComment {
             noticeComment.setNotice(notice);
         }
         return noticeComment;
+    }
+
+    public static NoticeComment writeChildComment(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment) {
+        NoticeComment childComment = new NoticeComment(member, detail, writeDate);
+        if (notice != null) {
+            childComment.setNotice(notice);
+        }
+        childComment.addChildComment(childComment, parentComment);
+
+        return childComment;
     }
 }
