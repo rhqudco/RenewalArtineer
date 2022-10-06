@@ -45,25 +45,26 @@ public class NoticeComment {
         parentComment.setParentComment(parent);
     }
 
-    private NoticeComment(Member member, String detail, LocalDateTime writeDate) {
+    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
         this.member = member;
         this.detail = detail;
         this.writeDate = writeDate;
+        this.notice = notice;
     }
 
     public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
-        NoticeComment noticeComment = new NoticeComment(member, detail, writeDate);
-        if (notice != null) {
-            noticeComment.setNotice(notice);
+        if (notice == null) {
+            throw new IllegalStateException("글이 없습니다.");
         }
+        NoticeComment noticeComment = new NoticeComment(member, detail, writeDate, notice);
         return noticeComment;
     }
 
     public static NoticeComment writeChildComment(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment) {
-        NoticeComment childComment = new NoticeComment(member, detail, writeDate);
-        if (notice != null) {
-            childComment.setNotice(notice);
+        if (notice == null) {
+            throw new IllegalStateException("글이 없습니다.");
         }
+        NoticeComment childComment = new NoticeComment(member, detail, writeDate, notice);
         childComment.addChildComment(childComment, parentComment);
 
         return childComment;

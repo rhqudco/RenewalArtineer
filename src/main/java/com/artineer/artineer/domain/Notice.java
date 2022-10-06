@@ -28,8 +28,8 @@ public class Notice {
     private UploadFile uploadFile;
     private Long view;
 
-    @OneToMany(mappedBy = "notice")
-    private List<NoticeComment> comments = new ArrayList<>();
+//    @OneToMany(mappedBy = "notice")
+//    private List<NoticeComment> comments = new ArrayList<>();
 
     protected Notice() {
     }
@@ -44,10 +44,10 @@ public class Notice {
     }
 
     // 연관관계 편의 메소드
-    public void addComments(NoticeComment noticeComment) {
-        comments.add(noticeComment);
-        noticeComment.setNotice(this);
-    }
+//    public void addComments(NoticeComment noticeComment) {
+//        comments.add(noticeComment);
+//        noticeComment.setNotice(this);
+//    }
 
     // 연관관계 편의 메소드
     public void setUploadFile(UploadFile uploadFile) {
