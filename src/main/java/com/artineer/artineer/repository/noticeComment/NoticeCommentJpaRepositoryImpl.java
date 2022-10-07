@@ -1,4 +1,4 @@
-package com.artineer.artineer.repository.notice;
+package com.artineer.artineer.repository.noticeComment;
 
 import com.artineer.artineer.domain.NoticeComment;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,14 @@ public class NoticeCommentJpaRepositoryImpl implements NoticeCommentJpaRepositor
     private final EntityManager em;
 
     @Override
+    public NoticeComment save(NoticeComment noticeComment) {
+        em.persist(noticeComment);
+        return noticeComment;
+    }
+
+    @Override
     public List<NoticeComment> findByNoticeNo(Long no) {
-        return em.createQuery("select nc from NoticeComment nc join fetch nc.notice n where n.no = :no", NoticeComment.class)
+        return em.createQuery("select nc from NoticeComment nc where nc.notice.no = :no", NoticeComment.class)
                 .getResultList();
     }
 }

@@ -1,8 +1,8 @@
-package com.artineer.artineer.service.notice;
+package com.artineer.artineer.service.noticeComment;
 
 import com.artineer.artineer.domain.NoticeComment;
-import com.artineer.artineer.repository.notice.NoticeCommentJpaRepository;
-import com.artineer.artineer.repository.notice.NoticeCommentRepository;
+import com.artineer.artineer.repository.noticeComment.NoticeCommentJpaRepository;
+import com.artineer.artineer.repository.noticeComment.NoticeCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +15,20 @@ import java.util.List;
 public class NoticeCommentServiceImpl implements NoticeCommentService{
 
     private final NoticeCommentJpaRepository noticeCommentJpaRepository;
+    private final NoticeCommentRepository noticeCommentRepository;
+
+    @Override
+    public NoticeComment save(NoticeComment noticeComment) {
+        return noticeCommentJpaRepository.save(noticeComment);
+    }
 
     @Override
     public List<NoticeComment> findAllCommentOfNotice(Long no) {
         return noticeCommentJpaRepository.findByNoticeNo(no);
+    }
+
+    @Override
+    public List<NoticeComment> lookUpComment(Long no) {
+        return noticeCommentRepository.findByNo(no);
     }
 }

@@ -3,43 +3,30 @@ package com.artineer.artineer.controller;
 import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
-import com.artineer.artineer.controller.dto.member.MemberFindDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
 import com.artineer.artineer.domain.UploadFile;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.service.member.MemberService;
-import com.artineer.artineer.service.notice.NoticeCommentService;
+import com.artineer.artineer.service.noticeComment.NoticeCommentService;
 import com.artineer.artineer.service.notice.NoticeService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.hibernate.Session;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -106,10 +93,25 @@ public class NoticeController {
         return writingShowImage.displayImage(fileName);
     }
 
-    @ResponseBody
+    @ResponseBody // ajax 예정
     @PostMapping("/writeComment")
-    public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comments") String comments) {
-        
+    public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comments") String comments, HttpSession session) {
+        Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        NoticeComment writeComment = NoticeComment.writeComment(member, comments, LocalDateTime.now(), notice);
+        noticeCommentService.save(writeComment);
+    }
+
+    // 댓글에 답글
+    @ResponseBody // ajax 예정
+    @PostMapping("/writeChildComment")
+    public void writeChildComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comments") String comments,
+                                  @RequestParam("parent-comment") Long parentComment, HttpSession session) {
+        Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        NoticeComment parentCom = noticeCommentService.lookUpComment(parentComment).get(0);
+        NoticeComment writeComment = NoticeComment.writeChildComment(member, comments, LocalDateTime.now(), notice, parentCom);
+        noticeCommentService.save(writeComment);
     }
 }
 

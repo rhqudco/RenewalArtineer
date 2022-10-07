@@ -4,7 +4,6 @@ import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.loginCheck.Login;
 import com.artineer.artineer.domain.Member;
-import com.artineer.artineer.service.notice.NoticeCommentService;
 import com.artineer.artineer.service.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
