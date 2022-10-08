@@ -26,6 +26,10 @@
     <div th:if="${comments}">
         <div th:each="item : ${comments}">
             <p th:utext="${item.detail}"></p>
+            <!-- 이게 맞나 모르겠어서 일단 커밋.. -->
+            <div th:if="${item.parentComment.no} == ${item.no}">
+                <p th:utext="${item.detail}"></p>
+            </div>
             <hr>
         </div>
     </div>
