@@ -1,5 +1,6 @@
 package com.artineer.artineer.service.member;
 
+import com.artineer.artineer.controller.dto.member.MemberModifyDto;
 import com.artineer.artineer.domain.Member;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface MemberService {
     Member findAccountId(String name, String email);
     Member findAccountPw(String id, String email);
     void updatePassword(Long no, String password);
+
+    void modifyMember(Long memberNo, MemberModifyDto memberModifyDto);
 }

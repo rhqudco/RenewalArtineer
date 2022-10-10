@@ -1,5 +1,6 @@
 package com.artineer.artineer.repository.member;
 
+import com.artineer.artineer.controller.dto.member.MemberModifyDto;
 import com.artineer.artineer.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

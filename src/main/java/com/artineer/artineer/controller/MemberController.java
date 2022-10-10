@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -185,9 +186,20 @@ public class MemberController {
     }
 
     @GetMapping("/members/modify/{memberNo}")
-    public void modifyMember(@PathVariable("memberNo") Long memberNo) {
+    public String modifyMemberForm(@PathVariable("memberNo") Long memberNo, Model model) {
         Member findMember = memberService.findMember(memberNo).get(0);
-        MemberModifyDto.modifyMember(findMember.getId(), findMember.getName(), findMember.getBirth(),
+        MemberModifyDto form = MemberModifyDto.modifyMember(findMember.getId(), findMember.getName(), findMember.getBirth(),
                 findMember.getEmail(), findMember.getPhone(), findMember.getGender(), findMember.getGeneration());
+        model.addAttribute("form", form);
+
+        return "member/modifyForm";
+    }
+
+    @PostMapping("/members/modify/{memberNo}")
+    public String modifyMember(@PathVariable("memberNo") Long memberNo, @ModelAttribute("form") MemberModifyDto memberModifyDto, RedirectAttributes redirectAttributes) {
+        memberService.modifyMember(memberNo, memberModifyDto);
+        redirectAttributes.addAttribute("memberNo", memberNo);
+
+        return "redirect:/members/modify/{memberNo}";
     }
 }

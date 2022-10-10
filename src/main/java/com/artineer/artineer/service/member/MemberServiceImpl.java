@@ -1,6 +1,7 @@
 package com.artineer.artineer.service.member;
 
 import com.artineer.artineer.common.WebSecurityConfig;
+import com.artineer.artineer.controller.dto.member.MemberModifyDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.repository.member.MemberJpaRepository;
 import com.artineer.artineer.repository.member.MemberRepository;
@@ -80,6 +81,13 @@ public class MemberServiceImpl implements MemberService{
         List<Member> members = memberRepository.findByNo(no);
         Member findMember = members.get(0);
         findMember.changePassword(password);
+    }
+
+    @Override
+    @Transactional
+    public void modifyMember(Long memberNo, MemberModifyDto memberModifyDto) {
+        Member findMember = memberRepository.findByNo(memberNo).get(0);
+        findMember.modifyMember(memberModifyDto);
     }
 
     @Override

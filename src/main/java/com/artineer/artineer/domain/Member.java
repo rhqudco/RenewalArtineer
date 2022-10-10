@@ -1,5 +1,6 @@
 package com.artineer.artineer.domain;
 
+import com.artineer.artineer.controller.dto.member.MemberModifyDto;
 import com.artineer.artineer.controller.dto.member.MemberSaveDto;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Member")
-@Getter @Setter
+@Getter
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_no")
@@ -69,5 +70,16 @@ public class Member {
 
     public void changePassword(String password) {
         this.password = password;
+    }
+
+    public void modifyMember(MemberModifyDto memberModifyDto) {
+        this.id = memberModifyDto.getId();
+        this.password = memberModifyDto.getPassword();
+        this.name = memberModifyDto.getName();
+        this.email = memberModifyDto.getEmail();
+        this.birth = memberModifyDto.getBirth();
+        this.phone = memberModifyDto.getPhone();
+        this.gender = memberModifyDto.getGender();
+        this.generation = memberModifyDto.getGeneration();
     }
 }
