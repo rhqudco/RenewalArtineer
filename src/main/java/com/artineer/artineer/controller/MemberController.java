@@ -2,6 +2,7 @@ package com.artineer.artineer.controller;
 
 import com.artineer.artineer.common.MailService;
 import com.artineer.artineer.controller.dto.member.MemberFindDto;
+import com.artineer.artineer.controller.dto.member.MemberModifyDto;
 import com.artineer.artineer.domain.Level;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.common.WebSecurityConfig;
@@ -24,9 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -184,5 +182,12 @@ public class MemberController {
         // 텍스트만 보내는 메소드
         //List<String> userMail = new ArrayList<>();
         //userMail.add(memberEmail);
+    }
+
+    @GetMapping("/members/modify/{memberNo}")
+    public void modifyMember(@PathVariable("memberNo") Long memberNo) {
+        Member findMember = memberService.findMember(memberNo).get(0);
+        MemberModifyDto.modifyMember(findMember.getId(), findMember.getName(), findMember.getBirth(),
+                findMember.getEmail(), findMember.getPhone(), findMember.getGender(), findMember.getGeneration());
     }
 }

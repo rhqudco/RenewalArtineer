@@ -7,6 +7,9 @@
 <body>
     <h1>Artineer Index</h1>
     <a href="/members/join">회원가입</a>
+    <button onclick="location.href='editForm.html'"
+            th:onclick="|location.href='@{/members/modify/{memberNo}(memberNo=${session.loginMember.no})}'|"
+            type="button">회원수정</button>
     <form th:action="@{/members/logout}" method="post">
         <button class="w-100 btn btn-dark btn-lg" onclick="location.href='items.html'" type="submit">
             로그아웃
