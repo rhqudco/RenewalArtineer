@@ -188,7 +188,7 @@ public class MemberController {
     @GetMapping("/members/modify/{memberNo}")
     public String modifyMemberForm(@PathVariable("memberNo") Long memberNo, Model model) {
         Member findMember = memberService.findMember(memberNo).get(0);
-        MemberModifyDto form = MemberModifyDto.modifyMember(findMember.getId(), findMember.getName(), findMember.getBirth(),
+        MemberModifyDto form = MemberModifyDto.modifyFormDto(findMember.getId(), findMember.getName(), findMember.getBirth(),
                 findMember.getEmail(), findMember.getPhone(), findMember.getGender(), findMember.getGeneration());
         model.addAttribute("form", form);
 
@@ -196,7 +196,20 @@ public class MemberController {
     }
 
     @PostMapping("/members/modify/{memberNo}")
-    public String modifyMember(@PathVariable("memberNo") Long memberNo, @ModelAttribute("form") MemberModifyDto memberModifyDto, RedirectAttributes redirectAttributes) {
+    public String modifyMember(@PathVariable("memberNo") Long memberNo, @ModelAttribute("form") MemberModifyDto form,
+                               RedirectAttributes redirectAttributes) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(form.getEmailId());
+        sb.append("@");
+        sb.append(form.getEmailDomain());
+        // email
+        String memberEmail = sb.toString();
+        // birth
+        Birth birth = new Birth(form.getBirth().getYear(), form.getBirth().getMonth(), form.getBirth().getDay());
+        // Phone
+        Phone phone = new Phone(form.getPhone().getFirstNumber(), form.getPhone().getMiddleNumber(), form.getPhone().getLastNumber());
+        MemberModifyDto memberModifyDto = MemberModifyDto.modifyMemberDto(form.getId(), form.getPassword(), form.getName(),
+                birth, memberEmail, phone, form.getGender(), form.getGeneration());
         memberService.modifyMember(memberNo, memberModifyDto);
         redirectAttributes.addAttribute("memberNo", memberNo);
 

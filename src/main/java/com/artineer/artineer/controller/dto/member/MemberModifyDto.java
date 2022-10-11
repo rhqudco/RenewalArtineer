@@ -20,13 +20,31 @@ public class MemberModifyDto {
     @Embedded
     private Birth birth;
     @NotBlank
-    private String email;
+    private String emailId;
+    @NotBlank
+    private String emailDomain;
     @Embedded
     private Phone phone;
     @NotBlank
     private String gender;
     @NotBlank
     private String generation;
+
+    /*
+    * emailId + @ + emailDomain = email
+    * */
+    private String email;
+
+    public MemberModifyDto(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.birth = birth;
+        this.email = email;
+        this.phone = phone;
+        this.gender = gender;
+        this.generation = generation;
+    }
 
     public MemberModifyDto(String id, String name, Birth birth, String email, Phone phone, String gender, String generation) {
         this.id = id;
@@ -38,7 +56,11 @@ public class MemberModifyDto {
         this.generation = generation;
     }
 
-    public static MemberModifyDto modifyMember(String id, String name, Birth birth, String email, Phone phone, String gender, String generation) {
+    public static MemberModifyDto modifyMemberDto(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation) {
+        return new MemberModifyDto(id, password, name, birth, email, phone, gender, generation);
+    }
+
+    public static MemberModifyDto modifyFormDto(String id, String name, Birth birth, String email, Phone phone, String gender, String generation) {
         return new MemberModifyDto(id, name, birth, email, phone, gender, generation);
     }
 }
