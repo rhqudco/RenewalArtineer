@@ -210,6 +210,7 @@ public class MemberController {
         Phone phone = new Phone(form.getPhone().getFirstNumber(), form.getPhone().getMiddleNumber(), form.getPhone().getLastNumber());
         MemberModifyDto memberModifyDto = MemberModifyDto.modifyMemberDto(form.getId(), form.getPassword(), form.getName(),
                 birth, memberEmail, phone, form.getGender(), form.getGeneration());
+
         memberService.modifyMember(memberNo, memberModifyDto);
         redirectAttributes.addAttribute("memberNo", memberNo);
 
