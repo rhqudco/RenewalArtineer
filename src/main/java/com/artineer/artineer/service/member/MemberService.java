@@ -16,6 +16,6 @@ public interface MemberService {
     Member findAccountId(String name, String email);
     Member findAccountPw(String id, String email);
     void updatePassword(Long no, String password);
-
     void modifyMember(Long memberNo, MemberModifyDto memberModifyDto);
+    void deleteMember(Long memberNo);
 }

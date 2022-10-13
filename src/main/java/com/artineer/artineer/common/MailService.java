@@ -46,7 +46,9 @@ public class MailService {
                 "<h1>[We Are Artineer!]</h1>",
                 "<hr>",
                 "<b>" + memberId + "</b>" + "님이 요청하신 임시 비밀번호 입니다.",
-                "<h2>" + tempPassword + "</h2>"
+                "<h2>" + tempPassword + "</h2>",
+                newLine,
+                "<h4>로그인 후 꼭 비밀번호를 변경해 주세요.</h4>"
                 );
 
         return content;

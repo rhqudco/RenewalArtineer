@@ -91,6 +91,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public void deleteMember(Long memberNo) {
+        memberRepository.deleteByNo(memberNo);
+    }
+
+    /*
+    * 검증 메소드
+    * */
+
+    @Override
     public boolean validateEqualPassword(String rawPassword, String encodedPassword) {
         return webSecurityConfig.getPasswordEncoder().matches(rawPassword, encodedPassword);
 
