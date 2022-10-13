@@ -1,15 +1,12 @@
 package com.artineer.artineer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 public class UploadFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +22,10 @@ public class UploadFile {
     private Notice notice;
 
     protected UploadFile() {
+    }
+
+    public void addNotice(Notice notice) {
+        this.notice = notice;
     }
 
     public UploadFile(String uploadFileName, String storeFileName) {

@@ -55,6 +55,7 @@ public class NoticeController {
             return "notice/noticeWriteForm";
         }
 
+        // member 찾기
         Member sessionLogin = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberNo = sessionLogin.getNo();
         Member loginMember = memberService.findMember(memberNo).get(0);

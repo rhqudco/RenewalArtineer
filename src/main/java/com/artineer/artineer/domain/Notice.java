@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Notice {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_no")
@@ -50,10 +50,10 @@ public class Notice {
 //    }
 
     // 연관관계 편의 메소드
-    public void setUploadFile(UploadFile uploadFile) {
+    public void addUploadFile(UploadFile uploadFile) {
         if (uploadFile != null) {
             this.uploadFile = uploadFile;
-            uploadFile.setNotice(this);
+            uploadFile.addNotice(this);
         }
     }
 
@@ -61,7 +61,7 @@ public class Notice {
                                      String detail, UploadFile uploadFile, Long view) {
         Notice notice = new Notice(member, writeDate, title, detail, view);
         if (uploadFile != null) {
-            notice.setUploadFile(uploadFile);
+            notice.addUploadFile(uploadFile);
         }
         return notice;
     }

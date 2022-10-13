@@ -41,7 +41,7 @@ public class FileStore {
         String uploadFileName = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(uploadFileName);
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
-        return new UploadFile(uploadFileName, storeFileName);
+        return UploadFile.createUploadFile(uploadFileName, storeFileName);
     }
 
     private String createStoreFileName(String originalFilename) {
