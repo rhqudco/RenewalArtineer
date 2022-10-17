@@ -26,10 +26,8 @@ public class Notice {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "uploadFile_no")
     private UploadFile uploadFile;
-    private Long view;
 
-//    @OneToMany(mappedBy = "notice")
-//    private List<NoticeComment> comments = new ArrayList<>();
+    private Long view;
 
     protected Notice() {
     }
@@ -39,15 +37,8 @@ public class Notice {
         this.writeDate = writeDate;
         this.title = title;
         this.detail = detail;
-//        this.uploadFile = uploadFile;
         this.view = view;
     }
-
-    // 연관관계 편의 메소드
-//    public void addComments(NoticeComment noticeComment) {
-//        comments.add(noticeComment);
-//        noticeComment.setNotice(this);
-//    }
 
     // 연관관계 편의 메소드
     public void addUploadFile(UploadFile uploadFile) {
