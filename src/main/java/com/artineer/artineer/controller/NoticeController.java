@@ -48,10 +48,9 @@ public class NoticeController {
     public String viewNoticeBoard(@PageableDefault(size = 15, sort = "no", direction = Sort.Direction.DESC) Pageable pageable,
                                 Model model) {
         Page<Notice> allNotice = noticeService.findAllNotice(pageable);
-        int totalPages = allNotice.getTotalPages();// 총 페이지 수
 
-        Page<NoticePageDto> pageDto = allNotice.map(m -> NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getId(), m.getWriteDate(), m.getDetail(), m.getView()));
-
+        Page<NoticePageDto> pageDto = allNotice.map(m -> NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getId(), m.getWriteDate(), m.getTitle(), m.getView()));
+        int totalPages = pageDto.getTotalPages();// 총 페이지 수
 
         model.addAttribute("pageDto", pageDto);
         model.addAttribute("totalPages", totalPages);
