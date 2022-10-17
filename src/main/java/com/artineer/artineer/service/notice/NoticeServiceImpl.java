@@ -3,6 +3,8 @@ package com.artineer.artineer.service.notice;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.repository.notice.NoticeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,5 +26,17 @@ public class NoticeServiceImpl implements NoticeService{
     @Override
     public List<Notice> lookUpNotice(Long no) {
         return noticeRepository.findByNo(no);
+    }
+
+    @Override
+    public Page<Notice> findAllNotice(Pageable pageable) {
+        return noticeRepository.findAll(pageable);
+    }
+
+    @Override
+    @Transactional
+    public void updateNoticeView(Long no) {
+        Notice findNotice = noticeRepository.findByNo(no).get(0);
+        findNotice.updateNoticeView();
     }
 }

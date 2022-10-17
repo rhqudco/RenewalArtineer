@@ -56,4 +56,8 @@ public class Notice {
         }
         return notice;
     }
+
+    public void updateNoticeView() {
+        this.view++;
+    }
 }

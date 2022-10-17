@@ -3,6 +3,7 @@ package com.artineer.artineer.controller;
 import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
+import com.artineer.artineer.controller.dto.notice.NoticePageDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
@@ -14,6 +15,10 @@ import com.artineer.artineer.service.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +43,21 @@ public class NoticeController {
     private final FileStore fileStore;
     private final WritingShowImage writingShowImage;
     private final NoticeCommentService noticeCommentService;
+
+    @GetMapping("/notice")
+    public String viewNoticeBoard(@PageableDefault(size = 15, sort = "no", direction = Sort.Direction.DESC) Pageable pageable,
+                                Model model) {
+        Page<Notice> allNotice = noticeService.findAllNotice(pageable);
+        int totalPages = allNotice.getTotalPages();// 총 페이지 수
+
+        Page<NoticePageDto> pageDto = allNotice.map(m -> NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getId(), m.getWriteDate(), m.getDetail(), m.getView()));
+
+
+        model.addAttribute("pageDto", pageDto);
+        model.addAttribute("totalPages", totalPages);
+
+        return "notice/noticeBoard";
+    }
 
     @GetMapping("/notice/write")
     public String writeNotice(Model model) {
@@ -76,6 +96,7 @@ public class NoticeController {
     public String viewNotice(@PathVariable("noticeNo") Long no, Model model) {
         List<Notice> notices = noticeService.lookUpNotice(no);
         Notice notice = notices.get(0);
+        noticeService.updateNoticeView(no);
         List<NoticeComment> comments = noticeCommentService.findAllCommentOfNotice(no);
         model.addAttribute("notice", notice);
         model.addAttribute("comments", comments);
