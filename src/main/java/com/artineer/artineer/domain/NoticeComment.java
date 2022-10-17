@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 public class NoticeComment {
     @Id
     @GeneratedValue
@@ -38,11 +37,15 @@ public class NoticeComment {
     protected NoticeComment() {
     }
 
+    private void setParentComment(NoticeComment parentComment) {
+        this.parentComment = parentComment;
+    }
+
 
     // 연관관계 편의 메소드
-    public void addChildComment(NoticeComment noticeComment, NoticeComment parent) {
-        childComments.add(noticeComment);
-        parentComment.setParentComment(parent);
+    public void addChildComment(NoticeComment childComment, NoticeComment parent) {
+        childComment.setParentComment(parent);
+        parent.childComments.add(childComment);
     }
 
     private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {

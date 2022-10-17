@@ -22,6 +22,7 @@ public class NoticeCommentJpaRepositoryImpl implements NoticeCommentJpaRepositor
     @Override
     public List<NoticeComment> findByNoticeNo(Long no) {
         return em.createQuery("select nc from NoticeComment nc where nc.notice.no = :no", NoticeComment.class)
+                .setParameter("no", no)
                 .getResultList();
     }
 }
