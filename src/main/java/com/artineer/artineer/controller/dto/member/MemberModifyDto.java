@@ -9,7 +9,6 @@ import javax.persistence.Embedded;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
 public class MemberModifyDto {
     @NotBlank
     private String id;

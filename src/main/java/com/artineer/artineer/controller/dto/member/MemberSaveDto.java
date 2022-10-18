@@ -5,10 +5,11 @@ import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Embedded;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
 public class MemberSaveDto {
     @NotBlank
     private String id;
@@ -19,6 +20,8 @@ public class MemberSaveDto {
     @NotBlank
     private String name;
 
+    @Embedded
+    
     private Birth birth;
 
     @NotBlank
@@ -27,6 +30,7 @@ public class MemberSaveDto {
     @NotBlank
     private String emailDomain;
 
+    @Embedded
     private Phone phone;
 
     @NotBlank

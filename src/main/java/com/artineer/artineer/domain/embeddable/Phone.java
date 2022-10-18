@@ -8,7 +8,6 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
-@Setter
 public class Phone {
     private String firstNumber;
     private String middleNumber;

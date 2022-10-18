@@ -8,7 +8,6 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
-@Setter
 public class Birth {
     private String year;
     private String month;
