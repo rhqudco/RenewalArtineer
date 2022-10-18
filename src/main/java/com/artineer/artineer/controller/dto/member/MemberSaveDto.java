@@ -3,12 +3,16 @@ package com.artineer.artineer.controller.dto.member;
 import com.artineer.artineer.domain.Level;
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Embedded;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
+@AllArgsConstructor
 public class MemberSaveDto {
     @NotBlank
     private String id;
@@ -34,6 +38,4 @@ public class MemberSaveDto {
 
     @NotBlank
     private String generation;
-
-    private Level level;
 }

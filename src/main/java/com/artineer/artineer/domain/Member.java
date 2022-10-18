@@ -61,7 +61,7 @@ public class Member {
         this.phone = dto.getPhone();
         this.gender = dto.getGender();
         this.generation = dto.getGeneration();
-        this.level = dto.getLevel();
+//        this.level = dto.getLevel();
     }
 
     public static Member createMember(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, Level level) {
