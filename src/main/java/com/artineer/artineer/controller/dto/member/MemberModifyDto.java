@@ -2,6 +2,7 @@ package com.artineer.artineer.controller.dto.member;
 
 import com.artineer.artineer.domain.embeddable.Birth;
 import com.artineer.artineer.domain.embeddable.Phone;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import javax.persistence.Embedded;
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@AllArgsConstructor
 public class MemberModifyDto {
     @NotBlank
     private String id;
@@ -33,6 +35,21 @@ public class MemberModifyDto {
     * emailId + @ + emailDomain = email
     * */
     private String email;
+
+    public MemberModifyDto() {
+    }
+
+    public MemberModifyDto(String id, String password, String name, Birth birth, String emailId, String emailDomain, Phone phone, String gender, String generation) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.birth = birth;
+        this.emailId = emailId;
+        this.emailDomain = emailDomain;
+        this.phone = phone;
+        this.gender = gender;
+        this.generation = generation;
+    }
 
     public MemberModifyDto(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation) {
         this.id = id;
