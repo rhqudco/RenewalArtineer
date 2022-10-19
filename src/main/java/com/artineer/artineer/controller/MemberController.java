@@ -81,7 +81,7 @@ public class MemberController {
 
     @GetMapping("/members/login")
     public String loginForm(Model model) {
-        model.addAttribute("form", new MemberLoginDto(null, null));
+        model.addAttribute("form", new MemberLoginDto());
         return "member/loginForm";
     }
 
@@ -118,7 +118,7 @@ public class MemberController {
 
     @GetMapping("/members/find/account")
     public String findAccountForm(Model model) {
-        model.addAttribute("form", new MemberFindDto(null, null, null, null));
+        model.addAttribute("form", new MemberFindDto());
         return "member/findAccountForm";
     }
 

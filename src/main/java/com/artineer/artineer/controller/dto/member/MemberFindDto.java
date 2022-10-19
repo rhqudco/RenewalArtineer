@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@AllArgsConstructor
+@Getter @Setter
 public class MemberFindDto {
     private String id;
     private String name;

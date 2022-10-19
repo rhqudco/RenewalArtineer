@@ -7,8 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-//@Setter
-@AllArgsConstructor
+@Setter
 public class MemberLoginDto {
     @NotBlank
     private String id;

@@ -12,7 +12,7 @@ import javax.persistence.Embedded;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class MemberSaveDto {
     @NotBlank
     private String id;
@@ -38,4 +38,6 @@ public class MemberSaveDto {
 
     @NotBlank
     private String generation;
+
+
 }
