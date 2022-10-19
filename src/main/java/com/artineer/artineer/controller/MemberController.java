@@ -32,8 +32,6 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class MemberController {
 
-    private static final Long adminLevel  = 2L;
-
     private final MemberService memberService;
     private final WebSecurityConfig webSecurityConfig;
     private final BirthValidator birthValidator;

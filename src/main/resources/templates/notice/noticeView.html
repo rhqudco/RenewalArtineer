@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <!--    <link th:href="@{/css/bootstrap.min.css}"-->
     <!--          href="../css/bootstrap.min.css" rel="stylesheet">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/writeComment.js}" src="../js/writeComment.js" ></script>
     <style>
         .container {
             max-width: 560px;
@@ -22,14 +24,23 @@
     <div th:utext="${notice.detail}"></div>
     첨부파일: <a th:if="${notice.uploadFile}" th:href="|/attach/${notice.getNo}|" th:text="${notice.getUploadFile().getUploadFileName()}" /><br/>
     <hr>
-    댓글 :
-    <div th:if="${comments}">
-        <div th:each="item : ${comments}">
-            <p th:utext="${item.detail}"></p>
-            <!-- 이게 맞나 모르겠어서 일단 커밋.. -->
-            <div th:if="${item.parentComment.no} == ${item.no}">
-                <p th:utext="${item.detail}"></p>
-            </div>
+    <div th:if="${noticeComments}">
+        댓글
+        <hr>
+        <div th:each="noticeComments : ${noticeComments}">
+            <form action="noticeView.html" th:action="|/writeSubCommentForm/${noticeComments.notice.no}|" method="post" th:object="${form}">
+                <input type="text" th:value="${noticeComments.no}" th:field="*{parentNo}">
+                <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
+                <input type="button" value="답글" id="write-sub-comment">
+                <div id="sub-comment-area">
+                    <label for="detail" >답글 내용</label>
+                    <input type="text" id="detail" th:field="*{detail}" class="form-control" th:errorclass="field-error" placeholder="내용을 입력하세요.">
+                    <div class="field-error" th:errors="*{detail}">
+                        내용을 입력하세요.
+                    </div>
+                </div>
+                <button type="submit">답글 달기</button>
+            </form>
             <hr>
         </div>
     </div>

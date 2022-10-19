@@ -20,4 +20,15 @@ $(function (){
             }
         })
     })
+
+    $('#sub-comment-btn').on('click', function () {
+        $('#sub-comment-value').prop("type", "text")
+        $('#write-sub-comment').prop("type", "button")
+    })
+
+    function clickFunc() {
+        let id = document.getElementById(this.id);
+        id.onclick
+    }
+
 })

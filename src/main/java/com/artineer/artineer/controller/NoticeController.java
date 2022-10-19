@@ -4,6 +4,7 @@ import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.notice.NoticePageDto;
+import com.artineer.artineer.controller.dto.notice.SubNoticeCommentDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.time.LocalDateTime;
@@ -92,13 +94,15 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/noticeView/{noticeNo}")
-    public String viewNotice(@PathVariable("noticeNo") Long no, Model model) {
+    public String viewNotice(@PathVariable("noticeNo") Long no, Model model,
+                             HttpServletRequest request) {
         List<Notice> notices = noticeService.lookUpNotice(no);
         Notice notice = notices.get(0);
         noticeService.updateNoticeView(no);
-        List<NoticeComment> comments = noticeCommentService.findAllCommentOfNotice(no);
+        List<NoticeComment> noticeComments = noticeCommentService.findAllCommentOfNotice(no);
         model.addAttribute("notice", notice);
-        model.addAttribute("comments", comments);
+        model.addAttribute("noticeComments", noticeComments);
+        model.addAttribute("form", new SubNoticeCommentDto());
         return "notice/noticeView";
     }
 
@@ -116,22 +120,39 @@ public class NoticeController {
 
     @ResponseBody // ajax 예정
     @PostMapping("/writeComment")
-    public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comments") String comments, HttpSession session) {
+    public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        NoticeComment writeComment = NoticeComment.writeComment(member, comments, LocalDateTime.now(), notice);
+        NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice);
         noticeCommentService.save(writeComment);
+    }
+
+    @PostMapping("/writeSubCommentForm/{noticeNo}")
+    public String writeCommentForm(@ModelAttribute("form") SubNoticeCommentDto dto,
+                                   @PathVariable("noticeNo") Long noticeNo, HttpSession session,
+                                   RedirectAttributes redirectAttributes) {
+        log.info("dto.getParentNo() = {}", dto.getParentNo());
+        log.info("dto.getDetail() = {}", dto.getDetail());
+        Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        NoticeComment parentComment = noticeCommentService.lookUpComment(dto.getParentNo()).get(0);
+        NoticeComment writeComment = NoticeComment.writeChildComment(member, dto.getDetail(), LocalDateTime.now(), notice, parentComment);
+
+        noticeCommentService.save(writeComment);
+
+        redirectAttributes.addAttribute("noticeNo", noticeNo);
+        return "redirect:/notice/noticeView/{noticeNo}";
     }
 
     // 댓글에 답글
     @ResponseBody // ajax 예정
     @PostMapping("/writeChildComment")
-    public void writeChildComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comments") String comments,
+    public void writeChildComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment,
                                   @RequestParam("parent-comment") Long parentComment, HttpSession session) {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment parentCom = noticeCommentService.lookUpComment(parentComment).get(0);
-        NoticeComment writeComment = NoticeComment.writeChildComment(member, comments, LocalDateTime.now(), notice, parentCom);
+        NoticeComment writeComment = NoticeComment.writeChildComment(member, comment, LocalDateTime.now(), notice, parentCom);
         noticeCommentService.save(writeComment);
     }
 }

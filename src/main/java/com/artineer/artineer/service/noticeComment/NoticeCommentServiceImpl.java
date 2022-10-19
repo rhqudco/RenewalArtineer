@@ -18,6 +18,7 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
     private final NoticeCommentRepository noticeCommentRepository;
 
     @Override
+    @Transactional
     public NoticeComment save(NoticeComment noticeComment) {
         return noticeCommentJpaRepository.save(noticeComment);
     }
