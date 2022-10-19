@@ -31,7 +31,6 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
-
     private final MemberService memberService;
     private final WebSecurityConfig webSecurityConfig;
     private final BirthValidator birthValidator;
@@ -48,7 +47,7 @@ public class MemberController {
     @PostMapping("/members/join")
     public String memberJoin(@Validated @ModelAttribute("form") MemberSaveDto dto,
                        BindingResult bindingResult) {
-
+        System.out.println("dto = " + dto.getName());
 
         birthValidator.validate(dto.getBirth(), bindingResult);
         phoneValidator.validate(dto.getPhone(), bindingResult);
@@ -82,7 +81,7 @@ public class MemberController {
 
     @GetMapping("/members/login")
     public String loginForm(Model model) {
-        model.addAttribute("form", new MemberLoginDto());
+        model.addAttribute("form", new MemberLoginDto(null, null));
         return "member/loginForm";
     }
 
@@ -90,6 +89,9 @@ public class MemberController {
     public String login(@Validated @ModelAttribute("form") MemberLoginDto dto,
                       BindingResult bindingResult, HttpServletRequest request,
                       @RequestParam(defaultValue = "/") String redirectURL) {
+
+        log.info("dto.getId() = {}", dto.getId());
+        log.info("dto.getPassword() = {}", dto.getPassword());
 
         // 빈값 검증
         if (bindingResult.hasErrors()) {
@@ -116,7 +118,7 @@ public class MemberController {
 
     @GetMapping("/members/find/account")
     public String findAccountForm(Model model) {
-        model.addAttribute("form", new MemberFindDto());
+        model.addAttribute("form", new MemberFindDto(null, null, null, null));
         return "member/findAccountForm";
     }
 
