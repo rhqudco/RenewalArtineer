@@ -17,7 +17,7 @@ public class NoticeComment {
     private Long no;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_no")
     private Member member;
 
     private String detail;

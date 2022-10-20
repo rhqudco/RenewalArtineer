@@ -29,17 +29,16 @@
         <hr>
         <div th:each="noticeComments : ${noticeComments}">
             <form action="noticeView.html" th:action="|/writeSubCommentForm/${noticeComments.notice.no}|" method="post" th:object="${form}">
-                <input type="text" th:value="${noticeComments.no}" th:field="*{parentNo}">
+                <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
                 <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
-                <input type="button" value="답글" id="write-sub-comment">
+                <input type="button" value="답글" id="write-sub-comment" th:if="!${noticeComments.parentComment}">
                 <div id="sub-comment-area">
-                    <label for="detail" >답글 내용</label>
-                    <input type="text" id="detail" th:field="*{detail}" class="form-control" th:errorclass="field-error" placeholder="내용을 입력하세요.">
+<!--                    <input type="text" id="detail" th:field="*{detail}" class="form-control" th:errorclass="field-error" placeholder="내용을 입력하세요.">-->
+<!--                    <button type="submit">답글 달기</button>-->
                     <div class="field-error" th:errors="*{detail}">
                         내용을 입력하세요.
                     </div>
                 </div>
-                <button type="submit">답글 달기</button>
             </form>
             <hr>
         </div>

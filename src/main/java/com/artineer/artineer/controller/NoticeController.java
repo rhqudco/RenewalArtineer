@@ -5,6 +5,7 @@ import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.notice.NoticePageDto;
 import com.artineer.artineer.controller.dto.notice.SubNoticeCommentDto;
+import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
@@ -94,12 +95,18 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/noticeView/{noticeNo}")
-    public String viewNotice(@PathVariable("noticeNo") Long no, Model model,
+    public String viewNotice(@PathVariable("noticeNo") Long noticeNo, Model model,
                              HttpServletRequest request) {
-        List<Notice> notices = noticeService.lookUpNotice(no);
+        List<Notice> notices = noticeService.lookUpNotice(noticeNo);
+        if (notices.size() == 0) {
+            return "redirect:/notice";
+        }
         Notice notice = notices.get(0);
-        noticeService.updateNoticeView(no);
-        List<NoticeComment> noticeComments = noticeCommentService.findAllCommentOfNotice(no);
+        noticeService.updateNoticeView(noticeNo);
+        List<NoticeCommentDto> noticeComments = noticeCommentService.findAllCommentOfNotice(noticeNo);
+        for (NoticeCommentDto noticeComment : noticeComments) {
+            System.out.println("noticeComment.getNo() = " + noticeComment.getNo());
+        }
         model.addAttribute("notice", notice);
         model.addAttribute("noticeComments", noticeComments);
         model.addAttribute("form", new SubNoticeCommentDto());

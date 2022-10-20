@@ -5,6 +5,6 @@ import com.artineer.artineer.domain.NoticeComment;
 import java.util.List;
 
 public interface NoticeCommentJpaRepository {
-    List<NoticeComment> findByNoticeNo(Long no);
+    List<NoticeComment> findByNoticeNo(Long noticeNo);
     NoticeComment save(NoticeComment noticeComment);
 }
