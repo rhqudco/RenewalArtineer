@@ -65,18 +65,16 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 
         List<NoticeComment> collect = noticeComments
                 .stream()
-                .filter(nc -> nc.getParentComment() != null)
+                .filter(nc -> nc.getParentComment() != null) // 답글만 넣음.
                 .collect(Collectors.toList());
 
         for (int i = 0; i < result.size(); i++) {
-            temp.add(result.get(i));
+            if (result.get(i).getParentComment() == null) {
+                temp.add(result.get(i));
+            }
             for (int j = 0; j < collect.size(); j++) {
-                if (collect.get(j) != null) {
-                    if (result.get(i).getNo().equals(collect.get(j).getParentComment().getNo())) {
-                        temp.add(j+1, NoticeCommentDto.convertCommentToDto(collect.get(j)));
-                    }
-                } else {
-                    temp.add(result.get(j));
+                if (result.get(i).getNo().equals(collect.get(j).getParentComment().getNo())) {
+                    temp.add(result.indexOf(result.get(i))+1, NoticeCommentDto.convertCommentToDto(collect.get(j)));
                 }
             }
         }
