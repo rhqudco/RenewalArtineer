@@ -103,10 +103,8 @@ public class NoticeController {
         }
         Notice notice = notices.get(0);
         noticeService.updateNoticeView(noticeNo);
-        List<NoticeCommentDto> noticeComments = noticeCommentService.findAllCommentOfNotice(noticeNo);
-        for (NoticeCommentDto noticeComment : noticeComments) {
-            System.out.println("noticeComment.getNo() = " + noticeComment.getNo());
-        }
+        List<NoticeComment> noticeComments = noticeCommentService.findAllCommentOfNotice(noticeNo);
+
         model.addAttribute("notice", notice);
         model.addAttribute("noticeComments", noticeComments);
         model.addAttribute("form", new SubNoticeCommentDto());

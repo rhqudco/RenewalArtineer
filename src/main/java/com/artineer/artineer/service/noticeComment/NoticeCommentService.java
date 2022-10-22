@@ -6,7 +6,7 @@ import com.artineer.artineer.domain.NoticeComment;
 import java.util.List;
 
 public interface NoticeCommentService {
-    List<NoticeCommentDto> findAllCommentOfNotice(Long no);
+    List<NoticeComment> findAllCommentOfNotice(Long no);
     NoticeComment save(NoticeComment noticeComment);
     List<NoticeComment> lookUpComment(Long noticeNo);
 }

@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class NoticeCommentDto {
-    private Long no;
     private Member member;
     private String detail;
     private LocalDateTime writeDate;
@@ -22,8 +21,7 @@ public class NoticeCommentDto {
     private NoticeComment parentComment;
     private List<NoticeCommentDto> childComments = new ArrayList<>();
 
-    public NoticeCommentDto(Long no, Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment) {
-        this.no = no;
+    public NoticeCommentDto(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment) {
         this.member = member;
         this.detail = detail;
         this.writeDate = writeDate;
@@ -32,7 +30,7 @@ public class NoticeCommentDto {
     }
 
     public static NoticeCommentDto convertCommentToDto(NoticeComment noticeComment) {
-        return new NoticeCommentDto((noticeComment.getNo()), noticeComment.getMember(),
+        return new NoticeCommentDto(noticeComment.getMember(),
                 noticeComment.getDetail(), noticeComment.getWriteDate(), noticeComment.getNotice(),
                 noticeComment.getParentComment());
     }
