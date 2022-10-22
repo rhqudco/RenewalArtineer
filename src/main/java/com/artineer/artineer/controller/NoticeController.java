@@ -123,7 +123,7 @@ public class NoticeController {
         return writingShowImage.displayImage(fileName);
     }
 
-    @ResponseBody // ajax 예정
+    @ResponseBody
     @PostMapping("/writeComment")
     public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
@@ -136,8 +136,6 @@ public class NoticeController {
     public String writeCommentForm(@ModelAttribute("form") SubNoticeCommentDto dto,
                                    @PathVariable("noticeNo") Long noticeNo, HttpSession session,
                                    RedirectAttributes redirectAttributes) {
-        log.info("dto.getParentNo() = {}", dto.getParentNo());
-        log.info("dto.getDetail() = {}", dto.getDetail());
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment parentComment = noticeCommentService.lookUpComment(dto.getParentNo()).get(0);
@@ -149,17 +147,17 @@ public class NoticeController {
         return "redirect:/notice/noticeView/{noticeNo}";
     }
 
-    // 댓글에 답글
-    @ResponseBody // ajax 예정
-    @PostMapping("/writeChildComment")
-    public void writeChildComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment,
-                                  @RequestParam("parent-comment") Long parentComment, HttpSession session) {
-        Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        NoticeComment parentCom = noticeCommentService.lookUpComment(parentComment).get(0);
-        NoticeComment writeComment = NoticeComment.writeChildComment(member, comment, LocalDateTime.now(), notice, parentCom);
-        noticeCommentService.save(writeComment);
-    }
+//    // 댓글에 답글
+//    @ResponseBody // ajax 예정
+//    @PostMapping("/writeChildComment")
+//    public void writeChildComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment,
+//                                  @RequestParam("parent-comment") Long parentComment, HttpSession session) {
+//        Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
+//        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//        NoticeComment parentCom = noticeCommentService.lookUpComment(parentComment).get(0);
+//        NoticeComment writeComment = NoticeComment.writeChildComment(member, comment, LocalDateTime.now(), notice, parentCom);
+//        noticeCommentService.save(writeComment);
+//    }
 }
 
 //    ALTER TABLE NOTICE ALTER column DETAIL TEXT;
