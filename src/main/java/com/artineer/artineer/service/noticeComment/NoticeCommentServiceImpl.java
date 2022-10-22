@@ -33,7 +33,7 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 
     @Override
     public List<NoticeComment> findAllCommentOfNotice(Long noticeNo) {
-        return noticeCommentJpaRepository.findByNoticeNo(noticeNo);
+        return convertCommentStructure(noticeCommentJpaRepository.findByNoticeNo(noticeNo));
     }
 
     @Override
@@ -54,6 +54,7 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 //            }
 //        });
 //        return result;
+//
 //        List<NoticeCommentDto> result = new ArrayList<>();
 //        List<NoticeCommentDto> result2 = new ArrayList<>();
 //        Map<Long, NoticeCommentDto> map = new HashMap<>();
@@ -85,30 +86,22 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
                 .filter(nc -> nc.getParentComment() == null)
                 .collect(Collectors.toList());
 
-        List<NoticeComment> childList = noticeComments.stream()
-                .filter(nc -> nc.getParentComment() != null)
-                .collect(Collectors.toList());
-
-        ConcurrentHashMap<Long, NoticeComment> commentMap = new ConcurrentHashMap<>();
         Map<Long, NoticeComment> commentHashMap = new HashMap<>();
-
 
         parent.forEach(nc -> {
             commentHashMap.put(nc.getNo(), nc);
         });
-        for (int i = 0; i < commentHashMap.size(); i++) {
-            for (int j = 0; j < childList.size(); j++) {
-                if (commentHashMap.get((long) i).getNo().equals(childList.get(j).getParentComment().getNo())) {
-                    commentHashMap.get((long) i).getChildComments().add(childList.get(j));
-                }
-            }
-        }
-        List<NoticeComment> temp = new ArrayList<>(commentHashMap.values());
-        List<NoticeComment> result = new ArrayList<>();
-//        temp.forEach(nc -> {
-//            NoticeCommentDto dto = convertCommentToDto(nc);
-//            result.add(dto);
-//        });
-        return temp;
+
+//        for (int i = 0; i < commentHashMap.size(); i++) {
+//            for (int j = 0; j < childList.size(); j++) {
+//                if (childList.get(j) != null && commentHashMap.get((long) i).getNo().equals(childList.get(j).getParentComment().getNo())) {
+//                    commentHashMap.get((long) i).getChildComments().add(childList.get(j));
+//                }
+//            }
+//        }
+
+        List<NoticeComment> result = new ArrayList<>(commentHashMap.values());
+
+        return result;
     }
 }
