@@ -32,7 +32,7 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
     }
 
     @Override
-    public List<NoticeComment> findAllCommentOfNotice(Long noticeNo) {
+    public List<NoticeCommentDto> findAllCommentOfNotice(Long noticeNo) {
         return convertCommentStructure(noticeCommentJpaRepository.findByNoticeNo(noticeNo));
     }
 
@@ -41,67 +41,23 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
         return noticeCommentRepository.findByNo(no);
     }
 
-    private List<NoticeComment> convertCommentStructure(List<NoticeComment> noticeComments) {
-//        List<NoticeCommentDto> result = new ArrayList<>();
-//        Map<Long, NoticeCommentDto> map = new HashMap<>();
-//        noticeComments.stream().forEach(nc -> {
-//            NoticeCommentDto dto = convertCommentToDto(nc);
-//            map.put(dto.getNo(), dto);
-//            if (nc.getParentComment() != null) {
-//                map.get(nc.getParentComment().getNo()).getChildComments().add(dto);
-//            } else {
-//                result.add(dto);
-//            }
-//        });
-//        return result;
-//
-//        List<NoticeCommentDto> result = new ArrayList<>();
-//        List<NoticeCommentDto> result2 = new ArrayList<>();
-//        Map<Long, NoticeCommentDto> map = new HashMap<>();
-//        List<NoticeCommentDto> temp = new ArrayList<>();
-//
-//        noticeComments.stream().forEach(nc -> {
-//            NoticeCommentDto dto = convertCommentToDto(nc);
-//            result.add(dto);
-//        });
-//
-//        List<NoticeComment> collect = noticeComments
-//                .stream()
-//                .filter(nc -> nc.getParentComment() != null) // 답글만 넣음.
-//                .collect(Collectors.toList());
-//
-//        for (int i = 0; i < result.size(); i++) {
-//            if (result.get(i).getParentComment() == null) {
-//                temp.add(result.get(i));
-//            }
-//            for (int j = 0; j < collect.size(); j++) {
-//                if (result.get(i).getNo().equals(collect.get(j).getParentComment().getNo())) {
-//                    temp.add(result.indexOf(result.get(i))+1, NoticeCommentDto.convertCommentToDto(collect.get(j)));
-//                }
-//            }
-//        }
-//        return temp;
+    private List<NoticeCommentDto> convertCommentStructure(List<NoticeComment> noticeComments) {
+        List<NoticeCommentDto> result = new ArrayList<>();
+        Map<Long, NoticeCommentDto> map = new HashMap<>();
 
-        List<NoticeComment> parent = noticeComments.stream()
-                .filter(nc -> nc.getParentComment() == null)
-                .collect(Collectors.toList());
+        noticeComments.stream().forEach(nc -> {
+            NoticeCommentDto dto = convertCommentToDto(nc);
+            map.put(dto.getNo(), dto);
 
-        Map<Long, NoticeComment> commentHashMap = new HashMap<>();
-
-        parent.forEach(nc -> {
-            commentHashMap.put(nc.getNo(), nc);
+            if (nc.getParentComment() != null) {
+//                NoticeCommentDto parent = map.get(dto.getParentComment().getNo());
+//                int idx = result.indexOf(parent);
+//                result.get(idx).getChildComments().add(dto);
+                map.get(nc.getParentComment().getNo()).getChildComments().add(dto);
+            } else {
+                result.add(dto);
+            }
         });
-
-//        for (int i = 0; i < commentHashMap.size(); i++) {
-//            for (int j = 0; j < childList.size(); j++) {
-//                if (childList.get(j) != null && commentHashMap.get((long) i).getNo().equals(childList.get(j).getParentComment().getNo())) {
-//                    commentHashMap.get((long) i).getChildComments().add(childList.get(j));
-//                }
-//            }
-//        }
-
-        List<NoticeComment> result = new ArrayList<>(commentHashMap.values());
-
         return result;
     }
 }
