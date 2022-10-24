@@ -34,6 +34,7 @@
             <div class="field-error" th:errors="*{id}">
                 중복된 아이디 입니다.
             </div>
+            <input type="button" value="ID 중복 체크" id="validate-id-btn">
         </div>
         <div>
             <label for="password" >Password</label>
@@ -124,7 +125,7 @@
 
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.save}">상품 등록</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" id="join-btn" th:text="#{button.member.save}" disabled>상품 등록</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"

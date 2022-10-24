@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public Member join(Member member) {
-        validateDuplicateMemberId(member);
+        validateDuplicateMemberId(member.getId());
         memberJpaRepository.save(member);
         return member;
     }
@@ -59,10 +59,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Member findAccountId(String name, String email) {
-        List<Member> members = memberRepository.findByNameAndEmail(name, email);
-        if (members.isEmpty()) {
-            return null;
-        }
+        List<Member> members = validateMemberNameAndEmail(name, email);
         return members.get(0);
     }
 
@@ -95,6 +92,11 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.deleteByNo(memberNo);
     }
 
+    @Override
+    public void validationDuplicateMemberId(String memberId) {
+        validateDuplicateMemberId(memberId);
+    }
+
     /*
     * 검증 메소드
     * */
@@ -114,10 +116,18 @@ public class MemberServiceImpl implements MemberService{
     }
 
     // 아이디 중복 검사
-    private void validateDuplicateMemberId(Member member) {
-        List<Member> findMember = memberRepository.findById(member.getId());
+    private void validateDuplicateMemberId(String memberId) {
+        List<Member> findMember = memberRepository.findById(memberId);
         if(!findMember.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 아이디 입니다.");
         }
+    }
+
+    private List<Member> validateMemberNameAndEmail(String name, String email) {
+        List<Member> members = memberRepository.findByNameAndEmail(name, email);
+        if (members.isEmpty()) {
+            throw new IllegalStateException("해당 정보로 가입한 회원이 없습니다.");
+        }
+        return members;
     }
 }

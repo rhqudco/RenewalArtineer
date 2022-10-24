@@ -9,6 +9,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
+@Setter
 @AllArgsConstructor
 public class Phone {
     private String firstNumber;

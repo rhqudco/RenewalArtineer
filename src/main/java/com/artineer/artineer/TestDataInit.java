@@ -25,7 +25,7 @@ public class TestDataInit {
     @PostConstruct
     public void init() {
         Member member = new Member("admin", webSecurityConfig.getPasswordEncoder().encode("1"),
-                "rhqudco1204@naver.com");
+                "고병채", "rhqudco1204@naver.com");
         memberService.join(member);
 
         for (int i = 1; i <= 100; i++) {

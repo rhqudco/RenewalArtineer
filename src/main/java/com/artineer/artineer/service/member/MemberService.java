@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface MemberService {
     Member join(Member member);
-
     List<Member> findMember(Long no);
     Member validLogin(String id, String password);
     boolean validateEqualPassword(String rawPassword, String encodedPassword);
@@ -18,4 +17,5 @@ public interface MemberService {
     void updatePassword(Long no, String password);
     void modifyMember(Long memberNo, MemberModifyDto memberModifyDto);
     void deleteMember(Long memberNo);
+    void validationDuplicateMemberId(String id);
 }

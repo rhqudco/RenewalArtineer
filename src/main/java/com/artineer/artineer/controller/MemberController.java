@@ -16,6 +16,8 @@ import com.artineer.artineer.validator.BirthValidator;
 import com.artineer.artineer.validator.PhoneValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,10 +28,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@ControllerAdvice
 public class MemberController {
     private final MemberService memberService;
     private final WebSecurityConfig webSecurityConfig;
@@ -46,7 +51,7 @@ public class MemberController {
 
     @PostMapping("/members/join")
     public String memberJoin(@Validated @ModelAttribute("form") MemberSaveDto dto,
-                       BindingResult bindingResult) {
+                             BindingResult bindingResult) {
         System.out.println("dto = " + dto.getName());
 
         birthValidator.validate(dto.getBirth(), bindingResult);
@@ -79,6 +84,20 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @ResponseBody
+    @PostMapping("/validateDuplicateId")
+    public ResponseEntity<Object> validateDuplicateMemberId(@RequestParam("memberId") String memberId) {
+        // 중복이면 여기서 걸림.
+        // new IllegalStateException!!!
+        memberService.validationDuplicateMemberId(memberId);
+
+        /// 중복 아니면 사용 가능.
+        Map<HttpStatus, String> returnStat = new HashMap<>();
+        returnStat.put(HttpStatus.OK, "사용할 수 있는 아이디 입니다.");
+
+        return new ResponseEntity<>(returnStat, HttpStatus.OK);
+    }
+
     @GetMapping("/members/login")
     public String loginForm(Model model) {
         model.addAttribute("form", new MemberLoginDto());
@@ -87,11 +106,8 @@ public class MemberController {
 
     @PostMapping("/members/login")
     public String login(@Validated @ModelAttribute("form") MemberLoginDto dto,
-                      BindingResult bindingResult, HttpServletRequest request,
-                      @RequestParam(defaultValue = "/") String redirectURL) {
-
-        log.info("dto.getId() = {}", dto.getId());
-        log.info("dto.getPassword() = {}", dto.getPassword());
+                        BindingResult bindingResult, HttpServletRequest request,
+                        @RequestParam(defaultValue = "/") String redirectURL) {
 
         // 빈값 검증
         if (bindingResult.hasErrors()) {
@@ -125,12 +141,12 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/members/find/account/id")
-    public String findAccountId(@RequestParam("memberName") String memberName,
+    public ResponseEntity<Object> findAccountId(@RequestParam("memberName") String memberName,
                                 @RequestParam("emailId") String emailId,
                                 @RequestParam("emailDomain") String emailDomain) {
 
         if (memberName.equals("") || emailId.equals("") || emailDomain.equals("")) {
-            return "";
+            throw new IllegalStateException("입력하신 정보를 다시 확인해 주세요.");
         }
 
         StringBuffer sb = new StringBuffer();
@@ -140,10 +156,11 @@ public class MemberController {
         String memberEmail = sb.toString();
 
         Member member = memberService.findAccountId(memberName, memberEmail);
-        if (member == null) {
-            return "위 정보로 가입된 회원을 찾을 수 없습니다.";
-        }
-        return member.getId();
+
+        Map<HttpStatus, String> returnStat = new HashMap<>();
+        returnStat.put(HttpStatus.OK, member.getId());
+
+        return new ResponseEntity<>(returnStat, HttpStatus.OK);
     }
 
     @ResponseBody
@@ -216,4 +233,5 @@ public class MemberController {
 
         return "redirect:/members/modify/{memberNo}";
     }
+
 }
