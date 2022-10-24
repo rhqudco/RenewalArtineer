@@ -165,12 +165,12 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/members/find/account/pw")
-    public String findAccountPw(@RequestParam("memberId") String memberId,
+    public ResponseEntity<Object> findAccountPw(@RequestParam("memberId") String memberId,
                                 @RequestParam("emailId") String emailId,
-                                @RequestParam("emailDomain") String emailDomain) {
+                                @RequestParam("emailDomain") String emailDomain) throws MessagingException {
         // 빈 값 입력시
         if (memberId.equals("") || emailId.equals("") || emailDomain.equals("")) {
-            return "";
+            throw new IllegalStateException("입력하신 정보를 다시 확인해 주세요.");
         }
 
         StringBuffer sb = new StringBuffer();
@@ -180,26 +180,25 @@ public class MemberController {
         String memberEmail = sb.toString();
 
         // 정보 없을 때
+        // 예외 처리는 service에서 해줌.
         Member member = memberService.findAccountPw(memberId, memberEmail);
-        if (member == null) {
-            return "위 정보로 가입된 회원을 찾을 수 없습니다.";
-        }
 
+        // 성공 했을 때
+
+        // temporaryPassword = 임시 비밀번호, mailService.sendMessage(memberId, memberEmail) = 메일 보내는 메소드
         try {
-            // 성공 했을 때
-            // temporaryPassword = 임시 비밀번호, mailService.sendMessage(memberId, memberEmail = 메일 보내는 메소드
             String temporaryPassword = mailService.sendMessage(memberId, memberEmail);
             // 비밀번호 바꾸기
             String encodePassword = webSecurityConfig.getPasswordEncoder().encode(temporaryPassword);
             memberService.updatePassword(member.getNo(), encodePassword);
-            return member.getId();
-        } catch (MessagingException e) {
-            return "잠시 후 다시 시도해 주세요.";
+        } catch (MessagingException ex) {
+            throw new MessagingException("메일 전송에 실패했습니다. 잠시후 다시 시도해 주세요.");
         }
 
-        // 텍스트만 보내는 메소드
-        //List<String> userMail = new ArrayList<>();
-        //userMail.add(memberEmail);
+        Map<HttpStatus, String> returnStat = new HashMap<>();
+        returnStat.put(HttpStatus.OK, member.getEmail());
+
+        return new ResponseEntity<>(returnStat, HttpStatus.OK);
     }
 
     @GetMapping("/members/modify/{memberNo}")

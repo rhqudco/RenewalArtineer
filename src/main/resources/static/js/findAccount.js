@@ -46,26 +46,35 @@ $(document).ready(function(){
                 "emailId":$('#emailId').val(),
                 "emailDomain":$('#emailDomain').val()
             },
-            dataType:'text',
+            dataType:'json',
             async: true,
             success:function (result) {
                 console.log(result)
-                if (result === "") {
+                if (Object.keys(result)[0] === "BAD_REQUEST") {
                     $('#result-info').css({'display': 'inline'});
-                    $('#result-text').text("입력하신 정보를 다시 확인해 주세요.");
-                }
-                else if(result === "위 정보로 가입된 회원을 찾을 수 없습니다."){
-                    $('#result-info').css({'display': 'inline'});
-                    $('#result-text').text(result);
-                }
-                else if(result === "잠시 후 다시 시도해 주세요."){
-                    $('#result-info').css({'display': 'inline'});
-                    $('#result-text').text(result);
+                    $('#result-text').text(Object.values(result)[0]);
                 }
                 else {
                     $('#result-info').css({'display': 'inline'});
-                    $('#result-text').text("입력하신  " + result + "으로 임시 비밀번호를 발송하였습니다.");
+                    $('#result-text').text("입력하신 " + Object.values(result)[0] + " 으로 임시 비밀번호를 발송하였습니다.");
                 }
+
+                // if (result === "") {
+                //     $('#result-info').css({'display': 'inline'});
+                //     $('#result-text').text("입력하신 정보를 다시 확인해 주세요.");
+                // }
+                // else if(result === "위 정보로 가입된 회원을 찾을 수 없습니다."){
+                //     $('#result-info').css({'display': 'inline'});
+                //     $('#result-text').text(result);
+                // }
+                // else if(result === "잠시 후 다시 시도해 주세요."){
+                //     $('#result-info').css({'display': 'inline'});
+                //     $('#result-text').text(result);
+                // }
+                // else {
+                //     $('#result-info').css({'display': 'inline'});
+                //     $('#result-text').text("입력하신  " + result + "으로 임시 비밀번호를 발송하였습니다.");
+                // }
             },
             error:function (data, textStatus) {
                 console.log(data);

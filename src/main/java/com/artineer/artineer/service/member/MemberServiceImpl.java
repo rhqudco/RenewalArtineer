@@ -59,16 +59,17 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Member findAccountId(String name, String email) {
-        List<Member> members = validateMemberNameAndEmail(name, email);
-        return members.get(0);
+        List<Member> findMembers = memberRepository.findByNameAndEmail(name, email);
+        validateNotNullMemberNameAndEmail(findMembers);
+
+        return findMembers.get(0);
     }
 
     @Override
     public Member findAccountPw(String id, String email) {
         List<Member> members = memberRepository.findByIdAndEmail(id, email);
-        if (members.isEmpty()) {
-            return null;
-        }
+        validateNotNullMemberIdAndEmail(members);
+
         return members.get(0);
     }
 
@@ -123,11 +124,15 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
-    private List<Member> validateMemberNameAndEmail(String name, String email) {
-        List<Member> members = memberRepository.findByNameAndEmail(name, email);
-        if (members.isEmpty()) {
+    private void validateNotNullMemberNameAndEmail(List<Member> findMembers) {
+        if (findMembers.isEmpty()) {
             throw new IllegalStateException("해당 정보로 가입한 회원이 없습니다.");
         }
-        return members;
+    }
+
+    private void validateNotNullMemberIdAndEmail(List<Member> findMembers) {
+        if (findMembers.isEmpty()) {
+            throw new IllegalStateException("해당 정보로 가입한 회원이 없습니다.");
+        }
     }
 }
