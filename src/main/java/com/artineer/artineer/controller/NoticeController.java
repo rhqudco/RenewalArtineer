@@ -4,7 +4,7 @@ import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.notice.NoticePageDto;
-import com.artineer.artineer.controller.dto.notice.SubNoticeCommentDto;
+import com.artineer.artineer.controller.dto.noticeComment.SubNoticeCommentDto;
 import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
@@ -16,7 +16,6 @@ import com.artineer.artineer.service.noticeComment.NoticeCommentService;
 import com.artineer.artineer.service.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -123,15 +122,22 @@ public class NoticeController {
         return writingShowImage.displayImage(fileName);
     }
 
+    /*
+    * 댓글 작섣
+    * */
     @ResponseBody
     @PostMapping("/writeComment")
-    public void writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
+    public String writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice);
         noticeCommentService.save(writeComment);
+        return Long.toString(noticeNo);
     }
 
+    /*
+     * 대댓글 작섣
+     * */
     @PostMapping("/writeSubCommentForm/{noticeNo}")
     public String writeCommentForm(@ModelAttribute("form") SubNoticeCommentDto dto,
                                    @PathVariable("noticeNo") Long noticeNo, HttpSession session,
@@ -146,18 +152,6 @@ public class NoticeController {
         redirectAttributes.addAttribute("noticeNo", noticeNo);
         return "redirect:/notice/noticeView/{noticeNo}";
     }
-
-//    // 댓글에 답글
-//    @ResponseBody // ajax 예정
-//    @PostMapping("/writeChildComment")
-//    public void writeChildComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment,
-//                                  @RequestParam("parent-comment") Long parentComment, HttpSession session) {
-//        Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
-//        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-//        NoticeComment parentCom = noticeCommentService.lookUpComment(parentComment).get(0);
-//        NoticeComment writeComment = NoticeComment.writeChildComment(member, comment, LocalDateTime.now(), notice, parentCom);
-//        noticeCommentService.save(writeComment);
-//    }
 }
 
 //    ALTER TABLE NOTICE ALTER column DETAIL TEXT;

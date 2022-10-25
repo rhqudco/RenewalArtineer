@@ -1,4 +1,4 @@
-package com.artineer.artineer.controller.dto.notice;
+package com.artineer.artineer.controller.dto.noticeComment;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -12,7 +12,7 @@ $(function (){
             dataType:'text',
             async: true,
             success:function (result) {
-                location.reload();
+                location.replace("/notice/noticeView/" + result);
             },
             error:function (data, textStatus) {
                 console.log(data);
@@ -21,10 +21,8 @@ $(function (){
         })
     })
 
-    $('#write-sub-comment').on('click', function () {
-        $('#sub-comment-area').append('<input type="text" id="detail" name="detail" placeholder="내용을 입력하세요.">');
-        $('#sub-comment-area').append('<button type="submit">답글 달기</button>');
+    $('.write-sub-comment').on('click', function () {
+        console.log($(this).siblings().length);
+        $(this).next().css("display", "inline-block");
     })
-
-
 })

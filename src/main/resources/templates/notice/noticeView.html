@@ -14,6 +14,9 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+        .sub-comment-write-area {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -28,21 +31,25 @@
         댓글
         <hr>
         <div th:each="noticeComments : ${noticeComments}">
-            <form action="noticeView.html" th:action="|/writeSubCommentForm/${noticeComments.notice.no}|" method="post" th:object="${form}">
-                <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
-                <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
-                <input type="button" value="답글" id="write-sub-comment" th:if="!${noticeComments.parentComment}">
-                <div id="sub-comment-area">
-                    <div class="field-error" th:errors="*{detail}">
-                        내용을 입력하세요.
+            <div th:id="|comment-area-${noticeComments.no}|" onclick="openSubComment();">
+                <form action="noticeView.html" th:action="|/writeSubCommentForm/${noticeComments.notice.no}|" method="post" th:object="${form}">
+                    <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
+                    <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
+                    <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
+                    <div class="sub-comment-write-area">
+                        <input type="text" th:field="*{detail}" id="detail" name="detail" placeholder="내용을 입력하세요.">
+                        <div class="field-error" th:errors="*{detail}">
+                            내용을 입력하세요.
+                        </div>
+                        <button type="submit">답글 달기</button>
                     </div>
-                </div>
-            </form>
-            <hr>
-            <div th:if="${noticeComments.childComments}">
-                <div th:each="child : ${noticeComments.childComments}">
-                    <span th:utext="${child.member.id}"></span> <span th:utext="${child.detail}"></span>
-                    <hr>
+                </form>
+                <hr>
+                <div id="child-comment-area" th:if="${noticeComments.childComments}">
+                    <div th:each="child : ${noticeComments.childComments}">
+                        <span th:utext="${child.member.id}"></span> <span th:utext="${child.detail}"></span>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>
