@@ -3,6 +3,7 @@ package com.artineer.artineer.controller;
 import com.artineer.artineer.common.FileStore;
 import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
+import com.artineer.artineer.controller.dto.notice.NoticeCondition;
 import com.artineer.artineer.controller.dto.notice.NoticePageDto;
 import com.artineer.artineer.controller.dto.noticeComment.SubNoticeCommentDto;
 import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
@@ -34,6 +35,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,6 +60,27 @@ public class NoticeController {
         model.addAttribute("totalPages", totalPages);
 
         return "notice/noticeBoard";
+    }
+
+    @GetMapping("/noticePage")
+    public String viewNoticePageBoard(@PageableDefault(size = 15) Pageable pageable, NoticeCondition condition, Model model,
+                                            @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                                            @RequestParam(value = "id" ,required = false, defaultValue = "") String id) {
+        if (title.equals("")) {
+            title = null;
+        }
+        if (id.equals("")) {
+            id = null;
+        }
+        condition.setTitle(title);
+        condition.setId(id);
+        Page<Notice> noticeTitleOrId = noticeService.findNoticeTitleOrId(pageable, condition);
+        int totalPages = noticeTitleOrId.getTotalPages();
+
+        model.addAttribute("pageDto", noticeTitleOrId);
+        model.addAttribute("totalPages", totalPages);
+
+        return "notice/noticeTestBoard";
     }
 
     @GetMapping("/notice/write")

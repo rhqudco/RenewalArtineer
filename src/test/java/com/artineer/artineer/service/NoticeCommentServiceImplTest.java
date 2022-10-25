@@ -105,23 +105,23 @@ class NoticeCommentServiceImplTest {
 
         System.out.println("==========================================================");
 
-        List<NoticeComment> allCommentOfNotice = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
-
-        for (NoticeComment noticeComment : allCommentOfNotice) {
-            System.out.println("=======================시작===================================");
-            System.out.println(noticeComment);
-            System.out.println("noticeComment.getDetail() = " + noticeComment.getDetail());
-            if (!noticeComment.getChildComments().isEmpty()) {
-                List<NoticeComment> childComments = noticeComment.getChildComments();
-                List<String> collect = childComments.stream()
-                        .map(NoticeComment::getDetail)
-                        .filter(detail -> !detail.isEmpty())
-                        .collect(toList());
-                System.out.println("==========================================================");
-                System.out.println("collect = " + collect);
-                System.out.println("==========================================================");
-            }
-            System.out.println("===========================끝===============================");
-        }
+//        List<NoticeComment> allCommentOfNotice = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
+//
+//        for (NoticeComment noticeComment : allCommentOfNotice) {
+//            System.out.println("=======================시작===================================");
+//            System.out.println(noticeComment);
+//            System.out.println("noticeComment.getDetail() = " + noticeComment.getDetail());
+//            if (!noticeComment.getChildComments().isEmpty()) {
+//                List<NoticeComment> childComments = noticeComment.getChildComments();
+//                List<String> collect = childComments.stream()
+//                        .map(NoticeComment::getDetail)
+//                        .filter(detail -> !detail.isEmpty())
+//                        .collect(toList());
+//                System.out.println("==========================================================");
+//                System.out.println("collect = " + collect);
+//                System.out.println("==========================================================");
+//            }
+//            System.out.println("===========================끝===============================");
+//        }
     }
 }

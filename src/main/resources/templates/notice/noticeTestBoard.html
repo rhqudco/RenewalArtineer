@@ -65,7 +65,7 @@
         <tr th:each="pageDto : ${pageDto}">
             <td th:text="${pageDto.no}"></td>
             <td><a th:href="@{/notice/noticeView/{no}(no=${pageDto.no})}" th:text="${pageDto.title}"></a></td>
-            <td th:text="${pageDto.writer}"></td>
+            <td th:text="${pageDto.member.id}"></td>
             <td th:text="${#temporals.format(pageDto.writeDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${pageDto.view}"></td>
         </tr>
@@ -75,7 +75,7 @@
     <div class="pagination">
         <ul>
             <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                <a th:href="@{/notice/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
+                <a th:href="@{/noticePage/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
             </li>
         </ul>
     </div>

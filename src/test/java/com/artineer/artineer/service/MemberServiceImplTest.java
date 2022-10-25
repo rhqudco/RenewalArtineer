@@ -52,7 +52,6 @@ class MemberServiceImplTest {
         memberDTO.setPhone(phone);
         memberDTO.setGender("1");
         memberDTO.setGeneration("3");
-        memberDTO.setLevel(Level.USER);
 
         Member member = new Member(memberDTO);
         Member createMember = memberService.join(member);
@@ -80,7 +79,6 @@ class MemberServiceImplTest {
         memberDTO.setPhone(phone);
         memberDTO.setGender("1");
         memberDTO.setGeneration("3");
-        memberDTO.setLevel(Level.USER);
 
         Member member = new Member(memberDTO);
         memberService.join(member);

@@ -1,5 +1,6 @@
 package com.artineer.artineer.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class Notice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
+    @JsonIgnore
     private Member member;
 
     private LocalDateTime writeDate;

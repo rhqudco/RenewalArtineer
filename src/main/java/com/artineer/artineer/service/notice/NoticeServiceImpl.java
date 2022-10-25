@@ -1,6 +1,9 @@
 package com.artineer.artineer.service.notice;
 
+import com.artineer.artineer.controller.dto.notice.NoticeCondition;
+import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
+import com.artineer.artineer.repository.notice.NoticeJpaRepository;
 import com.artineer.artineer.repository.notice.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,7 @@ import java.util.List;
 public class NoticeServiceImpl implements NoticeService{
 
     private final NoticeRepository noticeRepository;
+    private final NoticeJpaRepository noticeJpaRepository;
 
     @Override
     @Transactional
@@ -38,5 +42,10 @@ public class NoticeServiceImpl implements NoticeService{
     public void updateNoticeView(Long no) {
         Notice findNotice = noticeRepository.findByNo(no).get(0);
         findNotice.updateNoticeView();
+    }
+
+    @Override
+    public Page<Notice> findNoticeTitleOrId(Pageable pageable, NoticeCondition condition) {
+        return noticeJpaRepository.searchNoticePage(condition, pageable);
     }
 }

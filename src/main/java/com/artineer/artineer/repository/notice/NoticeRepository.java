@@ -1,5 +1,6 @@
 package com.artineer.artineer.repository.notice;
 
+import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
