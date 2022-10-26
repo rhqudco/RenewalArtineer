@@ -35,6 +35,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -64,18 +65,24 @@ public class NoticeController {
 
     @GetMapping("/noticePage")
     public String viewNoticePageBoard(@PageableDefault(size = 15) Pageable pageable, NoticeCondition condition, Model model,
-                                            @RequestParam(value = "title", required = false, defaultValue = "") String title,
-                                            @RequestParam(value = "id" ,required = false, defaultValue = "") String id) {
-        if (title.equals("")) {
-            title = null;
+                                      @RequestParam(value = "selectorParam", required = false, defaultValue = "")  String selectorParam,
+                                      @RequestParam(value = "parameter", required = false, defaultValue = "") String parameter) {
+
+        System.out.println("======================================");
+        System.out.println("selectorParam = " + selectorParam);
+        System.out.println("parameter = " + parameter);
+        System.out.println("======================================");
+        if (selectorParam.equals("writer")) {
+            condition.setId(parameter);
+        } else {
+            condition.setTitle(parameter);
         }
-        if (id.equals("")) {
-            id = null;
-        }
-        condition.setTitle(title);
-        condition.setId(id);
-        Page<Notice> noticeTitleOrId = noticeService.findNoticeTitleOrId(pageable, condition);
+
+        Page<NoticePageDto> noticeTitleOrId = noticeService.findNoticeTitleOrId(pageable, condition);
+
         int totalPages = noticeTitleOrId.getTotalPages();
+
+        log.info("totalPages = {}", totalPages);
 
         model.addAttribute("pageDto", noticeTitleOrId);
         model.addAttribute("totalPages", totalPages);

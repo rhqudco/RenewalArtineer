@@ -2,6 +2,7 @@ package com.artineer.artineer.controller.dto.notice;
 
 import com.artineer.artineer.domain.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 

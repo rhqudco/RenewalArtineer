@@ -1,6 +1,7 @@
 package com.artineer.artineer.service.notice;
 
 import com.artineer.artineer.controller.dto.notice.NoticeCondition;
+import com.artineer.artineer.controller.dto.notice.NoticePageDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import org.aspectj.weaver.ast.Not;
@@ -14,5 +15,5 @@ public interface NoticeService {
     List<Notice> lookUpNotice(Long no);
     Page<Notice> findAllNotice(Pageable pageable);
     void updateNoticeView(Long no);
-    Page<Notice> findNoticeTitleOrId(Pageable pageable, NoticeCondition condition);
+    Page<NoticePageDto> findNoticeTitleOrId(Pageable pageable, NoticeCondition condition);
  }

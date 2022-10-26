@@ -1,6 +1,7 @@
 package com.artineer.artineer.service.notice;
 
 import com.artineer.artineer.controller.dto.notice.NoticeCondition;
+import com.artineer.artineer.controller.dto.notice.NoticePageDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.repository.notice.NoticeJpaRepository;
@@ -45,7 +46,10 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public Page<Notice> findNoticeTitleOrId(Pageable pageable, NoticeCondition condition) {
-        return noticeJpaRepository.searchNoticePage(condition, pageable);
+    public Page<NoticePageDto> findNoticeTitleOrId(Pageable pageable, NoticeCondition condition) {
+        Page<Notice> notices = noticeJpaRepository.searchNoticePage(condition, pageable);
+
+        return notices.map(m ->
+                NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getId(), m.getWriteDate(), m.getTitle(), m.getView()));
     }
 }
