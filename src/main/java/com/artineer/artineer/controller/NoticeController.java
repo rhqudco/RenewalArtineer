@@ -8,10 +8,7 @@ import com.artineer.artineer.controller.dto.notice.NoticePageDto;
 import com.artineer.artineer.controller.dto.notice.NoticeViewDto;
 import com.artineer.artineer.controller.dto.noticeComment.SubNoticeCommentDto;
 import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
-import com.artineer.artineer.domain.Member;
-import com.artineer.artineer.domain.Notice;
-import com.artineer.artineer.domain.NoticeComment;
-import com.artineer.artineer.domain.UploadFile;
+import com.artineer.artineer.domain.*;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.service.noticeComment.NoticeCommentService;
@@ -157,7 +154,7 @@ public class NoticeController {
     public String writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice);
+        NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice, checkDeleted.isNotDeleted);
         noticeCommentService.save(writeComment);
         return Long.toString(noticeNo);
     }
@@ -172,7 +169,7 @@ public class NoticeController {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment parentComment = noticeCommentService.lookUpComment(dto.getParentNo()).get(0);
-        NoticeComment writeComment = NoticeComment.writeChildComment(member, dto.getDetail(), LocalDateTime.now(), notice, parentComment);
+        NoticeComment writeComment = NoticeComment.writeChildComment(member, dto.getDetail(), LocalDateTime.now(), notice, parentComment, checkDeleted.isNotDeleted);
 
         noticeCommentService.save(writeComment);
 

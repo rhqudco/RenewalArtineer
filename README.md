@@ -2,7 +2,7 @@
 
 - 개발 일지 : https://5bong2-develop.tistory.com/178?category=1016445
 - IDEA : IntelliJ Ultimate
-- FrontEnd : HTML, CSS, JavaScript, jQuery, Thymeleaf
+- FrontEnd : HTML, CSS, JavaScript, jQuery
 - Template Engine : Thymeleaf
 - BackEnd : Spring Boot 2.7.2
 - Language : Java 11
@@ -50,9 +50,12 @@
   - ~~게시판 게시글 검색~~
     - ~~제목~~
     - ~~작성자~~
+  - 글, 댓글 삭제 (본인만 가능하게)
+    - 댓글 삭제했을 때 대댓글이 있으면 삭제된 댓글이라 표시하고 대댓글은 보여줌.
+    - 글 삭제시 댓글들도 삭제
   - 메일 발신자 변경(admin@artineer.net)
   - Entity, DTO에서 @Setter 제거
   - 공지 완료하면 나머지 게시판에 똑같이 적용
   - 댓글 작성하고 새로고침 되면 조회수 업데이트 쿼리 고치기
     - 새로고침은 조회수 올라가지 않게
-  - 기능 완성 후 리턴 객체 엔티티 -> DTO로 변경
+  - ~~기능 완성 후 리턴 객체 엔티티 -> DTO로 변경~~

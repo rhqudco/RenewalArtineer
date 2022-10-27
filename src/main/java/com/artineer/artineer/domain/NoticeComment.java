@@ -31,8 +31,11 @@ public class NoticeComment {
     @JoinColumn(name = "parentComment_no")
     private NoticeComment parentComment;
 
-    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.PERSIST)
     private List<NoticeComment> childComments = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private checkDeleted checkDeleted;
 
     protected NoticeComment() {
     }
@@ -48,26 +51,27 @@ public class NoticeComment {
         parent.childComments.add(childComment);
     }
 
-    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
+    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice, checkDeleted checkDeleted) {
         this.member = member;
         this.detail = detail;
         this.writeDate = writeDate;
         this.notice = notice;
+        this.checkDeleted = checkDeleted;
     }
 
-    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice) {
+    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice, checkDeleted checkDeleted) {
         if (notice == null) {
             throw new IllegalStateException("글이 없습니다.");
         }
-        NoticeComment noticeComment = new NoticeComment(member, detail, writeDate, notice);
+        NoticeComment noticeComment = new NoticeComment(member, detail, writeDate, notice, checkDeleted);
         return noticeComment;
     }
 
-    public static NoticeComment writeChildComment(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment) {
+    public static NoticeComment writeChildComment(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment, checkDeleted checkDeleted) {
         if (notice == null) {
             throw new IllegalStateException("글이 없습니다.");
         }
-        NoticeComment childComment = new NoticeComment(member, detail, writeDate, notice);
+        NoticeComment childComment = new NoticeComment(member, detail, writeDate, notice, checkDeleted);
         childComment.addChildComment(childComment, parentComment);
 
         return childComment;
