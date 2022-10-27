@@ -52,7 +52,6 @@ $(function (){
                     const range = quill.getSelection(); // 사용자가 선택한 에디터 범위
                     // data.uploadPath = data.uploadPath.replace(/\\/g, '/');
                     quill.insertEmbed(range.index, 'image', "/display?fileName=" + data);
-
                 },
                 error: function (err) {
                     console.log(err);

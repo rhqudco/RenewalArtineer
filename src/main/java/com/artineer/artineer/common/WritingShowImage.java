@@ -82,16 +82,14 @@ public class WritingShowImage {
         /*
         Files.probeContentType() 해당 파일의 Content 타입을 인식(image, text/plain ...)
         없으면 null 반환
-
         file.toPath() -> file 객체를 Path객체로 변환
-
         */
             header.add("Content-type", Files.probeContentType(file.toPath()));
-
+            log.info("header = {}", header);
             result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         return result;
     }

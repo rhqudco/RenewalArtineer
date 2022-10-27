@@ -5,6 +5,7 @@ import com.artineer.artineer.common.WritingShowImage;
 import com.artineer.artineer.controller.dto.WriteSaveDto;
 import com.artineer.artineer.controller.dto.notice.NoticeCondition;
 import com.artineer.artineer.controller.dto.notice.NoticePageDto;
+import com.artineer.artineer.controller.dto.notice.NoticeViewDto;
 import com.artineer.artineer.controller.dto.noticeComment.SubNoticeCommentDto;
 import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
 import com.artineer.artineer.domain.Member;
@@ -123,9 +124,10 @@ public class NoticeController {
                              HttpServletRequest request) {
         List<Notice> notices = noticeService.lookUpNotice(noticeNo);
         if (notices.size() == 0) {
+            // 삭제된 글 alert 띄우기.
             return "redirect:/notice";
         }
-        Notice notice = notices.get(0);
+        NoticeViewDto notice = NoticeViewDto.convertNoticeDto(notices.get(0));
         noticeService.updateNoticeView(noticeNo);
         List<NoticeCommentDto> noticeComments = noticeCommentService.findAllCommentOfNotice(noticeNo);
 
