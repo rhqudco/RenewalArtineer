@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,8 +34,6 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,7 +46,7 @@ public class NoticeController {
     private final WritingShowImage writingShowImage;
     private final NoticeCommentService noticeCommentService;
 
-    @GetMapping("/notice")
+/*    @GetMapping("/notice")
     public String viewNoticeBoard(@PageableDefault(size = 15, sort = "no", direction = Sort.Direction.DESC) Pageable pageable,
                                 Model model) {
         Page<Notice> allNotice = noticeService.findAllNotice(pageable);
@@ -60,18 +57,14 @@ public class NoticeController {
         model.addAttribute("pageDto", pageDto);
         model.addAttribute("totalPages", totalPages);
 
-        return "notice/noticeBoard";
-    }
+        return "noticeBoard(UnUse)";
+    }*/
 
-    @GetMapping("/noticePage")
+    @GetMapping("/notice")
     public String viewNoticePageBoard(@PageableDefault(size = 15) Pageable pageable, NoticeCondition condition, Model model,
                                       @RequestParam(value = "selectorParam", required = false, defaultValue = "")  String selectorParam,
                                       @RequestParam(value = "parameter", required = false, defaultValue = "") String parameter) {
 
-        System.out.println("======================================");
-        System.out.println("selectorParam = " + selectorParam);
-        System.out.println("parameter = " + parameter);
-        System.out.println("======================================");
         if (selectorParam.equals("writer")) {
             condition.setId(parameter);
         } else {
@@ -86,8 +79,10 @@ public class NoticeController {
 
         model.addAttribute("pageDto", noticeTitleOrId);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("selectorParam", selectorParam);
+        model.addAttribute("parameter", parameter);
 
-        return "notice/noticeTestBoard";
+        return "notice/noticeBoard";
     }
 
     @GetMapping("/notice/write")

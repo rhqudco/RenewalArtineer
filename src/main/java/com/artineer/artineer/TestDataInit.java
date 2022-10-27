@@ -28,10 +28,47 @@ public class TestDataInit {
                 "고병채", "rhqudco1204@naver.com");
         memberService.join(member);
 
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 20; i++) {
             Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "title" + i, "detail", null, 0L);
             noticeService.saveNotice(notice);
         }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "admin" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "test" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "example" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "dance" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "singer" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "project" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "spring" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "thymeleaf" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+        for (int i = 1; i <= 20; i++) {
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "coding" + i, "detail", null, 0L);
+            noticeService.saveNotice(notice);
+        }
+
 
     }
 }
