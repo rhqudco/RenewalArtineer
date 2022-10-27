@@ -44,6 +44,14 @@ public class NoticeComment {
         this.parentComment = parentComment;
     }
 
+    private void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    private void setCheckDeleted(checkDeleted checkDeleted) {
+        this.checkDeleted = checkDeleted;
+    }
+
 
     // 연관관계 편의 메소드
     public void addChildComment(NoticeComment childComment, NoticeComment parent) {
@@ -75,5 +83,10 @@ public class NoticeComment {
         childComment.addChildComment(childComment, parentComment);
 
         return childComment;
+    }
+
+    public static void deleteCommentHaveChild(NoticeComment noticeComment) {
+        noticeComment.setDetail("삭제된 댓글 입니다.");
+        noticeComment.setCheckDeleted(com.artineer.artineer.domain.checkDeleted.isDeleted);
     }
 }

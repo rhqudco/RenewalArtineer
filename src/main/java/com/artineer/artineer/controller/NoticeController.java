@@ -60,7 +60,7 @@ public class NoticeController {
 
     @GetMapping("/notice")
     public String viewNoticePageBoard(@PageableDefault(size = 15) Pageable pageable, NoticeCondition condition, Model model,
-                                      @RequestParam(value = "selectorParam", required = false, defaultValue = "")  String selectorParam,
+                                      @RequestParam(value = "selectorParam", required = false, defaultValue = "") String selectorParam,
                                       @RequestParam(value = "parameter", required = false, defaultValue = "") String parameter) {
 
         if (selectorParam.equals("writer")) {
@@ -136,7 +136,7 @@ public class NoticeController {
 
     @ResponseBody
     @PostMapping("/post/imageUpload")
-    public File postImage(MultipartFile[] uploadFile){
+    public File postImage(MultipartFile[] uploadFile) {
         return writingShowImage.imagePost(uploadFile);
     }
 
@@ -147,8 +147,8 @@ public class NoticeController {
     }
 
     /*
-    * 댓글 작섣
-    * */
+     * 댓글 작섣
+     * */
     @ResponseBody
     @PostMapping("/writeComment")
     public String writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
@@ -175,6 +175,24 @@ public class NoticeController {
 
         redirectAttributes.addAttribute("noticeNo", noticeNo);
         return "redirect:/notice/noticeView/{noticeNo}";
+    }
+
+    @ResponseBody
+    @PostMapping("/deleteComment")
+    public void deleteComment(@RequestParam(value = "parentNo", required = false) Long parentNo,
+                              @RequestParam(value = "childNo", required = false) Long childNo) {
+        if (parentNo != null) {
+            NoticeComment comment = noticeCommentService.findByNo(parentNo).get(0);
+            if (comment.getChildComments() != null) {
+                noticeCommentService.deleteCommentHaveChild(parentNo);
+            } else {
+                noticeCommentService.deleteComment(parentNo);
+            }
+        }
+        if (childNo != null) {
+            noticeCommentService.deleteComment(childNo);
+        }
+
     }
 }
 

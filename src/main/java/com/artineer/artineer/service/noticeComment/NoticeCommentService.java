@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface NoticeCommentService {
     List<NoticeCommentDto> findAllCommentOfNotice(Long no);
+    List<NoticeComment> findByNo(Long noticeCommentNo);
     NoticeComment save(NoticeComment noticeComment);
     List<NoticeComment> lookUpComment(Long noticeNo);
+    void deleteCommentHaveChild(Long no);
+    void deleteComment(Long no);
 }

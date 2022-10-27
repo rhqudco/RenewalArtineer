@@ -59,6 +59,7 @@
                 <hr>
                 <div id="child-comment-area" th:if="${noticeComments.childComments}">
                     <div th:each="child : ${noticeComments.childComments}">
+                        <input type="hidden" id="childNo" name="childNo" th:value="${child.no}">
                         <span th:utext="${child.member.id}"></span> <span th:utext="${child.detail}"></span>
                         <hr>
                     </div>

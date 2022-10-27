@@ -60,4 +60,21 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
         });
         return result;
     }
+
+    @Override
+    @Transactional
+    public void deleteCommentHaveChild(Long no) {
+        NoticeComment.deleteCommentHaveChild(noticeCommentRepository.findByNo(no).get(0));
+    }
+
+    @Override
+    public List<NoticeComment> findByNo(Long noticeCommentNo) {
+        return noticeCommentRepository.findByNo(noticeCommentNo);
+    }
+
+    @Override
+    @Transactional
+    public void deleteComment(Long no) {
+        noticeCommentRepository.deleteByNo(no);
+    }
 }
