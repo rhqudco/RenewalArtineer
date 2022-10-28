@@ -27,6 +27,9 @@ public class TestDataInit {
         Member member = new Member("admin", webSecurityConfig.getPasswordEncoder().encode("1"),
                 "고병채", "rhqudco1204@naver.com");
         memberService.join(member);
+        Member member2 = new Member("admin2", webSecurityConfig.getPasswordEncoder().encode("1"),
+                "고병채", "rhqudco1204@naver.com");
+        memberService.join(member2);
 
         for (int i = 1; i <= 20; i++) {
             Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "title" + i, "detail", null, 0L);

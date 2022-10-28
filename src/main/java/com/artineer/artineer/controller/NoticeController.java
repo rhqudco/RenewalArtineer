@@ -9,6 +9,7 @@ import com.artineer.artineer.controller.dto.notice.NoticeViewDto;
 import com.artineer.artineer.controller.dto.noticeComment.SubNoticeCommentDto;
 import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
 import com.artineer.artineer.domain.*;
+import com.artineer.artineer.exception.UserMatchedException;
 import com.artineer.artineer.loginCheck.SessionConst;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.service.noticeComment.NoticeCommentService;
@@ -147,10 +148,16 @@ public class NoticeController {
     }
 
     @PostMapping("/deleteNotice/{noticeNo}")
-    public String deleteNotice(@PathVariable("noticeNo") Long noticeNo) {
+    public String deleteNotice(@PathVariable("noticeNo") Long noticeNo,
+                               HttpSession session) throws UserMatchedException {
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Notice findNotice = noticeService.lookUpNotice(noticeNo).get(0);
+        if (!findNotice.getMember().getNo().equals(loginMember.getNo())) {
+            throw new UserMatchedException("본인만 삭제할 수 있습니다.");
+        }
         noticeService.deleteNotice(noticeNo);
         noticeCommentService.deleteAllCommentByNotice(noticeNo);
-        return "notice/noticeBoard";
+        return "redirect:/notice";
     }
 
     /*
@@ -188,15 +195,26 @@ public class NoticeController {
     * 댓글 삭제(부모 댓글, 일반 댓글)
     * */
     @PostMapping("/deleteComment/{noticeNo}")
-    public String deleteParentComment(@RequestParam(value = "parentNo", required = false) Long parentNo,
+    public String deleteParentComment(@RequestParam(value = "parentNo") Long parentNo,
                                       @PathVariable("noticeNo") Long noticeNo,
-                                      RedirectAttributes redirectAttributes) {
+                                      RedirectAttributes redirectAttributes,
+                                      HttpSession session) throws UserMatchedException {
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if (parentNo != null) { // 부모 인덱스가 들어오면
             NoticeComment comment = noticeCommentService.findByNo(parentNo).get(0); // 찾는다.
             if (comment.getChildComments().isEmpty()) { // 자식 댓글이 없으면
-                noticeCommentService.deleteComment(parentNo); // 그냥 삭제
-            } else { // 자식 댓글이 있으면
-                noticeCommentService.deleteCommentHaveChild(parentNo); // 상태를 삭제로 바꾸고 내용도 삭제되었다고 알림.
+                if (loginMember.getNo().equals(comment.getMember().getNo())) { // 로그인 계정과 사용자가 일치하면.
+                    noticeCommentService.deleteComment(parentNo); // 그냥 삭제
+                } else {
+                    throw new UserMatchedException("본인만 삭제할 수 있습니다.");
+                }
+            }
+            else { // 자식 댓글이 있으면
+                if (loginMember.getNo().equals(comment.getMember().getNo())) { // 로그인 계정과 사용자가 일치하면.
+                    noticeCommentService.deleteCommentHaveChild(parentNo); // 상태를 삭제로 바꾸고 내용도 삭제되었다고 알림.
+                } else {
+                    throw new UserMatchedException("본인만 삭제할 수 있습니다.");
+                }
             }
         }
         redirectAttributes.addAttribute("noticeNo", noticeNo);
@@ -209,8 +227,16 @@ public class NoticeController {
     @PostMapping("/deleteChildComment/{noticeNo}")
     public String deleteChildComment(@PathVariable("noticeNo") Long noticeNo,
                                      @RequestParam("childNo") Long childNo,
-                                     RedirectAttributes redirectAttributes) {
-        noticeCommentService.deleteComment(childNo);
+                                     RedirectAttributes redirectAttributes,
+                                     HttpSession session) throws UserMatchedException {
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        NoticeComment childComment = noticeCommentService.findByNo(childNo).get(0);
+        if (loginMember.getNo().equals(childComment.getMember().getNo())) {
+            noticeCommentService.deleteComment(childNo);
+        } else {
+            throw new UserMatchedException("본인만 삭제할 수 있습니다.");
+        }
+
         redirectAttributes.addAttribute("noticeNo", noticeNo);
         return "redirect:/notice/noticeView/{noticeNo}";
     }

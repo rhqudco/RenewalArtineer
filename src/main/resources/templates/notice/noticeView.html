@@ -29,11 +29,15 @@
 <body>
 
 <div class="container">
-    <input type="hidden" th:field="${notice.no}" id="notice-no">
-    <p th:text="${notice.writer}"></p>
-    <p th:text="${notice.title}"></p>
-    <div id="detail-area" style="white-space:pre;" th:utext="${notice.detail}"></div>
-    첨부파일: <a th:if="${notice.uploadFile}" th:href="|/attach/${notice.getNo}|" th:text="${notice.getUploadFile().getUploadFileName()}" /><br/>
+    <form method="post" action="noticeView.html">
+        <input type="hidden" th:field="${notice.no}" id="notice-no">
+        <p th:text="${notice.writer}"></p>
+        <p th:text="${notice.title}"></p>
+        <div id="detail-area" style="white-space:pre;" th:utext="${notice.detail}"></div>
+        첨부파일: <a th:if="${notice.uploadFile}" th:href="|/attach/${notice.getNo}|" th:text="${notice.getUploadFile().getUploadFileName()}" />
+        <br/>
+        <input type="submit" value="글 삭제" th:formaction="|/deleteNotice/${notice.no}|">
+    </form>
     <hr>
     <div th:if="${noticeComments}">
         댓글

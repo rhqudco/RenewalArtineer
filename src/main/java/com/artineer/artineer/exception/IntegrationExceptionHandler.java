@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,5 +29,15 @@ public class IntegrationExceptionHandler {
         returnStat.put(HttpStatus.BAD_REQUEST, ex.getMessage());
 
         return new ResponseEntity<>(returnStat, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(UserMatchedException.class)
+    public void handlerMessageUserMatchedEx(Exception ex, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('" + ex.getMessage() + "');</script>");
+//        out.println("<script>location.href=document.referrer;</script>");
+        out.println("<script>history.go(-1);</script>");
+        out.flush();
     }
 }
