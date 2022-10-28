@@ -126,9 +126,49 @@ class NoticeCommentServiceImplTest {
         em.clear();
 
         List<NoticeCommentDto> allCommentOfNotice = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
-        
+
         assertThat(allCommentOfNotice.get(0).getChildComments().size()).isEqualTo(1); // parentComment Have childComment
         assertThat(allCommentOfNotice.get(0).getCheckDeleted()).isEqualTo(checkDeleted.isDeleted); // parentComment Status is deleted
         assertThat(allCommentOfNotice.get(0).getChildComments().get(0).getCheckDeleted()).isEqualTo(checkDeleted.isNotDeleted); // childComment Status is notDeleted
+    }
+
+    @Test
+    void deleteComment() {
+        Member findMember = memberService.findMember(1L).get(0);
+
+        Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
+        noticeService.saveNotice(writeNotice);
+
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        noticeCommentService.save(comment);
+
+        em.flush();
+        em.clear();
+
+        noticeCommentService.deleteComment(comment.getNo());
+
+        List<NoticeCommentDto> comments = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
+        assertThat(comments.size()).isEqualTo(0);
+    }
+
+    @Test
+    void deleteChildComment() {
+        Member findMember = memberService.findMember(1L).get(0);
+
+        Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
+        noticeService.saveNotice(writeNotice);
+
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        noticeCommentService.save(comment);
+        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "child", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
+
+        em.flush();
+        em.clear();
+
+        noticeCommentService.deleteComment(childComment.getNo());
+
+
+        List<NoticeCommentDto> commentList = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
+        assertThat(commentList.get(0).getChildComments()).isEmpty();
     }
 }
