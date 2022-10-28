@@ -16,4 +16,5 @@ public interface NoticeService {
     Page<Notice> findAllNotice(Pageable pageable);
     void updateNoticeView(Long no);
     Page<NoticePageDto> findNoticeTitleOrId(Pageable pageable, NoticeCondition condition);
+    void deleteNotice(Long no);
  }

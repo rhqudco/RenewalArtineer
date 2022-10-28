@@ -50,9 +50,11 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
             map.put(dto.getNo(), dto);
 
             if (nc.getParentComment() != null) {
-//                NoticeCommentDto parent = map.get(dto.getParentComment().getNo());
-//                int idx = result.indexOf(parent);
-//                result.get(idx).getChildComments().add(dto);
+                /*
+                NoticeCommentDto parent = map.get(dto.getParentComment().getNo());
+                int idx = result.indexOf(parent);
+                result.get(idx).getChildComments().add(dto);
+                */
                 map.get(nc.getParentComment().getNo()).getChildComments().add(dto);
             } else {
                 result.add(dto);
@@ -76,5 +78,11 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
     @Transactional
     public void deleteComment(Long no) {
         noticeCommentRepository.deleteByNo(no);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllCommentByNotice(Long noticeNo) {
+        noticeCommentRepository.deleteAllByNoticeNo(noticeNo);
     }
 }

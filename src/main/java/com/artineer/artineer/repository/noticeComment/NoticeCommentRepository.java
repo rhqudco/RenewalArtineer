@@ -8,4 +8,5 @@ import java.util.List;
 public interface NoticeCommentRepository extends JpaRepository<NoticeComment, Long> {
     List<NoticeComment> findByNo(Long no);
     void deleteByNo(Long no);
+    void deleteAllByNoticeNo(Long noticeNo);
 }

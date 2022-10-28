@@ -170,5 +170,6 @@ class NoticeCommentServiceImplTest {
 
         List<NoticeCommentDto> commentList = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
         assertThat(commentList.get(0).getChildComments()).isEmpty();
+        assertThat(commentList.get(0).getCheckDeleted()).isEqualTo(checkDeleted.isNotDeleted);
     }
 }

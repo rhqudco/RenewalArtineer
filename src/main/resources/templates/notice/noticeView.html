@@ -17,10 +17,6 @@
         .sub-comment-write-area {
             display: none;
         }
-        #detail-area {
-            width: 1280px;
-            height: 720px;
-        }
          /*
          이미지 크기 조정
          */
@@ -43,25 +39,37 @@
         댓글
         <hr>
         <div th:each="noticeComments : ${noticeComments}">
-            <div th:id="|comment-area-${noticeComments.no}|" onclick="openSubComment();">
-                <form action="noticeView.html" th:action="|/writeSubCommentForm/${noticeComments.notice.no}|" method="post" th:object="${form}">
+            <div th:id="|comment-area-${noticeComments.no}|">
+                <form action="noticeView.html" method="post" th:object="${form}">
                     <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
-                    <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
+
+<!--                    <div th:if="${noticeComments.checkDeleted == 'isDeleted'}">-->
+<!--                        <span th:utext="${noticeComments.detail}"></span>-->
+<!--                    </div>-->
+<!--                    <div th:if="${noticeComments.checkDeleted == 'isNotDeleted'}">-->
+                        <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
+<!--                    </div>-->
+
+                    <input type="submit" value="삭제" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
                     <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
                     <div class="sub-comment-write-area">
                         <input type="text" th:field="*{detail}" id="detail" name="detail" placeholder="내용을 입력하세요.">
                         <div class="field-error" th:errors="*{detail}">
                             내용을 입력하세요.
                         </div>
-                        <button type="submit">답글 달기</button>
+                        <input type="submit" value="답글 달기" th:formaction="|/writeSubCommentForm/${noticeComments.notice.no}|">
                     </div>
                 </form>
                 <hr>
                 <div id="child-comment-area" th:if="${noticeComments.childComments}">
                     <div th:each="child : ${noticeComments.childComments}">
-                        <input type="hidden" id="childNo" name="childNo" th:value="${child.no}">
-                        <span th:utext="${child.member.id}"></span> <span th:utext="${child.detail}"></span>
-                        <hr>
+                        <form action="noticeView.html" method="post">
+                            <span th:utext="${child.member.id}"></span> <span th:utext="${child.detail}"></span>
+<!--                            <input type="button" value="삭제" id="delete-child-comment" class="delete-child-comment" th:if="!${noticeComments.parentComment}">-->
+                            <input type="submit" value="삭제" th:formaction="|/deleteChildComment/${noticeComments.notice.no}|">
+                            <input type="hidden" id="childNo" name="childNo" th:value="${child.no}">
+                            <hr>
+                        </form>
                     </div>
                 </div>
             </div>

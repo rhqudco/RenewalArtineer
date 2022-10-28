@@ -146,6 +146,13 @@ public class NoticeController {
         return writingShowImage.displayImage(fileName);
     }
 
+    @PostMapping("/deleteNotice/{noticeNo}")
+    public String deleteNotice(@PathVariable("noticeNo") Long noticeNo) {
+        noticeService.deleteNotice(noticeNo);
+        noticeCommentService.deleteAllCommentByNotice(noticeNo);
+        return "notice/noticeBoard";
+    }
+
     /*
      * 댓글 작섣
      * */
@@ -177,22 +184,29 @@ public class NoticeController {
         return "redirect:/notice/noticeView/{noticeNo}";
     }
 
-    @ResponseBody
-    @PostMapping("/deleteComment")
-    public void deleteComment(@RequestParam(value = "parentNo", required = false) Long parentNo,
-                              @RequestParam(value = "childNo", required = false) Long childNo) {
-        if (parentNo != null) {
-            NoticeComment comment = noticeCommentService.findByNo(parentNo).get(0);
-            if (comment.getChildComments() != null) {
-                noticeCommentService.deleteCommentHaveChild(parentNo);
-            } else {
-                noticeCommentService.deleteComment(parentNo);
+    @PostMapping("/deleteComment/{noticeNo}")
+    public String deleteParentComment(@RequestParam(value = "parentNo", required = false) Long parentNo,
+                                      @PathVariable("noticeNo") Long noticeNo,
+                                      RedirectAttributes redirectAttributes) {
+        if (parentNo != null) { // 부모 인덱스가 들어오면
+            NoticeComment comment = noticeCommentService.findByNo(parentNo).get(0); // 찾는다.
+            if (comment.getChildComments().isEmpty()) { // 자식 댓글이 없으면
+                noticeCommentService.deleteComment(parentNo); // 그냥 삭제
+            } else { // 자식 댓글이 있으면
+                noticeCommentService.deleteCommentHaveChild(parentNo); // 상태를 삭제로 바꾸고 내용도 삭제되었다고 알림.
             }
         }
-        if (childNo != null) {
-            noticeCommentService.deleteComment(childNo);
-        }
+        redirectAttributes.addAttribute("noticeNo", noticeNo);
+        return "redirect:/notice/noticeView/{noticeNo}";
+    }
 
+    @PostMapping("/deleteChildComment/{noticeNo}")
+    public String deleteChildComment(@PathVariable("noticeNo") Long noticeNo,
+                                     @RequestParam("childNo") Long childNo,
+                                     RedirectAttributes redirectAttributes) {
+        noticeCommentService.deleteComment(childNo);
+        redirectAttributes.addAttribute("noticeNo", noticeNo);
+        return "redirect:/notice/noticeView/{noticeNo}";
     }
 }
 

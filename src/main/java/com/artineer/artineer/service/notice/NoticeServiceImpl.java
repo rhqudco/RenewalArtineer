@@ -6,6 +6,7 @@ import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.repository.notice.NoticeJpaRepository;
 import com.artineer.artineer.repository.notice.NoticeRepository;
+import com.artineer.artineer.service.noticeComment.NoticeCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ public class NoticeServiceImpl implements NoticeService{
 
     private final NoticeRepository noticeRepository;
     private final NoticeJpaRepository noticeJpaRepository;
+    private final NoticeCommentService noticeCommentService;
 
     @Override
     @Transactional
@@ -51,5 +53,11 @@ public class NoticeServiceImpl implements NoticeService{
 
         return notices.map(m ->
                 NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getId(), m.getWriteDate(), m.getTitle(), m.getView()));
+    }
+
+    @Override
+    @Transactional
+    public void deleteNotice(Long no) {
+        noticeRepository.deleteByNo(no);
     }
 }

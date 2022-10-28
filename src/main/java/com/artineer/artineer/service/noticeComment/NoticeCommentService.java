@@ -12,4 +12,5 @@ public interface NoticeCommentService {
     List<NoticeComment> lookUpComment(Long noticeNo);
     void deleteCommentHaveChild(Long no);
     void deleteComment(Long no);
+    void deleteAllCommentByNotice(Long noticeNo);
 }
