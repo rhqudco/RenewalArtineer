@@ -1,8 +1,10 @@
 package com.artineer.artineer.service;
 
+import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
+import com.artineer.artineer.domain.checkDeleted;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.service.notice.NoticeService;
 import com.artineer.artineer.service.noticeComment.NoticeCommentService;
@@ -42,7 +44,7 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
 
         // 저장된 객체
         NoticeComment savedNoticeComment = noticeCommentService.save(comment);
@@ -68,8 +70,6 @@ class NoticeCommentServiceImplTest {
 
         NoticeComment comment2 = noticeCommentService.lookUpComment(savedNoticeCommentNo).get(0);
 
-        System.out.println("comment2 = " + comment2);
-
         assertThat(savedNoticeComment).isNotEqualTo(comment2);
     }
 
@@ -80,7 +80,7 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
         noticeCommentService.save(comment);
 
 
@@ -89,7 +89,7 @@ class NoticeCommentServiceImplTest {
 
         System.out.println("==========================================================");
 
-        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "childDetail", LocalDateTime.now(), writeNotice, comment);
+        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "childDetail", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
         noticeCommentService.save(childComment);
 
         em.flush();
@@ -97,31 +97,38 @@ class NoticeCommentServiceImplTest {
 
         System.out.println("==========================================================");
 
-        NoticeComment childComment2 = NoticeComment.writeChildComment(findMember, "childDetail2", LocalDateTime.now(), writeNotice, comment);
+        NoticeComment childComment2 = NoticeComment.writeChildComment(findMember, "childDetail2", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
         noticeCommentService.save(childComment2);
 
         em.flush();
         em.clear();
 
         System.out.println("==========================================================");
+    }
 
-//        List<NoticeComment> allCommentOfNotice = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
-//
-//        for (NoticeComment noticeComment : allCommentOfNotice) {
-//            System.out.println("=======================시작===================================");
-//            System.out.println(noticeComment);
-//            System.out.println("noticeComment.getDetail() = " + noticeComment.getDetail());
-//            if (!noticeComment.getChildComments().isEmpty()) {
-//                List<NoticeComment> childComments = noticeComment.getChildComments();
-//                List<String> collect = childComments.stream()
-//                        .map(NoticeComment::getDetail)
-//                        .filter(detail -> !detail.isEmpty())
-//                        .collect(toList());
-//                System.out.println("==========================================================");
-//                System.out.println("collect = " + collect);
-//                System.out.println("==========================================================");
-//            }
-//            System.out.println("===========================끝===============================");
-//        }
+    @Test
+    void deleteCommentHaveChild() {
+        Member findMember = memberService.findMember(1L).get(0);
+
+        Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
+        noticeService.saveNotice(writeNotice);
+
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        noticeCommentService.save(comment);
+        NoticeComment.writeChildComment(findMember, "child", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
+
+        em.flush();
+        em.clear();
+
+        noticeCommentService.deleteCommentHaveChild(comment.getNo());
+
+        em.flush();
+        em.clear();
+
+        List<NoticeCommentDto> allCommentOfNotice = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
+        
+        assertThat(allCommentOfNotice.get(0).getChildComments().size()).isEqualTo(1); // parentComment Have childComment
+        assertThat(allCommentOfNotice.get(0).getCheckDeleted()).isEqualTo(checkDeleted.isDeleted); // parentComment Status is deleted
+        assertThat(allCommentOfNotice.get(0).getChildComments().get(0).getCheckDeleted()).isEqualTo(checkDeleted.isNotDeleted); // childComment Status is notDeleted
     }
 }
