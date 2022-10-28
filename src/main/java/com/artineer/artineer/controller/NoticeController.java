@@ -184,6 +184,9 @@ public class NoticeController {
         return "redirect:/notice/noticeView/{noticeNo}";
     }
 
+    /*
+    * 댓글 삭제(부모 댓글, 일반 댓글)
+    * */
     @PostMapping("/deleteComment/{noticeNo}")
     public String deleteParentComment(@RequestParam(value = "parentNo", required = false) Long parentNo,
                                       @PathVariable("noticeNo") Long noticeNo,
@@ -200,6 +203,9 @@ public class NoticeController {
         return "redirect:/notice/noticeView/{noticeNo}";
     }
 
+    /*
+    * 댓글 삭제(대댓글)
+    * */
     @PostMapping("/deleteChildComment/{noticeNo}")
     public String deleteChildComment(@PathVariable("noticeNo") Long noticeNo,
                                      @RequestParam("childNo") Long childNo,
@@ -209,5 +215,3 @@ public class NoticeController {
         return "redirect:/notice/noticeView/{noticeNo}";
     }
 }
-
-//    ALTER TABLE NOTICE ALTER column DETAIL TEXT;

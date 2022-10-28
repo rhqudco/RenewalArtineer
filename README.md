@@ -1,6 +1,4 @@
 # Artineer 리뉴얼 프로젝트
-
-- 개발 일지 : https://5bong2-develop.tistory.com/178?category=1016445
 - IDEA : IntelliJ Ultimate
 - FrontEnd : HTML, CSS, JavaScript, jQuery
 - Template Engine : Thymeleaf
@@ -13,7 +11,7 @@
 - DevOps : Jenkins, AWS, Docker
 
 
-### 2022 10 17
+### 계획
 - __완료 기능__
   - 회원가입
     - input 태그 빈값 검증
