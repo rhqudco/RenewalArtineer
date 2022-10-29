@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="css/header.css" />
     <title>Artineer</title>
 </head>
 <body>
-    <h1>Artineer Index</h1>
-    <a href="/members/join">회원가입</a>
-    <button onclick="location.href='editForm.html'"
-            th:onclick="|location.href='@{/members/modify/{memberNo}(memberNo=${session.loginMember.no})}'|"
-            type="button">회원수정</button>
-    <form th:action="@{/members/logout}" method="post">
-        <button class="w-100 btn btn-dark btn-lg" onclick="location.href='items.html'" type="submit">
-            로그아웃
-        </button>
-    </form>
-    <a href="/notice/write">공지 작성</a>
-    <hr>
-    <a href="/notice">공지사항</a>
+    <div th:insert="~{fragment/headerLogin :: headerLogin}">
+    </div>
+
+    <div th:insert="~{fragment/footer :: footer}">
+    </div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js" th:src="@{/assets/js/jquery.min.js}"></script>
+    <script src="assets/js/jquery.dropotron.min.js" th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script src="assets/js/browser.min.js" th:src="@{/assets/js/browser.min.js}"></script>
+    <script src="assets/js/breakpoints.min.js" th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script src="assets/js/util.js" th:src="@{/assets/js/util.js}"></script>
+    <script src="assets/js/main.js" th:src="@{/assets/js/main.js}"></script>
 </body>
 </html>

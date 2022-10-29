@@ -2068,7 +2068,7 @@ input, select, textarea {
 		position: relative;
 		background: #ffffff;
 		border-bottom: solid 1px #ccc;
-		padding: 2em 0 0 0;
+		padding: 4em 0 3em 0;
 		text-align: center;
 	}
 
@@ -2104,7 +2104,11 @@ input, select, textarea {
 
 				#nav > ul > li > a {
 					border-radius: 5px;
-					color: #5d5d5d;
+					/*color: #5d5d5d;*/
+					color: #000000;
+					font-style: normal;
+					font-weight: bolder;
+					font-size: 13pt;
 					text-decoration: none;
 					padding: 0.6em 1.2em 0.6em 1.2em;
 					-moz-transition: background-color .25s ease-in-out;

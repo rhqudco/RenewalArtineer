@@ -7,7 +7,7 @@
 <!--    <link rel="stylesheet" href="css/header.css" />-->
 </head>
 <body>
-    <section id="header" th:fragment="header">
+    <section id="header" th:fragment="headerLogin">
         <!-- Logo -->
         <img id="logo" th:src="@{/img/logo.png}"><h1><a href="/">ARTINEER</a></h1>
         <!-- Nav -->
@@ -35,9 +35,9 @@
                 <li>
                     <a href="#">Members</a>
                     <ul>
-                        <li class="header-menu"><a href="/members/join" >회원가입</a></li>
-                        <li class="header-menu"><a href="/members/login">로그인</a></li>
-                        <li class="header-menu"><a href="/members/find/account">ID/PW 찾기</a></li>
+                        <li class="header-menu"><a th:href="|@{/members/modify/{memberNo}(memberNo=${session.loginMember.no})}|" >회원수정</a></li>
+                        <li class="header-menu"><a href="/members/logout">로그아웃</a></li>
+<!--                        <li class="header-menu"><a href="#">시험족보</a></li>-->
 <!--                        <li class="header-menu"><a href="#">활동사진</a></li>-->
                     </ul>
                 </li>

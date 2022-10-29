@@ -44,7 +44,7 @@ public class HomeController {
         return "loginIndex";
     }
 
-    @PostMapping("/members/logout")
+    @GetMapping("/members/logout")
     public String logout(HttpServletRequest request) {
         log.info("logout Method");
         HttpSession session = request.getSession(false);
@@ -79,6 +79,6 @@ public class HomeController {
     // test
     @GetMapping("/indexFile")
     public String indexFile() {
-        return "/fragment/index";
+        return "fragment/HeaderFooterSave";
     }
 }
