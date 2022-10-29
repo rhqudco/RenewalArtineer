@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        log.info("supportParameter 실행");
+//        log.info("supportParameter 실행");
 
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
         boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
@@ -26,7 +26,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        log.info("resolverArgument 실행");
+//        log.info("resolverArgument 실행");
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         HttpSession session = request.getSession();
         if (session == null) {

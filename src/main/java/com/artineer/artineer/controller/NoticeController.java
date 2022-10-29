@@ -118,8 +118,8 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/noticeView/{noticeNo}")
-    public String viewNotice(@PathVariable("noticeNo") Long noticeNo, Model model,
-                             HttpServletRequest request) {
+    public String viewNotice(@PathVariable("noticeNo") Long noticeNo, Model model) {
+
         List<Notice> notices = noticeService.lookUpNotice(noticeNo);
         if (notices.size() == 0) {
             // 삭제된 글 alert 띄우기.
@@ -150,6 +150,7 @@ public class NoticeController {
     @PostMapping("/deleteNotice/{noticeNo}")
     public String deleteNotice(@PathVariable("noticeNo") Long noticeNo,
                                HttpSession session) throws UserMatchedException {
+
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         Notice findNotice = noticeService.lookUpNotice(noticeNo).get(0);
         if (!findNotice.getMember().getNo().equals(loginMember.getNo())) {
@@ -165,7 +166,10 @@ public class NoticeController {
      * */
     @ResponseBody
     @PostMapping("/writeComment")
-    public String writeComment(@RequestParam("notice-no") Long noticeNo, @RequestParam("comment") String comment, HttpSession session) {
+    public String writeComment(@RequestParam("notice-no") Long noticeNo,
+                               @RequestParam("comment") String comment,
+                               HttpSession session) {
+
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice, checkDeleted.isNotDeleted);
@@ -180,6 +184,7 @@ public class NoticeController {
     public String writeCommentForm(@ModelAttribute("form") SubNoticeCommentDto dto,
                                    @PathVariable("noticeNo") Long noticeNo, HttpSession session,
                                    RedirectAttributes redirectAttributes) {
+
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment parentComment = noticeCommentService.lookUpComment(dto.getParentNo()).get(0);
@@ -199,6 +204,7 @@ public class NoticeController {
                                       @PathVariable("noticeNo") Long noticeNo,
                                       RedirectAttributes redirectAttributes,
                                       HttpSession session) throws UserMatchedException {
+
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if (parentNo != null) { // 부모 인덱스가 들어오면
             NoticeComment comment = noticeCommentService.findByNo(parentNo).get(0); // 찾는다.
@@ -229,6 +235,7 @@ public class NoticeController {
                                      @RequestParam("childNo") Long childNo,
                                      RedirectAttributes redirectAttributes,
                                      HttpSession session) throws UserMatchedException {
+
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment childComment = noticeCommentService.findByNo(childNo).get(0);
         if (loginMember.getNo().equals(childComment.getMember().getNo())) {

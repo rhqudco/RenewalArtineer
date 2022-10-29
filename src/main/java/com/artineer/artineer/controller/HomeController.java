@@ -75,4 +75,10 @@ public class HomeController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(resource);
     }
+
+    // test
+    @GetMapping("/indexFile")
+    public String indexFile() {
+        return "/fragment/index";
+    }
 }
