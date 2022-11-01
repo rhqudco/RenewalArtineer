@@ -36,7 +36,6 @@ public class IntegrationExceptionHandler {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<script>alert('" + ex.getMessage() + "');</script>");
-//        out.println("<script>location.href=document.referrer;</script>");
         out.println("<script>history.go(-1);</script>");
         out.flush();
     }
