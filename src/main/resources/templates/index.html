@@ -9,7 +9,9 @@
     <title>Artineer</title>
 </head>
 <body>
-    <div th:insert="~{fragment/header :: header}">
+    <div th:insert="~{fragment/headerLogin :: headerLogin}" th:if="${session.loginMember}">
+    </div>
+    <div th:insert="~{fragment/header :: header}" th:if="!${session.loginMember}">
     </div>
 
     <div th:insert="~{fragment/footer :: footer}">

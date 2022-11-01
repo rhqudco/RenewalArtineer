@@ -1,0 +1,51 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+#header {
+    position: relative;
+    background: #ffffff;
+    border-bottom: solid 1px #ccc;
+    padding: 4em 0 0 0;
+    margin-bottom: 0 !important;
+    text-align: center;
+}
+
+section {
+    /*background-color: rgb(235, 235, 237);*/
+    background-color: white !important;
+}
+
+body { /* 스크롤 안 보이게 */
+    overflow-x: hidden;
+}
+body::-webkit-scrollbar { /* 스크롤 안 보이게 */
+    overflow-x: hidden
+}
+
+#GoalPic {
+    transform: scale(2.0);
+}
+
+section {
+    padding-left: 50%;
+    text-align: center;
+}
+
+#WeAre {
+    padding-top: 25%;
+    padding-bottom: 40%;
+    margin: 0 auto;
+}
+#Major {
+    padding-bottom: 40%;
+    margin: 0 auto;
+}
+#Goal {
+    padding-bottom: 20%;
+    margin: 0 auto;
+}

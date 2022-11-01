@@ -36,12 +36,12 @@ public class HomeController {
         log.info("index Method");
 
         // 세션에 데이터가 없으면 home
-        if (loginMember == null) {
+/*        if (loginMember == null) {
             return "index";
         }
-        log.info("loginMember = {}", loginMember.getId());
+        log.info("loginMember = {}", loginMember.getId());*/
         // 세션이 유지되면 로그인으로 이동
-        return "loginIndex";
+        return "index";
     }
 
     @GetMapping("/members/logout")
@@ -80,5 +80,10 @@ public class HomeController {
     @GetMapping("/indexFile")
     public String indexFile() {
         return "fragment/HeaderFooterSave";
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
     }
 }

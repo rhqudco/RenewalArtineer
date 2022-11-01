@@ -4,101 +4,77 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/noticeView.js}" src="../js/noticeView.js" ></script>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/board.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <title>Title</title>
 
-    <style>
-        .main {
-            width: 700px;
-            height: 700px;
-            margin: auto;
-            margin-top: 100px;
-        }
-
-        table {
-            text-align: center;
-        }
-
-        .register {
-            text-align: center;
-            display: inline-block;
-            border: 1px solid;
-            width: 80px;
-            height: 30px;
-            background-color: mistyrose;
-            text-decoration: none;
-            line-height: 30px;
-        }
-
-        ul {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        ul li {
-            list-style-type: none;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-    </style>
 </head>
 <body>
-<div class="main">
-    <a href="/board/register" class="register">글 쓰기</a>
-    <table>
-        <colgroup>
-            <col width="50">
-            <col width="300">
-            <col width="150">
-            <col width="200">
-        </colgroup>
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="pageDto : ${pageDto}">
-            <td th:text="${pageDto.no}"></td>
-            <td><a th:href="@{/notice/noticeView/{no}(no=${pageDto.no})}" th:text="${pageDto.title}"></a></td>
-            <td th:text="${pageDto.writer}"></td>
-            <td th:text="${#temporals.format(pageDto.writeDate, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${pageDto.view}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="pagination" th:if="${selectorParam} == ''  and ${parameter} == ''">
-        <ul>
-            <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                <a th:href="@{/notice/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
-            </li>
-        </ul>
+    <div th:insert="~{fragment/headerLogin :: headerLogin}" th:if="${session.loginMember}">
     </div>
-
-    <div class="pagination" th:if="${selectorParam} != '' and ${parameter} != ''">
-        <ul>
-            <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                <a th:href="@{/notice(page=${pageStat.index}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${pageStat.index + 1}"></a>
-            </li>
-        </ul>
+    <div th:insert="~{fragment/header :: header}" th:if="!${session.loginMember}">
     </div>
+    <div class="main" id="area">
+        <a href="/notice/write" class="btn btn-primary">글 쓰기</a>
+        <table class="table table-hover" id="table">
+            <thead class="table-light">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pageDto : ${pageDto}">
+                <td th:text="${pageDto.no}"></td>
+                <td><a th:href="@{/notice/noticeView/{no}(no=${pageDto.no})}" th:text="${pageDto.title}"></a></td>
+                <td th:text="${pageDto.writer}"></td>
+                <td th:text="${#temporals.format(pageDto.writeDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${pageDto.view}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-    <div class="search-area">
-        <form action="noticeBoard.html" th:action method="get">
-            <select class="form-control" id="selector" name="selector">
-                <option value="title">제목</option>
-                <option value="writer">작성자</option>
-            </select>
-            <input type="hidden" id="selectorParam" name="selectorParam">
-            <input type="text" id="parameter" name="parameter">
-            <input type="submit" value="검색" id="search-btn">
-        </form>
+        <div class="text-center" th:if="${selectorParam} == ''  and ${parameter} == ''">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link" th:href="@{/notice/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="text-center" th:if="${selectorParam} != '' and ${parameter} != ''">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link" th:href="@{/notice(page=${pageStat.index}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${pageStat.index + 1}"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="search-area">
+            <form action="noticeBoard.html" th:action method="get">
+                <select class="form-control" id="selector" name="selector">
+                    <option value="title">제목</option>
+                    <option value="writer">작성자</option>
+                </select>
+                <input type="hidden" id="selectorParam" name="selectorParam">
+                <input type="text" id="parameter" name="parameter">
+                <input type="submit" value="검색" id="search-btn">
+            </form>
+        </div>
     </div>
-</div>
+    <div th:insert="~{fragment/footer :: footer}">
+    </div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js" th:src="@{/assets/js/jquery.min.js}"></script>
+    <script src="assets/js/jquery.dropotron.min.js" th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script src="assets/js/browser.min.js" th:src="@{/assets/js/browser.min.js}"></script>
+    <script src="assets/js/breakpoints.min.js" th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script src="assets/js/util.js" th:src="@{/assets/js/util.js}"></script>
+    <script src="assets/js/main.js" th:src="@{/assets/js/main.js}"></script>
 </body>
 </html>

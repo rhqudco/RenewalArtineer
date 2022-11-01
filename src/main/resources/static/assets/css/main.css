@@ -82,10 +82,10 @@ input, select, textarea {
 		box-sizing: inherit;
 	}
 
-	body {
-		background: #252122;
-		background-image: url("images/bg02.png");
-	}
+	/*body {*/
+	/*	background: #252122;*/
+	/*	background-image: url("images/bg02.png");*/
+	/*}*/
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 			-moz-animation: none !important;
@@ -2068,7 +2068,8 @@ input, select, textarea {
 		position: relative;
 		background: #ffffff;
 		border-bottom: solid 1px #ccc;
-		padding: 4em 0 3em 0;
+		padding: 4em 0 0 0;
+		margin-bottom: 3em;
 		text-align: center;
 	}
 
@@ -2296,9 +2297,14 @@ input, select, textarea {
 
 	#footer {
 		position: relative;
-		color: #858484;
+		background: #252122;
+		background-image: url("images/bg02.png");
 		/*padding: 1em 0;*/
 	}
+
+#copyright > .links > li {
+	color: white !important;
+}
 
 		#footer:before {
 			content: '';
@@ -2396,7 +2402,8 @@ input, select, textarea {
 		/* Header */
 
 			#header {
-				padding: 4em 0 3em 0;
+				padding: 4em 0 0 0;
+				margin-bottom: 3em;
 			}
 
 		/* Banner */
