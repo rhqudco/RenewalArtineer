@@ -49,11 +49,15 @@
             </ul>
         </div>
 
-        <div class="text-center" th:if="${selectorParam} != '' and ${parameter} != ''">
-            <ul class="pagination justify-content-center">
+        <div class="page" th:if="${selectorParam} != '' and ${parameter} != ''">
+            <ul class="pagination modal">
+                <li class="page-item"><a class="first" href="#">처음</a></li>
+                <li class="page-item"><a class="arrow left"><<</a></li>
                 <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
                     <a class="page-link" th:href="@{/notice(page=${pageStat.index}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${pageStat.index + 1}"></a>
                 </li>
+                <li class="page-item"><a class="arrow right">>></a></li>
+                <li class="page-item"><a class="first">끝</a></li>
             </ul>
         </div>
 
@@ -72,12 +76,5 @@
     </div>
     <div th:insert="~{fragment/footer :: footer}">
     </div>
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js" th:src="@{/assets/js/jquery.min.js}"></script>
-    <script src="assets/js/jquery.dropotron.min.js" th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-    <script src="assets/js/browser.min.js" th:src="@{/assets/js/browser.min.js}"></script>
-    <script src="assets/js/breakpoints.min.js" th:src="@{/assets/js/breakpoints.min.js}"></script>
-    <script src="assets/js/util.js" th:src="@{/assets/js/util.js}"></script>
-    <script src="assets/js/main.js" th:src="@{/assets/js/main.js}"></script>
 </body>
 </html>
