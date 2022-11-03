@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/noticeView.js}" src="../js/noticeView.js" ></script>
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/board.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/noticeView.js}" src="/js/noticeView.js" ></script>
+    <link rel="stylesheet" href="assets/css/main.css" th:href="@{/assets/css/main.css}"/>
+    <link rel="stylesheet" href="css/header.css" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" href="css/board.css" th:href="@{/css/board.css}"/>
+<!--    <link rel="stylesheet" href="css/bootstrap.min.css" />-->
+    <style>
 
+    </style>
+    <title>Artineer</title>
 </head>
 <body>
     <div th:insert="~{fragment/headerLogin :: headerLogin}" th:if="${session.loginMember}">
@@ -17,7 +19,7 @@
     <div th:insert="~{fragment/header :: header}" th:if="!${session.loginMember}">
     </div>
     <div class="main" id="area">
-        <a href="/notice/write" class="btn btn-primary">글 쓰기</a>
+
         <table class="table table-hover" id="table">
             <thead class="table-light">
             <tr>
@@ -55,7 +57,7 @@
             </ul>
         </div>
 
-        <div class="search-area">
+        <div id="search-area">
             <form action="noticeBoard.html" th:action method="get">
                 <select class="form-control" id="selector" name="selector">
                     <option value="title">제목</option>
@@ -66,6 +68,7 @@
                 <input type="submit" value="검색" id="search-btn">
             </form>
         </div>
+        <a href="/notice/write" class="write-button">글 쓰기</a>
     </div>
     <div th:insert="~{fragment/footer :: footer}">
     </div>

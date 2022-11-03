@@ -1,8 +1,39 @@
 #table {
     width: 70%;
-
+    margin-left:auto;
+    margin-right:auto;
 }
 #area {
     margin: 0 auto;
     justify-content: center;
+}
+.table-light > tr {
+    text-align: center;
+}
+.write-button {
+    background-color: #21cbd3;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 4px 60px 80%;
+    cursor: pointer;
+}
+
+#search-area {
+    /*display: inline-block;*/
+    width: 50%;
+    margin-bottom: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+#search-area > #parameter {
+    width: 60em !important;
+}
+.pagination {
+    display: inline;
 }
