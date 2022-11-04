@@ -52,7 +52,7 @@
                     </li>
 
                     <li th:if="${start > 1}">
-                        <a th:href="@{/notice/(page=${start - maxPage})}" class="arrow prev" ></a>
+                        <a th:href="@{/notice/(page=${start - maxPage - 1})}" class="arrow prev" ></a>
                     </li>
 
                     <li th:each="page: ${#numbers.sequence(start, end)}">
@@ -60,7 +60,7 @@
                     </li>
 
                     <li th:if="${end < pageDto.totalPages}">
-                        <a th:href="@{/notice/(page=${start + maxPage})}" class="arrow next" ></a>
+                        <a th:href="@{/notice/(page=${start + maxPage - 1})}" class="arrow next" ></a>
                     </li>
 
                     <li th:if="${end < pageDto.totalPages}">
