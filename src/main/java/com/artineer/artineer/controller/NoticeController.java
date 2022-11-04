@@ -155,13 +155,14 @@ public class NoticeController {
         if (!findNotice.getMember().getNo().equals(loginMember.getNo())) {
             throw new UserMatchedException("본인만 삭제할 수 있습니다.");
         }
-        noticeService.deleteNotice(noticeNo);
         noticeCommentService.deleteAllCommentByNotice(noticeNo);
+        noticeService.deleteNotice(noticeNo);
+
         return "redirect:/notice";
     }
 
     /*
-     * 댓글 작섣
+     * 댓글 작성
      * */
     @ResponseBody
     @PostMapping("/writeComment")

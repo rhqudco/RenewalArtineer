@@ -1,3 +1,6 @@
+.main {
+    max-width: 1480px;
+}
 #board-name {
     margin: 0 auto;
     text-align: center;

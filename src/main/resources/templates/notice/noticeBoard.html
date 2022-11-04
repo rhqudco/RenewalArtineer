@@ -52,7 +52,7 @@
                     </li>
 
                     <li th:if="${start > 1}">
-                        <a th:href="@{/notice/(page=${start - maxPage - 1})}" class="arrow prev" ></a>
+                        <a th:href="@{/notice/(page=${start - maxPage + 8})}" class="arrow prev" ></a>
                     </li>
 
                     <li th:each="page: ${#numbers.sequence(start, end)}">
@@ -81,7 +81,7 @@
                     </li>
 
                     <li th:if="${start > 1}">
-                        <a th:href="@{/notice/(page=${start - maxPage - 1}, selectorParam=${selectorParam}, parameter=${parameter})}" class="arrow prev" ></a>
+                        <a th:href="@{/notice/(page=${start - maxPage + 8}, selectorParam=${selectorParam}, parameter=${parameter})}" class="arrow prev" ></a>
                     </li>
 
                     <li th:each="page: ${#numbers.sequence(start, end)}">
@@ -108,7 +108,7 @@
                     <option value="writer">작성자</option>
                 </select>
                 <input type="hidden" id="selectorParam" name="selectorParam">
-                <input type="text" id="parameter" name="parameter">
+                <input type="text" id="parameter" name="parameter" th:value="${parameter}">
                 <input type="submit" value="검색" id="search-btn">
             </form>
         </div>
