@@ -43,32 +43,63 @@
         </table>
 
         <div class="page-wrap">
-            <div class="page-nation" th:if="${selectorParam} == ''  and ${parameter} == ''">
+            <div class="page-nation" th:if="${selectorParam} == ''  and ${parameter} == ''"
+                 th:with="start=${(pageDto.number/maxPage)*maxPage + 1},
+                      end=(${(pageDto.totalPages == 0) ? 1 : (start + (maxPage - 1) < pageDto.totalPages ? start + (maxPage - 1) : pageDto.totalPages)})" >
                 <ul class="pagination">
-                    <li><a class="arrow pprev" href="#"></a></li>
-                    <li><a class="arrow prev" href="#"></a></li>
-                    <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                        <a class="page-link" th:href="@{/notice/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
+                    <li th:if="${start > 1}">
+                        <a th:href="@{/notice/(page=0)}" class="arrow pprev" ></a>
                     </li>
-                    <li><a class="arrow next" href="#"></a></li>
-                    <li><a class="arrow nnext" href="#"></a></li>
+
+                    <li th:if="${start > 1}">
+                        <a th:href="@{/notice/(page=${start - maxPage})}" class="arrow prev" ></a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(start, end)}">
+                        <a th:href="@{/notice/(page=${page - 1})}" th:text="${page}"></a>
+                    </li>
+
+                    <li th:if="${end < pageDto.totalPages}">
+                        <a th:href="@{/notice/(page=${start + maxPage})}" class="arrow next" ></a>
+                    </li>
+
+                    <li th:if="${end < pageDto.totalPages}">
+                        <a th:href="@{/notice/(page=${pageDto.totalPages - 1})}" class="arrow nnext"></a>
+                    </li>
+
                 </ul>
             </div>
         </div>
 
         <div class="page-wrap">
-            <div class="page-nation" th:if="${selectorParam} != '' and ${parameter} != ''">
+            <div class="page-nation" th:if="${selectorParam} != '' and ${parameter} != ''"
+                 th:with="start=${(pageDto.number/maxPage)*maxPage + 1},
+                      end=(${(pageDto.totalPages == 0) ? 1 : (start + (maxPage - 1) < pageDto.totalPages ? start + (maxPage - 1) : pageDto.totalPages)})" >
                 <ul class="pagination">
-                    <li class="page-item"><a class="first" href="#">처음</a></li>
-                    <li class="page-item"><a class="arrow left"><<</a></li>
-                    <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                        <a class="page-link" th:href="@{/notice(page=${pageStat.index}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${pageStat.index + 1}"></a>
+                    <li th:if="${start > 1}">
+                        <a th:href="@{/notice/(page=0, selectorParam=${selectorParam}, parameter=${parameter})}" class="arrow pprev" ></a>
                     </li>
-                    <li class="page-item"><a class="arrow right">>></a></li>
-                    <li class="page-item"><a class="first">끝</a></li>
+
+                    <li th:if="${start > 1}">
+                        <a th:href="@{/notice/(page=${start - maxPage - 1}, selectorParam=${selectorParam}, parameter=${parameter})}" class="arrow prev" ></a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(start, end)}">
+                        <a th:href="@{/notice(page=${page - 1}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${page}"></a>
+                    </li>
+
+                    <li th:if="${end < pageDto.totalPages}">
+                        <a th:href="@{/notice/(page=${start + maxPage - 1}, selectorParam=${selectorParam}, parameter=${parameter})}" class="arrow next" ></a>
+                    </li>
+
+                    <li th:if="${end < pageDto.totalPages}">
+                        <a th:href="@{/notice/(page=${pageDto.totalPages - 1}, selectorParam=${selectorParam}, parameter=${parameter})}" class="arrow nnext"></a>
+                    </li>
+
                 </ul>
             </div>
         </div>
+
         <a href="/notice/write" class="write-button">글 쓰기</a>
         <div id="search-area">
             <form action="noticeBoard.html" th:action method="get">

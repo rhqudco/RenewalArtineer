@@ -72,12 +72,11 @@ public class NoticeController {
 
         Page<NoticePageDto> noticeTitleOrId = noticeService.findNoticeTitleOrId(pageable, condition);
 
-        int totalPages = noticeTitleOrId.getTotalPages();
-
-        log.info("totalPages = {}", totalPages);
+        int totalPage = noticeTitleOrId.getTotalPages();
 
         model.addAttribute("pageDto", noticeTitleOrId);
-        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("maxPage", 10);
+        model.addAttribute("totalPage", totalPage);
         model.addAttribute("selectorParam", selectorParam);
         model.addAttribute("parameter", parameter);
 
