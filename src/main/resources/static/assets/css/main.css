@@ -1503,6 +1503,7 @@ input, select, textarea {
 
 		table tr {
 			border-top: solid 1px #dddddd;
+			text-align: center;
 		}
 
 			table tr:first-child {
@@ -1514,7 +1515,8 @@ input, select, textarea {
 		}
 
 		table th {
-			text-align: left;
+			/*text-align: left;*/
+			font-size: large;
 			padding: 0.5em 1em 0.5em 1em;
 			font-weight: 700;
 			margin: 0 0 1em 0;

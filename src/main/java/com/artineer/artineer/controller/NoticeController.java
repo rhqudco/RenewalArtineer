@@ -60,7 +60,7 @@ public class NoticeController {
     }*/
 
     @GetMapping("/notice")
-    public String viewNoticePageBoard(@PageableDefault(size = 15) Pageable pageable, NoticeCondition condition, Model model,
+    public String viewNoticePageBoard(@PageableDefault(size = 10) Pageable pageable, NoticeCondition condition, Model model,
                                       @RequestParam(value = "selectorParam", required = false, defaultValue = "") String selectorParam,
                                       @RequestParam(value = "parameter", required = false, defaultValue = "") String parameter) {
 

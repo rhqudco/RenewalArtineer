@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="css/header.css" th:href="@{/css/header.css}"/>
     <link rel="stylesheet" href="css/board.css" th:href="@{/css/board.css}"/>
 <!--    <link rel="stylesheet" href="css/bootstrap.min.css" />-->
-    <style>
-
-    </style>
     <title>Artineer</title>
 </head>
 <body>
@@ -19,48 +16,60 @@
     <div th:insert="~{fragment/header :: header}" th:if="!${session.loginMember}">
     </div>
     <div class="main" id="area">
+        <div id="board-name">
+            <h1>공지사항</h1>
+            <p>Notice</p>
+        </div>
 
         <table class="table table-hover" id="table">
             <thead class="table-light">
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>등록일</th>
-                <th>조회수</th>
+                <th width="15%">번호</th>
+                <th width="45%">제목</th>
+                <th width="15%">작성자</th>
+                <th width="15%">등록일</th>
+                <th width="10%">조회수</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="pageDto : ${pageDto}">
                 <td th:text="${pageDto.no}"></td>
-                <td><a th:href="@{/notice/noticeView/{no}(no=${pageDto.no})}" th:text="${pageDto.title}"></a></td>
+                <td id="title"><a th:href="@{/notice/noticeView/{no}(no=${pageDto.no})}" th:text="${pageDto.title}"></a></td>
                 <td th:text="${pageDto.writer}"></td>
-                <td th:text="${#temporals.format(pageDto.writeDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(pageDto.writeDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${pageDto.view}"></td>
             </tr>
             </tbody>
         </table>
 
-        <div class="text-center" th:if="${selectorParam} == ''  and ${parameter} == ''">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a class="page-link" th:href="@{/notice/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
-                </li>
-            </ul>
+        <div class="page-wrap">
+            <div class="page-nation" th:if="${selectorParam} == ''  and ${parameter} == ''">
+                <ul class="pagination">
+                    <li><a class="arrow pprev" href="#"></a></li>
+                    <li><a class="arrow prev" href="#"></a></li>
+                    <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a class="page-link" th:href="@{/notice/(page=${pageStat.index})}" th:text="${pageStat.index + 1}"></a>
+                    </li>
+                    <li><a class="arrow next" href="#"></a></li>
+                    <li><a class="arrow nnext" href="#"></a></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="page" th:if="${selectorParam} != '' and ${parameter} != ''">
-            <ul class="pagination modal">
-                <li class="page-item"><a class="first" href="#">처음</a></li>
-                <li class="page-item"><a class="arrow left"><<</a></li>
-                <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a class="page-link" th:href="@{/notice(page=${pageStat.index}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${pageStat.index + 1}"></a>
-                </li>
-                <li class="page-item"><a class="arrow right">>></a></li>
-                <li class="page-item"><a class="first">끝</a></li>
-            </ul>
+        <div class="page-wrap">
+            <div class="page-nation" th:if="${selectorParam} != '' and ${parameter} != ''">
+                <ul class="pagination">
+                    <li class="page-item"><a class="first" href="#">처음</a></li>
+                    <li class="page-item"><a class="arrow left"><<</a></li>
+                    <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a class="page-link" th:href="@{/notice(page=${pageStat.index}, selectorParam=${selectorParam}, parameter=${parameter})}" th:text="${pageStat.index + 1}"></a>
+                    </li>
+                    <li class="page-item"><a class="arrow right">>></a></li>
+                    <li class="page-item"><a class="first">끝</a></li>
+                </ul>
+            </div>
         </div>
-
+        <a href="/notice/write" class="write-button">글 쓰기</a>
         <div id="search-area">
             <form action="noticeBoard.html" th:action method="get">
                 <select class="form-control" id="selector" name="selector">
@@ -72,7 +81,7 @@
                 <input type="submit" value="검색" id="search-btn">
             </form>
         </div>
-        <a href="/notice/write" class="write-button">글 쓰기</a>
+
     </div>
     <div th:insert="~{fragment/footer :: footer}">
     </div>

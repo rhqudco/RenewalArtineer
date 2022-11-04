@@ -1,8 +1,43 @@
+#board-name {
+    margin: 0 auto;
+    text-align: center;
+}
+#board-name > h1 {
+    font-weight: bold;
+    font-size: 50px;
+    color: #20c5cc;
+}
+#board-name > p {
+    margin-top: 5px;
+    color: #171718;
+}
+
 #table {
+    font-family: Malgun Gothic;
     width: 70%;
     margin-left:auto;
     margin-right:auto;
 }
+#table > th {
+    text-align: center !important;
+    font-size: larger;
+}
+#table > tbody {
+    font-size: larger;
+    font-weight: normal;
+
+}
+
+#title {
+    text-align: left;
+    margin-left: 1em;
+}
+
+#title > a {
+    text-decoration: none;
+    color: black;
+}
+
 #area {
     margin: 0 auto;
     justify-content: center;
@@ -11,16 +46,19 @@
     text-align: center;
 }
 .write-button {
-    background-color: #21cbd3;
+    margin-right: 15%;
+    background-color: #20c5cc;
     border: none;
     color: white;
-    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 4px 60px 80%;
+    float: right;
     cursor: pointer;
+    border-radius: 6px;
+    padding: 0.65em 1.5em 0.65em 1.5em;
+    font-weight: bold;
 }
 
 #search-area {
@@ -34,6 +72,63 @@
 #search-area > #parameter {
     width: 60em !important;
 }
-.pagination {
-    display: inline;
+#search-area > form {
+    text-align: center;
+}
+
+.page-wrap {
+    text-align:center !important;
+    font-size:0;
+    margin-bottom: 3%;
+}
+.page-nation {
+    display:inline-block;
+}
+.page-nation .none {
+    display:none;
+}
+.page-nation a {
+    display:block;
+    margin:0 3px;
+    border:1px solid #e6e6e6;
+    width:38px;
+    height:38px;
+    line-height:38px;
+    text-align:center;
+    background-color:#fff;
+    font-size:15px;
+    color:#999999;
+    text-decoration:none;
+}
+.page-nation .arrow {
+    border:1px solid #ccc;
+}
+.page-nation .pprev {
+    background:#f8f8f8 url('../img/page_pprev.png') no-repeat center center;
+    margin-left:0;
+}
+.page-nation .prev {
+    background:#f8f8f8 url('../img/page_prev.png') no-repeat center center;
+    margin-right:7px;
+}
+.page-nation .next {
+    background:#f8f8f8 url('../img/page_next.png') no-repeat center center;
+    margin-left:7px;
+}
+.page-nation .nnext {
+    background:#f8f8f8 url('../img/page_nnext.png') no-repeat center center;
+    margin-right:0;
+}
+.page-nation a.active {
+    background-color:#42454c;
+    color:#fff;
+    border:1px solid #42454c;
+}
+
+.page-nation > ul {
+    list-style: none;
+    margin: 0 auto ;
+}
+.page-nation > ul > li {
+    float: left;
 }
