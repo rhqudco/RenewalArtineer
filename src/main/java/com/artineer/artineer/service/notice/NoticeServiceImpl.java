@@ -52,7 +52,8 @@ public class NoticeServiceImpl implements NoticeService{
         Page<Notice> notices = noticeJpaRepository.searchNoticePage(condition, pageable);
 
         return notices.map(m ->
-                NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getId(), m.getWriteDate(), m.getTitle(), m.getView()));
+                NoticePageDto.createNoticePageDto(m.getNo(), m.getMember().getName(), m.getWriteDate(), m.getTitle(), m.getView(), m.getMember().getGeneration())
+        );
     }
 
     @Override

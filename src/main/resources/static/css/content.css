@@ -1,3 +1,91 @@
 .container {
     margin-bottom: 5% !important;
+    font-family: Malgun Gothic;
+}
+.container {
+    width: 70%;
+    max-width: 920px;
+}
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+.sub-comment-write-area {
+    display: none;
+}
+/*
+이미지 크기 조정
+*/
+img {
+    max-width: 920px;
+}
+#detail-area {
+    white-space:pre;
+    border-bottom: 1px solid #5d5d5d !important;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+#detail-area > img{
+    text-align: center;
+}
+#detail-area > p {
+    margin-bottom: 0 !important;
+}
+
+.container-header {
+    border-top: 0.7px solid gray;
+    border-bottom: 0.7px solid gray;
+    /*padding-bottom: 1%;*/
+}
+.header-content {
+    display: inline-block;
+    width: 15%;
+    height: 2em;
+    background-color: #f4f5fa;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 2em;
+}
+.header-value {
+    display: inline-block;
+    font-weight: bolder;
+    font-size: 16px;
+    margin-left: 2%;
+    max-width: 600px;
+}
+#writer {
+    display: inline-block;
+    width: 45%;
+}
+#file {
+    display: inline-block;
+    width: 45%;
+}
+
+input[type=submit], input[type=button] {
+    background-color: #20c5cc !important;
+    padding: 0.3em 0.7em 0.3em 0.7em !important;
+    margin: 0.1em !important;
+}
+
+hr {
+    border-top: solid 1px gray !important;
+    margin: 0.3em 0 0.3em 0 !important;
+}
+
+.btn-area {
+    margin: 1em;
+    text-align: right;
+    /*display: inline-block;*/
+}
+.comment-btn-area {
+    text-align: right;
+    display: inline-block;
+}
+.comment-p-area {
+    margin: 0;
+    font-weight: bolder;
+    font-size: 20px;
+    color: black;
 }

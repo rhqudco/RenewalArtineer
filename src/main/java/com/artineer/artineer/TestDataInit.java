@@ -25,10 +25,10 @@ public class TestDataInit {
     @PostConstruct
     public void init() {
         Member member = new Member("admin", webSecurityConfig.getPasswordEncoder().encode("1"),
-                "고병채", "rhqudco1204@naver.com");
+                "고병채", "rhqudco1204@naver.com", "3");
         memberService.join(member);
         Member member2 = new Member("admin2", webSecurityConfig.getPasswordEncoder().encode("1"),
-                "고병채", "rhqudco1204@naver.com");
+                "고병채", "rhqudco1204@naver.com", "4");
         memberService.join(member2);
 
         for (int i = 1; i <= 40; i++) {

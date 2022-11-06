@@ -9,25 +9,7 @@
     <link rel="stylesheet" href="assets/css/main.css" th:href="@{/assets/css/main.css}"/>
     <link rel="stylesheet" href="css/header.css" th:href="@{/css/header.css}"/>
     <link rel="stylesheet" href="css/content.css" th:href="@{/css/content.css}"/>
-    <style>
-        .container {
-            max-width: 560px;
-        }
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-        .sub-comment-write-area {
-            display: none;
-        }
-         /*
-         이미지 크기 조정
-         */
-        img {
-            max-width: 1280px;
-            max-height: 720px;
-        }
-    </style>
+
 </head>
 <body>
     <div th:insert="~{fragment/headerLogin :: headerLogin}" th:if="${session.loginMember}">
@@ -38,16 +20,41 @@
     <div class="container">
         <form method="post" action="noticeView.html">
             <input type="hidden" th:field="${notice.no}" id="notice-no">
-            <p th:text="${notice.writer}"></p>
-            <p th:text="${notice.title}"></p>
-            <div id="detail-area" style="white-space:pre;" th:utext="${notice.detail}"></div>
-            첨부파일: <a th:if="${notice.uploadFile}" th:href="|/attach/${notice.getNo}|" th:text="${notice.getUploadFile().getUploadFileName()}" />
-            <br/>
-            <input type="submit" value="글 삭제" th:formaction="|/deleteNotice/${notice.no}|">
+            <div class="container-header">
+                <span class="header-content">제목</span>
+                <span class="header-value" th:text="${notice.title}"></span>
+            </div>
+
+            <div class="container-header">
+                <span class="header-content">작성자</span>
+                <span class="header-value" id="writer" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>
+                <span class="header-content">작성시간</span>
+                <span class="header-value" th:text="${#temporals.format(notice.writeDate, 'yyyy-MM-dd (HH:mm)')}"></span>
+            </div>
+
+            <div class="container-header">
+                <span class="header-content">첨부파일</span>
+                <span class="header-value" id="file">
+                    <a th:if="${notice.uploadFile}"
+                       th:href="|/attach/${notice.getNo}|"
+                       th:text="${notice.getUploadFile().getUploadFileName()}"/>
+                </span>
+                <span class="header-content">조회수</span>
+                <span class="header-value" th:text="${notice.view}"></span>
+            </div>
+
+            <div id="detail-area" th:utext="${notice.detail}">
+
+            </div>
+            <div class="btn-area">
+                <input type="submit" value="글 삭제" th:formaction="|/deleteNotice/${notice.no}|">
+                <input type="submit" value="글 수정" th:formaction="|/deleteNotice/${notice.no}|">
+                <input type="button" value="목록" id="list-btn">
+            </div>
         </form>
         <hr>
         <div th:if="${noticeComments}">
-            댓글
+            <p class="comment-p-area">댓글</p>
             <hr>
             <div th:each="noticeComments : ${noticeComments}">
                 <div th:id="|comment-area-${noticeComments.no}|">
@@ -58,11 +65,13 @@
     <!--                        <span th:utext="${noticeComments.detail}"></span>-->
     <!--                    </div>-->
     <!--                    <div th:if="${noticeComments.checkDeleted == 'isNotDeleted'}">-->
-                            <span th:utext="${noticeComments.member.id}"></span> <span th:utext="${noticeComments.detail}"></span>
+                        <span class="header-content" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>
+                        <span class="header-value" th:utext="${noticeComments.detail}"></span>
     <!--                    </div>-->
-
-                        <input type="submit" value="삭제" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
-                        <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
+                        <div class="comment-btn-area">
+                            <input type="submit" value="삭제" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
+                            <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
+                        </div>
                         <div class="sub-comment-write-area">
                             <input type="text" th:field="*{detail}" id="detail" name="detail" placeholder="내용을 입력하세요.">
                             <div class="field-error" th:errors="*{detail}">
@@ -75,9 +84,12 @@
                     <div id="child-comment-area" th:if="${noticeComments.childComments}">
                         <div th:each="child : ${noticeComments.childComments}">
                             <form action="noticeView.html" method="post">
-                                <span th:utext="${child.member.id}"></span> <span th:utext="${child.detail}"></span>
+                                <span class="header-content" th:text="${child.writer} + ' (' + ${child.generation} + '기' + ')'"></span>
+                                <span class="header-value" th:text="${child.detail}"></span>
+                                <div class="comment-btn-area">
     <!--                            <input type="button" value="삭제" id="delete-child-comment" class="delete-child-comment" th:if="!${noticeComments.parentComment}">-->
-                                <input type="submit" value="삭제" th:formaction="|/deleteChildComment/${noticeComments.notice.no}|">
+                                    <input type="submit" value="삭제" th:formaction="|/deleteChildComment/${noticeComments.notice.no}|">
+                                </div>
                                 <input type="hidden" id="childNo" name="childNo" th:value="${child.no}">
                                 <hr>
                             </form>

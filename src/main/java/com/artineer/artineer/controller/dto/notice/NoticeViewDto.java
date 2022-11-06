@@ -17,8 +17,9 @@ public class NoticeViewDto {
     private String detail;
     private UploadFile uploadFile;
     private Long view;
+    private String generation;
 
-    public NoticeViewDto(Long no, String writer, LocalDateTime writeDate, String title, String detail, UploadFile uploadFile, Long view) {
+    public NoticeViewDto(Long no, String writer, LocalDateTime writeDate, String title, String detail, UploadFile uploadFile, Long view, String generation) {
         this.no = no;
         this.writer = writer;
         this.writeDate = writeDate;
@@ -26,9 +27,10 @@ public class NoticeViewDto {
         this.detail = detail;
         this.uploadFile = uploadFile;
         this.view = view;
+        this.generation = generation;
     }
 
     public static NoticeViewDto convertNoticeDto(Notice notice) {
-        return new NoticeViewDto(notice.getNo(), notice.getMember().getId(), notice.getWriteDate(), notice.getTitle(), notice.getDetail(), notice.getUploadFile(), notice.getView());
+        return new NoticeViewDto(notice.getNo(), notice.getMember().getName(), notice.getWriteDate(), notice.getTitle(), notice.getDetail(), notice.getUploadFile(), notice.getView(), notice.getMember().getGeneration());
     }
 }

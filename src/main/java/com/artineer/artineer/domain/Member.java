@@ -34,11 +34,12 @@ public class Member {
     }
 
     // 테스트용 데이터 위한 생성자
-    public Member(String id, String password, String name, String email) {
+    public Member(String id, String password, String name, String email, String generation) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.email = email;
+        this.generation = generation;
     }
 
     public Member(String id, String password, String name, Birth birth, String email, Phone phone, String gender, String generation, Level level) {

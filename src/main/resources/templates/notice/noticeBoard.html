@@ -35,7 +35,7 @@
             <tr th:each="pageDto : ${pageDto}">
                 <td th:text="${pageDto.no}"></td>
                 <td id="title"><a th:href="@{/notice/noticeView/{no}(no=${pageDto.no})}" th:text="${pageDto.title}"></a></td>
-                <td th:text="${pageDto.writer}"></td>
+                <td th:text="${pageDto.writer} + ' (' + ${pageDto.generation} + '기' + ')'"></td>
                 <td th:text="${#temporals.format(pageDto.writeDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${pageDto.view}"></td>
             </tr>
