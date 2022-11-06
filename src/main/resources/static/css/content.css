@@ -30,6 +30,9 @@ img {
 }
 #detail-area > p {
     margin-bottom: 0 !important;
+
+    max-width: 1280px;
+    max-height: 720px;
 }
 
 .container-header {
@@ -79,13 +82,20 @@ hr {
     text-align: right;
     /*display: inline-block;*/
 }
+
 .comment-btn-area {
     text-align: right;
     display: inline-block;
 }
+
 .comment-p-area {
     margin: 0;
     font-weight: bolder;
     font-size: 20px;
     color: black;
+}
+
+#detail-area {
+    border-bottom: 1px solid #5d5d5d !important;
+    padding: 1%;
 }
