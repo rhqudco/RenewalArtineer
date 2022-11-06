@@ -60,7 +60,6 @@
                 <div th:id="|comment-area-${noticeComments.no}|">
                     <form action="noticeView.html" method="post" th:object="${form}">
                         <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
-
     <!--                    <div th:if="${noticeComments.checkDeleted == 'isDeleted'}">-->
     <!--                        <span th:utext="${noticeComments.detail}"></span>-->
     <!--                    </div>-->
