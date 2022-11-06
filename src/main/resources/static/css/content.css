@@ -1,3 +1,59 @@
 .container {
     margin-bottom: 5% !important;
+    font-family: Malgun Gothic;
+}
+.container {
+    width: 70%;
+    max-width: 920px;
+}
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+.sub-comment-write-area {
+    display: none;
+}
+/*
+이미지 크기 조정
+*/
+img {
+    max-width: 1280px;
+    max-height: 720px;
+}
+#detail-area {
+    white-space:pre;
+}
+
+.container-header {
+    border-top: 0.7px solid gray;
+    border-bottom: 0.7px solid gray;
+    /*padding-bottom: 1%;*/
+}
+.header-content {
+    display: inline-block;
+    width: 15%;
+    height: 2em;
+    background-color: #f4f5fa;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 2em;
+}
+.header-value {
+    font-weight: bolder;
+    font-size: 16px;
+    margin-left: 2%;
+}
+#writer {
+    display: inline-block;
+    width: 45%;
+}
+#file {
+    display: inline-block;
+    width: 45%;
+}
+
+#detail-area {
+    border-bottom: 1px solid #5d5d5d !important;
+    padding: 1%;
 }
