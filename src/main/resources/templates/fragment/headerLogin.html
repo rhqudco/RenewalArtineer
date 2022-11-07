@@ -37,10 +37,9 @@
                     <ul>
                         <li class="header-menu"><a th:href="|@{/members/modify/{memberNo}(memberNo=${session.loginMember.no})}|" >회원수정</a></li>
                         <li class="header-menu"><a href="/members/logout">로그아웃</a></li>
-<!--                        <li class="header-menu"><a href="#">시험족보</a></li>-->
-<!--                        <li class="header-menu"><a href="#">활동사진</a></li>-->
                     </ul>
                 </li>
+                <li><a href="#" th:text="${session.loginMember.name} + ' (' + ${session.loginMember.generation} + ')기'"></a></li>
             </ul>
         </nav>
     </section>

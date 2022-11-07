@@ -58,22 +58,22 @@
             <p class="comment-p-area">댓글</p>
             <hr>
             <div th:each="noticeComments : ${noticeComments}">
-                <div th:id="|comment-area-${noticeComments.no}|">
-                    <form action="noticeView.html" method="post" th:object="${form}">
+                <div th:id="|comment-area-${noticeComments.no}|" class="all-comment-area">
+                    <form action="noticeView.html" method="post" th:object="${form}" class="comment-form">
                         <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
     <!--                    <div th:if="${noticeComments.checkDeleted == 'isDeleted'}">-->
     <!--                        <span th:utext="${noticeComments.detail}"></span>-->
     <!--                    </div>-->
     <!--                    <div th:if="${noticeComments.checkDeleted == 'isNotDeleted'}">-->
-                        <span class="header-content" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>
-                        <span class="header-value" th:utext="${noticeComments.detail}"></span>
+                        <span class="comment-header-content" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>
+                        <span class="header-value-comment" th:utext="${noticeComments.detail}"></span>
     <!--                    </div>-->
                         <div class="comment-btn-area">
-                            <input type="submit" value="삭제" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
+                            <input type="submit" value="삭제" class="delete" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
                             <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
                         </div>
                         <div class="sub-comment-write-area">
-                            <input type="text" th:field="*{detail}" id="detail" name="detail" placeholder="내용을 입력하세요.">
+                            <textarea th:field="*{detail}" id="detail" name="detail" class="comment-area" placeholder="내용을 입력하세요."></textarea>
                             <div class="field-error" th:errors="*{detail}">
                                 내용을 입력하세요.
                             </div>
@@ -81,14 +81,14 @@
                         </div>
                     </form>
                     <hr>
-                    <div id="child-comment-area" th:if="${noticeComments.childComments}">
+                    <div id="child-comment-area" class="child-comment-area" th:if="${noticeComments.childComments}">
                         <div th:each="child : ${noticeComments.childComments}">
-                            <form action="noticeView.html" method="post">
-                                <span class="header-content" th:text="${child.writer} + ' (' + ${child.generation} + '기' + ')'"></span>
-                                <span class="header-value" th:text="${child.detail}"></span>
+                            <form action="noticeView.html" method="post" class="comment-form">
+                                <span class="comment-header-content" th:text="${child.writer} + ' (' + ${child.generation} + '기' + ')'"></span>
+                                <span class="header-value-comment" th:utext="${child.detail}"></span>
                                 <div class="comment-btn-area">
     <!--                            <input type="button" value="삭제" id="delete-child-comment" class="delete-child-comment" th:if="!${noticeComments.parentComment}">-->
-                                    <input type="submit" value="삭제" th:formaction="|/deleteChildComment/${noticeComments.notice.no}|">
+                                    <input type="submit" value="삭제" class="delete" th:formaction="|/deleteChildComment/${noticeComments.notice.no}|">
                                 </div>
                                 <input type="hidden" id="childNo" name="childNo" th:value="${child.no}">
                                 <hr>
@@ -98,10 +98,13 @@
                 </div>
             </div>
         </div>
-        <label for="comment">
-            <input type="text" id="comment">
-        </label>
-        <input type="button" id="write-comment" value="댓글 작성">
+        <div class="comment-write-area">
+            <label for="comment">
+                <input type="hidden" id="comment" class="comment">
+                <textarea class="comment-area" id="comment-area" placeholder="댓글을 입력하세요."></textarea>
+            </label>
+            <input type="button" id="write-comment" value="댓글 작성">
+        </div>
     </div>
 
     <div th:insert="~{fragment/footer :: footer}">

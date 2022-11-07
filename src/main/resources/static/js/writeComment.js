@@ -6,7 +6,7 @@ $(function (){
             type:"post",
             url:"/writeComment",
             data:{
-                "comment":$('#comment').val(),
+                "comment":$('#comment-area').val(),
                 "notice-no":$('#notice-no').val()
             },
             dataType:'text',
@@ -21,8 +21,13 @@ $(function (){
         })
     })
 
+    $('.comment-area').on('text-change', function () {
+        $('.comment').val($('.comment-area').val());
+        console.log("change");
+    })
+
     $('.write-sub-comment').on('click', function () {
         console.log($(this).siblings().length);
-        $(this).next().css("display", "inline-block");
+        $(this).parent().next().css("display", "block");
     })
 })

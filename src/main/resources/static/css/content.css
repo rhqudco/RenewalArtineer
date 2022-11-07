@@ -50,12 +50,37 @@ img {
     font-size: 18px;
     line-height: 2em;
 }
+.comment-header-content {
+    display: inline-block;
+    width: 15%;
+    height: 2em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 2em;
+    vertical-align: top !important;
+}
 .header-value {
     display: inline-block;
     font-weight: bolder;
     font-size: 16px;
     margin-left: 2%;
     max-width: 600px;
+}
+.header-value-comment {
+    display: inline-block;
+    font-weight: bolder;
+    font-size: 16px;
+    margin-left: 2%;
+    max-width: 600px;
+    white-space: pre;
+}
+.comment-form {
+    vertical-align: middle;
+    margin-bottom: 1em !important;
+}
+.child-comment-area{
+    margin-left: 5%;
 }
 #writer {
     display: inline-block;
@@ -98,4 +123,21 @@ hr {
 #detail-area {
     border-bottom: 1px solid #5d5d5d !important;
     padding: 1%;
+}
+.comment-write-area {
+    width: 100%;
+    height: 3%;
+    /*display: inline;*/
+}
+.comment, .comment-area {
+    font-family: Malgun Gothic !important;
+    border: 1px solid #5d5d5d !important;
+    border-radius: 5px !important;
+    width: 80%;
+    height: 100%;
+    resize: none;
+}
+.comment-btn-area {
+    vertical-align: top !important;
+    float: right;
 }
