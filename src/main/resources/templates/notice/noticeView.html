@@ -73,7 +73,8 @@
                             <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
                         </div>
                         <div class="sub-comment-write-area">
-                            <textarea th:field="*{detail}" id="detail" name="detail" class="comment-area" placeholder="내용을 입력하세요."></textarea>
+                            <hr>
+                            <textarea th:field="*{detail}" id="detail" name="detail" class="comment-area" placeholder="댓글을 입력하세요."></textarea>
                             <div class="field-error" th:errors="*{detail}">
                                 내용을 입력하세요.
                             </div>
