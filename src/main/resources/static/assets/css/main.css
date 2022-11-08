@@ -2302,6 +2302,10 @@ input, select, textarea {
 		background: #252122;
 		background-image: url("images/bg02.png");
 		/*padding: 1em 0;*/
+
+	}
+	#footer > .container {
+		height: 220px !important;
 	}
 
 #copyright > .links > li {

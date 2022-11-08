@@ -1,0 +1,19 @@
+
+.container {
+    padding-bottom: 10% !important;
+    max-width: 720px;
+    font-family: Malgun Gothic !important;
+}
+
+.field-error {
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+    margin: 0 !important;
+    display: inline-block;
+}
+#join-btn:disabled {
+    background-color: dimgray !important;
+}
+.member-form > span {
+    display: inline-block;
+}

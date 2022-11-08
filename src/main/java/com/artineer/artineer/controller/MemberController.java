@@ -52,7 +52,6 @@ public class MemberController {
     @PostMapping("/members/join")
     public String memberJoin(@Validated @ModelAttribute("form") MemberSaveDto dto,
                              BindingResult bindingResult) {
-        System.out.println("dto = " + dto.getName());
 
         birthValidator.validate(dto.getBirth(), bindingResult);
         phoneValidator.validate(dto.getPhone(), bindingResult);
