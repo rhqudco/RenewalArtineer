@@ -26,64 +26,52 @@
             <div>
                 <label for="member-id" >ID</label>
                 <input type="text" id="member-id" th:field="*{id}" class="form-control" th:errorclass="field-error" placeholder="아이디를 입력하세요">
-                <div class="field-error" th:errors="*{id}">
-                    중복된 아이디 입니다.
-                </div>
+<!--                <div class="field-error" th:errors="*{id}">-->
+<!--                    중복된 아이디 입니다.-->
+<!--                </div>-->
                 <input type="button" value="ID 중복 체크" id="validate-id-btn">
             </div>
             <div>
                 <label for="password" >Password</label>
                 <input type="password" id="password" th:field="*{password}" class="form-control" th:errorclass="field-error" placeholder="비밀번호를 입력하세요">
-                <div class="field-error" th:errors="*{password}">
-                    비밀번호 조건에 맞지 않습니다.
-                </div>
+<!--                <div class="field-error" th:errors="*{password}">-->
+<!--                    비밀번호 조건에 맞지 않습니다.-->
+<!--                </div>-->
             </div>
             <div>
                 <label for="name" >이름</label>
                 <input type="text" id="name" th:field="*{name}" class="form-control" th:errorclass="field-error" placeholder="이름을 입력하세요">
-                <div class="field-error" th:errors="*{name}">
-                    필수 값 입니다.
-                </div>
+<!--                <div class="field-error" th:errors="*{name}">-->
+<!--                    필수 값 입니다.-->
+<!--                </div>-->
             </div>
             <div class="member-form">
-                <label for="birth-year" >생년월일</label>
+                <label for="birth-year">생년월일</label>
                 <span>
                     <input type="text" id="birth-year" th:field="*{birth.year}" class="form-control" th:errorclass="field-error" placeholder="ex) 2000">
-                    <br>
-                    <p class="field-error" th:errors="*{birth.year}">
-                        필수 값 입니다.
-                    </p>
                 </span>
                 <span>
                     <input type="text" id="birth-month" th:field="*{birth.month}" class="form-control" th:errorclass="field-error" placeholder="ex) 09">
-                    <br>
-                    <p class="field-error" th:errors="*{birth.month}">
-                        필수 값 입니다.
-                    </p>
                 </span>
                 <span>
                     <input type="text" id="birth-day" th:field="*{birth.day}" class="form-control" th:errorclass="field-error" placeholder="ex) 31">
-                    <br>
-                    <p class="field-error" th:errors="*{birth.day}">
-                        필수 값 입니다.
-                    </p>
                 </span>
+                <br>
+<!--                <p class="field-error" th:errors="*{birth.year}">-->
+<!--                    필수 값 입니다.-->
+<!--                </p>-->
+<!--                <p class="field-error" th:errors="*{birth.month}">-->
+<!--                    필수 값 입니다.-->
+<!--                </p>-->
+<!--                <p class="field-error" th:errors="*{birth.day}">-->
+<!--                    필수 값 입니다.-->
+<!--                </p>-->
             </div>
             <div class="member-form">
                 <label for="email" >이메일</label>
                 <span>
                     <input type="text" id="email" th:field="*{emailId}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요" >
-                    <br>
-                    <div class="field-error" th:errors="*{emailId}">
-                        필수 값 입니다.
-                    </div>
-
-                </span>
-                <span>
-                    <p>@</p>
-                </span>
-
-                <span>
+                    @
                     <input type="text" id="email-domain" th:field="*{emailDomain}" class="form-control" th:errorclass="field-error" placeholder="메일을 입력하세요">
                     <select class="form-control" id="email-domain-select">
                         <option value="type">--직접 입력--</option>
@@ -93,11 +81,14 @@
                         <option value="nate.com">nate.com</option>
                         <option value="kakao.com">kakao.com</option>
                     </select>
-                    <br>
-                    <div class="field-error" th:errors="*{emailDomain}">
-                        수량 오류
-                    </div>
                 </span>
+                <br>
+<!--                <div class="field-error" th:errors="*{emailId}">-->
+<!--                    필수 값 입니다.-->
+<!--                </div>-->
+<!--                <div class="field-error" th:errors="*{emailDomain}">-->
+<!--                    필수 값 입니다.-->
+<!--                </div>-->
             </div>
             <div>
                 <label for="phone" >연락처</label>
@@ -109,37 +100,37 @@
                 </select>
                 -
                 <input type="text" id="phone2" th:field="*{phone.middleNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
-                <div class="field-error" th:errors="*{phone.middleNumber}">
-                    필수 값 입니다.
-                </div>
+<!--                <div class="field-error" th:errors="*{phone.middleNumber}">-->
+<!--                    필수 값 입니다.-->
+<!--                </div>-->
                 -
                 <input type="text" id="phone3" th:field="*{phone.lastNumber}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">
-                <div class="field-error" th:errors="*{phone.lastNumber}">
-                    필수 값 입니다.
-                </div>
+<!--                <div class="field-error" th:errors="*{phone.lastNumber}">-->
+<!--                    필수 값 입니다.-->
+<!--                </div>-->
             </div>
             <div>
                 <label for="gender" >성별</label>
     <!--            <input type="text" id="gender" th:field="*{gender}" class="form-control" th:errorclass="field-error" placeholder="수량을 입력하세요">-->
                 <input type="radio" id="gender" name="sex" value="남" th:field="*{gender}">남
-                <input type="radio" name="sex"  value="여" th:field="*{gender}" checked>여
-                <div class="field-error" th:errors="*{gender}">
-                    선택해 주세요.
-                </div>
+                <input type="radio" id="gender" name="sex" value="여" th:field="*{gender}" checked>여
+<!--                <div class="field-error" th:errors="*{gender}">-->
+<!--                    선택해 주세요.-->
+<!--                </div>-->
             </div>
             <div>
                 <label for="generation" >기수</label>
                 <input type="text" id="generation" th:field="*{generation}" class="form-control" th:errorclass="field-error" placeholder="숫자만 입력, 2020년 가입은 4기">
-                <div class="field-error" th:errors="*{generation}">
-                    수량 오류
-                </div>
+<!--                <div class="field-error" th:errors="*{generation}">-->
+<!--                    수량 오류-->
+<!--                </div>-->
             </div>
 
             <hr class="my-4">
 
             <div class="row">
                 <div class="col">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit" id="join-btn" th:text="#{button.member.save}" disabled>상품 등록</button>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" id="join-btn" th:text="#{button.member.save}" disabled>가입</button>
                 </div>
                 <div class="col">
                     <button class="w-100 btn btn-secondary btn-lg"

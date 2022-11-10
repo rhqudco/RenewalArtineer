@@ -1,4 +1,3 @@
-
 .container {
     padding-bottom: 10% !important;
     max-width: 720px;
@@ -14,6 +13,12 @@
 #join-btn:disabled {
     background-color: dimgray !important;
 }
+.member-form {
+    margin-bottom: 0.5em;
+}
 .member-form > span {
     display: inline-block;
+}
+.field-error {
+    margin-left: 3em;
 }
