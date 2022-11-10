@@ -46,23 +46,23 @@
                 </div>
             </div>
             <div class="member-form">
-                <label for="birth.year" >생년월일</label>
+                <label for="birth-year" >생년월일</label>
                 <span>
-                    <input type="text" id="birth.year" th:field="*{birth.year}" class="form-control" th:errorclass="field-error" placeholder="ex) 2000">
+                    <input type="text" id="birth-year" th:field="*{birth.year}" class="form-control" th:errorclass="field-error" placeholder="ex) 2000">
                     <br>
                     <p class="field-error" th:errors="*{birth.year}">
                         필수 값 입니다.
                     </p>
                 </span>
                 <span>
-                    <input type="text" id="birth.month" th:field="*{birth.month}" class="form-control" th:errorclass="field-error" placeholder="ex) 09">
+                    <input type="text" id="birth-month" th:field="*{birth.month}" class="form-control" th:errorclass="field-error" placeholder="ex) 09">
                     <br>
                     <p class="field-error" th:errors="*{birth.month}">
                         필수 값 입니다.
                     </p>
                 </span>
                 <span>
-                    <input type="text" id="birth.day" th:field="*{birth.day}" class="form-control" th:errorclass="field-error" placeholder="ex) 31">
+                    <input type="text" id="birth-day" th:field="*{birth.day}" class="form-control" th:errorclass="field-error" placeholder="ex) 31">
                     <br>
                     <p class="field-error" th:errors="*{birth.day}">
                         필수 값 입니다.
