@@ -1,7 +1,7 @@
 .container {
     padding-bottom: 10% !important;
     max-width: 720px;
-    font-family: Malgun Gothic !important;
+    font-family: Malgun Gothic;
 }
 
 .field-error {

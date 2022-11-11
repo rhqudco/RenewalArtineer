@@ -6,6 +6,8 @@
   <!--          href="../css/bootstrap.min.css" rel="stylesheet">-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript" th:src="@{/js/joinForm.js}" src="../js/joinForm.js" ></script>
+  <link rel="stylesheet" href="assets/css/main.css" th:href="@{/assets/css/main.css}"/>
+  <link rel="stylesheet" href="css/loginForm.css" th:href="@{/css/loginForm.css}"/>
   <style>
     .container {
       max-width: 560px;
@@ -17,48 +19,57 @@
   </style>
 </head>
 <body>
-
-<div class="container">
-
-  <div class="py-5 text-center">
-    <h2>로그인</h2>
+  <div th:insert="~{fragment/headerLogin :: headerLogin}" th:if="${session.loginMember}">
+  </div>
+  <div th:insert="~{fragment/header :: header}" th:if="!${session.loginMember}">
   </div>
 
-  <form action="loginForm.html" th:action th:object="${form}" method="post">
-    <div th:if="${#fields.hasGlobalErrors()}">
-      <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 메시지</p>
-    </div>
-    <div>
-      <label for="memberId" >ID</label>
-      <input type="text" id="memberId" th:field="*{id}" class="form-control" th:errorclass="field-error" placeholder="아이디를 입력하세요">
-      <div class="field-error" th:errors="*{id}">
-        중복된 아이디 입니다.
-      </div>
-    </div>
-    <div>
-      <label for="password" >Password</label>
-      <input type="password" id="password" th:field="*{password}" class="form-control" th:errorclass="field-error" placeholder="비밀번호를 입력하세요">
-      <div class="field-error" th:errors="*{password}">
-        비밀번호 조건에 맞지 않습니다.
-      </div>
+  <div class="container">
+
+    <div class="py-5 text-center">
+      <h2>로그인</h2>
     </div>
 
-    <hr class="my-4">
-
-    <div class="row">
-      <div class="col">
-        <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.login}">상품 등록</button>
+    <form action="loginForm.html" th:action th:object="${form}" method="post">
+      <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 메시지</p>
       </div>
-      <div class="col">
-        <button class="w-100 btn btn-secondary btn-lg"
-                onclick="location.href='loginForm.html'"
-                th:onclick="|location.href='@{/members/login}'|"
-                type="button" th:text="#{button.member.saveCancel}">취소</button>
+
+      <div>
+        <label for="memberId" >ID</label>
+        <input type="text" id="memberId" th:field="*{id}" class="form-control" th:errorclass="field-error" placeholder="아이디를 입력하세요">
+        <div class="field-error" th:errors="*{id}">
+          중복된 아이디 입니다.
+        </div>
       </div>
-    </div>
 
-  </form>
+      <div>
+        <label for="password" >Password</label>
+        <input type="password" id="password" th:field="*{password}" class="form-control" th:errorclass="field-error" placeholder="비밀번호를 입력하세요">
+        <div class="field-error" th:errors="*{password}">
+          비밀번호 조건에 맞지 않습니다.
+        </div>
+      </div>
 
-</div> <!-- /container -->
+      <hr class="my-4">
+
+      <div class="row">
+        <div class="col">
+          <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.login}">상품 등록</button>
+        </div>
+        <div class="col">
+          <button class="w-100 btn btn-secondary btn-lg"
+                  onclick="location.href='loginForm.html'"
+                  th:onclick="|location.href='@{/members/login}'|"
+                  type="button" th:text="#{button.member.saveCancel}">취소</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div> <!-- /container -->
+
+  <div th:insert="~{fragment/footer :: footer}">
+  </div>
 </body>
 </html>

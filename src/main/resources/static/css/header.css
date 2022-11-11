@@ -1,7 +1,7 @@
 .header-menu {
-    font-family: sans-serif !important;
+    /*font-family: sans-serif !important;*/
     font-weight: inherit !important;
-
+    font-family: Malgun Gothic !important;
 }
 .header-menu > a {
     font-weight: normal !important;
