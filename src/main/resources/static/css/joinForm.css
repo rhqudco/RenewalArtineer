@@ -22,3 +22,8 @@
 .field-error {
     margin-left: 3em;
 }
+
+.header-menu > a {
+    font-weight: normal !important;
+    font-style: normal !important;
+}

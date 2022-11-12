@@ -4,3 +4,8 @@
     /*text-align: center;*/
     height: 100%;
 }
+
+.header-menu > a {
+    font-weight: normal !important;
+    font-style: normal !important;
+}
