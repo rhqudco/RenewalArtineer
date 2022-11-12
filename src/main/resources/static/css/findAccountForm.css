@@ -1,16 +1,42 @@
 .container {
-    max-width: 720px;
-    /*text-align: center;*/
+    max-width: 900px;
     margin-bottom: 10%;
 }
 .field-error {
     border-color: #dc3545;
     color: #dc3545;
 }
+.form-control {
+    border-radius: 5px;
+    border: 1px solid gray;
+    width: 12em;
+}
 .result-info {
     display: none;
 }
+
 .find-account-tag {
-    width: 5%;
-    height: 2%;
+    display: inline-block;
+    width: 3em;
+    height: 1em;
+}
+.info-tag {
+    margin: 1em;
+}
+.text-center > h2 {
+    font-style: normal;
+    font-family: Malgun Gothic;
+    margin-left: 5%;
+}
+.btn-row {
+    text-align: center;
+    margin: 2em;
+}
+
+#find-id, #find-pw {
+    margin-right: 3%;
+    background-color: #20c5cc;
+}
+.cancel-btn {
+    margin-left: 3%;
 }
