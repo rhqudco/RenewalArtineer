@@ -62,11 +62,12 @@ public class MemberModifyDto {
         this.generation = generation;
     }
 
-    public MemberModifyDto(String id, String name, Birth birth, String email, Phone phone, String gender, String generation) {
+    public MemberModifyDto(String id, String name, Birth birth, String emailId, String emailDomain, Phone phone, String gender, String generation) {
         this.id = id;
         this.name = name;
         this.birth = birth;
-        this.email = email;
+        this.emailId = emailId;
+        this.emailDomain = emailDomain;
         this.phone = phone;
         this.gender = gender;
         this.generation = generation;
@@ -76,7 +77,7 @@ public class MemberModifyDto {
         return new MemberModifyDto(id, password, name, birth, email, phone, gender, generation);
     }
 
-    public static MemberModifyDto modifyFormDto(String id, String name, Birth birth, String email, Phone phone, String gender, String generation) {
-        return new MemberModifyDto(id, name, birth, email, phone, gender, generation);
+    public static MemberModifyDto modifyFormDto(String id, String name, Birth birth, String emailId, String emailDomain, Phone phone, String gender, String generation) {
+        return new MemberModifyDto(id, name, birth, emailId, emailDomain, phone, gender, generation);
     }
 }

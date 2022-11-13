@@ -63,10 +63,6 @@
                         <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
                         <div th:if="${noticeComments.checkDeleted == T(com.artineer.artineer.domain.CheckDeleted).isDeleted}">
                             <span th:utext="${noticeComments.detail}"></span>
-<!--                            <div class="comment-btn-area">-->
-<!--                                <input type="submit" value="삭제" class="delete" th:formaction="|/deleteComment/${noticeComments.notice.no}|">-->
-<!--                                <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">-->
-<!--                            </div>-->
                         </div>
                         <div th:if="${noticeComments.checkDeleted == T(com.artineer.artineer.domain.CheckDeleted).isNotDeleted}">
                             <span class="comment-header-content" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>

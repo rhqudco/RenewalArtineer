@@ -1,7 +1,7 @@
 .container {
     padding-bottom: 10% !important;
     max-width: 720px;
-    font-family: Malgun Gothic;
+    font-family: Malgun Gothic !important;
 }
 
 .field-error {
@@ -26,4 +26,7 @@
 .header-menu > a {
     font-weight: normal !important;
     font-style: normal !important;
+}
+#generation {
+    width: 70% !important;
 }

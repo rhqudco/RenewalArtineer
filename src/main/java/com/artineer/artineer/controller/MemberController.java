@@ -203,8 +203,10 @@ public class MemberController {
     @GetMapping("/members/modify/{memberNo}")
     public String modifyMemberForm(@PathVariable("memberNo") Long memberNo, Model model) {
         Member findMember = memberService.findMember(memberNo).get(0);
+        String findMemberEmail = findMember.getEmail();
+        String[] email = findMemberEmail.split("@"); // dto에 넣기 위함.
         MemberModifyDto form = MemberModifyDto.modifyFormDto(findMember.getId(), findMember.getName(), findMember.getBirth(),
-                findMember.getEmail(), findMember.getPhone(), findMember.getGender(), findMember.getGeneration());
+                email[0], email[1], findMember.getPhone(), findMember.getGender(), findMember.getGeneration());
         model.addAttribute("form", form);
 
         return "member/modifyForm";
@@ -212,7 +214,8 @@ public class MemberController {
 
     @PostMapping("/members/modify/{memberNo}")
     public String modifyMember(@PathVariable("memberNo") Long memberNo, @ModelAttribute("form") MemberModifyDto form,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+
         StringBuffer sb = new StringBuffer();
         sb.append(form.getEmailId());
         sb.append("@");
@@ -222,9 +225,20 @@ public class MemberController {
         // birth
         Birth birth = new Birth(form.getBirth().getYear(), form.getBirth().getMonth(), form.getBirth().getDay());
         // Phone
-        Phone phone = new Phone(form.getPhone().getFirstNumber(), form.getPhone().getMiddleNumber(), form.getPhone().getLastNumber());
-        MemberModifyDto memberModifyDto = MemberModifyDto.modifyMemberDto(form.getId(), form.getPassword(), form.getName(),
-                birth, memberEmail, phone, form.getGender(), form.getGeneration());
+        Phone phone = new Phone(form.getPhone().getFirstNumber(), form.getPhone().getMiddleNumber(),
+                form.getPhone().getLastNumber());
+
+        birthValidator.validate(form.getBirth(), bindingResult);
+        phoneValidator.validate(form.getPhone(), bindingResult);
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "member/joinForm";
+        }
+
+        MemberModifyDto memberModifyDto = MemberModifyDto.modifyMemberDto(form.getId(),
+                webSecurityConfig.getPasswordEncoder().encode(form.getPassword()),
+                form.getName(), birth, memberEmail, phone,
+                form.getGender(), form.getGeneration());
 
         memberService.modifyMember(memberNo, memberModifyDto);
         redirectAttributes.addAttribute("memberNo", memberNo);
