@@ -85,7 +85,7 @@
                     <div id="child-comment-area" class="child-comment-area" th:if="${noticeComments.childComments}">
                         <div th:each="child : ${noticeComments.childComments}">
                             <form action="noticeView.html" method="post" class="comment-form">
-                                <span class="comment-header-content" th:text="${child.writer} + ' (' + ${child.generation} + '기' + ')'"></span>
+                                <span class="comment-header-content" th:text="ㄴ + ${child.writer} + ' (' + ${child.generation} + '기' + ')'"></span>
                                 <span class="header-value-comment" th:utext="${child.detail}"></span>
                                 <div class="comment-btn-area">
     <!--                            <input type="button" value="삭제" id="delete-child-comment" class="delete-child-comment" th:if="!${noticeComments.parentComment}">-->

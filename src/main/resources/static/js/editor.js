@@ -1,4 +1,10 @@
 $(function (){
+
+    $("#file-name").on('change',function(){
+        var fileName = $("#file-name").val();
+        $(".upload-name").val(fileName);
+    });
+
     function quilljsediterInit(){
         var option = {
             modules: {

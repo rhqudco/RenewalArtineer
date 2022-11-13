@@ -1,0 +1,64 @@
+.container {
+    margin-bottom: 10%;
+    font-family: Malgun Gothic !important;
+    font-style: normal;
+    max-width: 900px;
+}
+.editor-area {
+    height: 25em;
+    margin-bottom: 10%;
+    border-radius: 5px;
+}
+.text-center {
+    text-align: center;
+    margin: 3em;
+}
+#title {
+    width: 100%;
+    margin-bottom: 2%;
+}
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.write-button {
+    background-color: #20c5cc;
+}
+.cancel-btn {
+
+}
+.file-box, .upload-name {
+    display: inline-block;
+    height: 40px;
+    width: 80%;
+}
+.upload-name {
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    color: #999999;
+    border-radius: 5px;
+}
+.file-box > input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+.file-box > label {
+    display: inline-block;
+    height: 100%;
+    width: 5em;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom: 0 !important;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 0.2em;
+}
