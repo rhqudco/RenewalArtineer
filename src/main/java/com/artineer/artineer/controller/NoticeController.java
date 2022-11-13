@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.time.LocalDateTime;
@@ -172,7 +171,7 @@ public class NoticeController {
 
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice, checkDeleted.isNotDeleted);
+        NoticeComment writeComment = NoticeComment.writeComment(member, comment, LocalDateTime.now(), notice, CheckDeleted.isNotDeleted);
         noticeCommentService.save(writeComment);
         return Long.toString(noticeNo);
     }
@@ -188,7 +187,7 @@ public class NoticeController {
         Notice notice = noticeService.lookUpNotice(noticeNo).get(0);
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         NoticeComment parentComment = noticeCommentService.lookUpComment(dto.getParentNo()).get(0);
-        NoticeComment writeComment = NoticeComment.writeChildComment(member, dto.getDetail(), LocalDateTime.now(), notice, parentComment, checkDeleted.isNotDeleted);
+        NoticeComment writeComment = NoticeComment.writeChildComment(member, dto.getDetail(), LocalDateTime.now(), notice, parentComment, CheckDeleted.isNotDeleted);
 
         noticeCommentService.save(writeComment);
 

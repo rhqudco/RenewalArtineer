@@ -4,11 +4,10 @@ import com.artineer.artineer.controller.dto.noticeComment.NoticeCommentDto;
 import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
-import com.artineer.artineer.domain.checkDeleted;
+import com.artineer.artineer.domain.CheckDeleted;
 import com.artineer.artineer.service.member.MemberService;
 import com.artineer.artineer.service.notice.NoticeService;
 import com.artineer.artineer.service.noticeComment.NoticeCommentService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +17,8 @@ import javax.persistence.EntityManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -44,7 +40,7 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, CheckDeleted.isNotDeleted);
 
         // 저장된 객체
         NoticeComment savedNoticeComment = noticeCommentService.save(comment);
@@ -80,7 +76,7 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, CheckDeleted.isNotDeleted);
         noticeCommentService.save(comment);
 
 
@@ -89,7 +85,7 @@ class NoticeCommentServiceImplTest {
 
         System.out.println("==========================================================");
 
-        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "childDetail", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
+        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "childDetail", LocalDateTime.now(), writeNotice, comment, CheckDeleted.isNotDeleted);
         noticeCommentService.save(childComment);
 
         em.flush();
@@ -97,7 +93,7 @@ class NoticeCommentServiceImplTest {
 
         System.out.println("==========================================================");
 
-        NoticeComment childComment2 = NoticeComment.writeChildComment(findMember, "childDetail2", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
+        NoticeComment childComment2 = NoticeComment.writeChildComment(findMember, "childDetail2", LocalDateTime.now(), writeNotice, comment, CheckDeleted.isNotDeleted);
         noticeCommentService.save(childComment2);
 
         em.flush();
@@ -113,9 +109,9 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, CheckDeleted.isNotDeleted);
         noticeCommentService.save(comment);
-        NoticeComment.writeChildComment(findMember, "child", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
+        NoticeComment.writeChildComment(findMember, "child", LocalDateTime.now(), writeNotice, comment, CheckDeleted.isNotDeleted);
 
         em.flush();
         em.clear();
@@ -128,8 +124,8 @@ class NoticeCommentServiceImplTest {
         List<NoticeCommentDto> allCommentOfNotice = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
 
         assertThat(allCommentOfNotice.get(0).getChildComments().size()).isEqualTo(1); // parentComment Have childComment
-        assertThat(allCommentOfNotice.get(0).getCheckDeleted()).isEqualTo(checkDeleted.isDeleted); // parentComment Status is deleted
-        assertThat(allCommentOfNotice.get(0).getChildComments().get(0).getCheckDeleted()).isEqualTo(checkDeleted.isNotDeleted); // childComment Status is notDeleted
+        assertThat(allCommentOfNotice.get(0).getCheckDeleted()).isEqualTo(CheckDeleted.isDeleted); // parentComment Status is deleted
+        assertThat(allCommentOfNotice.get(0).getChildComments().get(0).getCheckDeleted()).isEqualTo(CheckDeleted.isNotDeleted); // childComment Status is notDeleted
     }
 
     @Test
@@ -139,7 +135,7 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, CheckDeleted.isNotDeleted);
         noticeCommentService.save(comment);
 
         em.flush();
@@ -158,9 +154,9 @@ class NoticeCommentServiceImplTest {
         Notice writeNotice = Notice.writeNotice(findMember, LocalDateTime.now(), "title", "detail", null, 0L);
         noticeService.saveNotice(writeNotice);
 
-        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, checkDeleted.isNotDeleted);
+        NoticeComment comment = NoticeComment.writeComment(findMember, "detail", LocalDateTime.now(), writeNotice, CheckDeleted.isNotDeleted);
         noticeCommentService.save(comment);
-        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "child", LocalDateTime.now(), writeNotice, comment, checkDeleted.isNotDeleted);
+        NoticeComment childComment = NoticeComment.writeChildComment(findMember, "child", LocalDateTime.now(), writeNotice, comment, CheckDeleted.isNotDeleted);
 
         em.flush();
         em.clear();
@@ -170,6 +166,6 @@ class NoticeCommentServiceImplTest {
 
         List<NoticeCommentDto> commentList = noticeCommentService.findAllCommentOfNotice(writeNotice.getNo());
         assertThat(commentList.get(0).getChildComments()).isEmpty();
-        assertThat(commentList.get(0).getCheckDeleted()).isEqualTo(checkDeleted.isNotDeleted);
+        assertThat(commentList.get(0).getCheckDeleted()).isEqualTo(CheckDeleted.isNotDeleted);
     }
 }

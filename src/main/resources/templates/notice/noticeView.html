@@ -61,16 +61,20 @@
                 <div th:id="|comment-area-${noticeComments.no}|" class="all-comment-area">
                     <form action="noticeView.html" method="post" th:object="${form}" class="comment-form">
                         <input type="hidden" th:value="${noticeComments.no}" id="parentNo" name="parentNo">
-    <!--                    <div th:if="${noticeComments.checkDeleted == 'isDeleted'}">-->
-    <!--                        <span th:utext="${noticeComments.detail}"></span>-->
-    <!--                    </div>-->
-    <!--                    <div th:if="${noticeComments.checkDeleted == 'isNotDeleted'}">-->
-                        <span class="comment-header-content" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>
-                        <span class="header-value-comment" th:utext="${noticeComments.detail}"></span>
-    <!--                    </div>-->
-                        <div class="comment-btn-area">
-                            <input type="submit" value="삭제" class="delete" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
-                            <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
+                        <div th:if="${noticeComments.checkDeleted == T(com.artineer.artineer.domain.CheckDeleted).isDeleted}">
+                            <span th:utext="${noticeComments.detail}"></span>
+<!--                            <div class="comment-btn-area">-->
+<!--                                <input type="submit" value="삭제" class="delete" th:formaction="|/deleteComment/${noticeComments.notice.no}|">-->
+<!--                                <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">-->
+<!--                            </div>-->
+                        </div>
+                        <div th:if="${noticeComments.checkDeleted == T(com.artineer.artineer.domain.CheckDeleted).isNotDeleted}">
+                            <span class="comment-header-content" th:text="${notice.writer} + ' (' + ${notice.generation} + '기' + ')'"></span>
+                            <span class="header-value-comment" th:utext="${noticeComments.detail}"></span>
+                            <div class="comment-btn-area">
+                                <input type="submit" value="삭제" class="delete" th:formaction="|/deleteComment/${noticeComments.notice.no}|">
+                                <input type="button" value="답글" id="write-sub-comment" class="write-sub-comment" th:if="!${noticeComments.parentComment}">
+                            </div>
                         </div>
                         <div class="sub-comment-write-area">
                             <hr>

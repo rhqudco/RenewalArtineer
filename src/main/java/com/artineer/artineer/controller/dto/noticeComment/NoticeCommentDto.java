@@ -1,9 +1,8 @@
 package com.artineer.artineer.controller.dto.noticeComment;
 
-import com.artineer.artineer.domain.Member;
 import com.artineer.artineer.domain.Notice;
 import com.artineer.artineer.domain.NoticeComment;
-import com.artineer.artineer.domain.checkDeleted;
+import com.artineer.artineer.domain.CheckDeleted;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +21,9 @@ public class NoticeCommentDto {
     private Notice notice;
     private NoticeComment parentComment;
     private List<NoticeCommentDto> childComments = new ArrayList<>();
-    private checkDeleted checkDeleted;
+    private CheckDeleted checkDeleted;
 
-    public NoticeCommentDto(Long no, String writer, String generation, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment, checkDeleted checkDeleted) {
+    public NoticeCommentDto(Long no, String writer, String generation, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment, CheckDeleted checkDeleted) {
         this.no = no;
         this.writer = writer;
         this.generation = generation;

@@ -1,7 +1,6 @@
 package com.artineer.artineer.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,7 +34,7 @@ public class NoticeComment {
     private List<NoticeComment> childComments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private checkDeleted checkDeleted;
+    private CheckDeleted checkDeleted;
 
     protected NoticeComment() {
     }
@@ -48,7 +47,7 @@ public class NoticeComment {
         this.detail = detail;
     }
 
-    private void setCheckDeleted(checkDeleted checkDeleted) {
+    private void setCheckDeleted(CheckDeleted checkDeleted) {
         this.checkDeleted = checkDeleted;
     }
 
@@ -59,7 +58,7 @@ public class NoticeComment {
         parent.childComments.add(childComment);
     }
 
-    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice, checkDeleted checkDeleted) {
+    private NoticeComment(Member member, String detail, LocalDateTime writeDate, Notice notice, CheckDeleted checkDeleted) {
         this.member = member;
         this.detail = detail;
         this.writeDate = writeDate;
@@ -67,7 +66,7 @@ public class NoticeComment {
         this.checkDeleted = checkDeleted;
     }
 
-    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice, checkDeleted checkDeleted) {
+    public static NoticeComment writeComment(Member member, String detail, LocalDateTime writeDate, Notice notice, CheckDeleted checkDeleted) {
         if (notice == null) {
             throw new IllegalStateException("글이 없습니다.");
         }
@@ -75,7 +74,7 @@ public class NoticeComment {
         return noticeComment;
     }
 
-    public static NoticeComment writeChildComment(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment, checkDeleted checkDeleted) {
+    public static NoticeComment writeChildComment(Member member, String detail, LocalDateTime writeDate, Notice notice, NoticeComment parentComment, CheckDeleted checkDeleted) {
         if (notice == null) {
             throw new IllegalStateException("글이 없습니다.");
         }
@@ -87,6 +86,6 @@ public class NoticeComment {
 
     public static void deleteCommentHaveChild(NoticeComment noticeComment) {
         noticeComment.setDetail("삭제된 댓글 입니다.");
-        noticeComment.setCheckDeleted(com.artineer.artineer.domain.checkDeleted.isDeleted);
+        noticeComment.setCheckDeleted(CheckDeleted.isDeleted);
     }
 }

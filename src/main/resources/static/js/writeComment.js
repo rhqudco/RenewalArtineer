@@ -28,6 +28,6 @@ $(function (){
 
     $('.write-sub-comment').on('click', function () {
         console.log($(this).siblings().length);
-        $(this).parent().next().css("display", "block");
+        $(this).parent().parent().next().css("display", "block");
     })
 })

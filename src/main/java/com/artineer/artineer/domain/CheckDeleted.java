@@ -1,5 +1,5 @@
 package com.artineer.artineer.domain;
 
-public enum checkDeleted {
+public enum CheckDeleted {
     isNotDeleted, isDeleted
 }

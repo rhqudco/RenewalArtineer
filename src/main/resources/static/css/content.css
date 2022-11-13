@@ -13,7 +13,8 @@
 .sub-comment-write-area {
     display: none;
     width: 100%;
-        height: 5em;
+    height: 5em;
+    margin-bottom: 1em;
 }
 .sub-comment-write-area > input[type=submit] {
     float: right;
