@@ -21,11 +21,18 @@ public class UploadFile {
     @JsonIgnore
     private Notice notice;
 
+    @OneToOne(mappedBy = "uploadFile", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Meeting meeting;
     protected UploadFile() {
     }
 
     public void addNotice(Notice notice) {
         this.notice = notice;
+    }
+
+    public void addMeeting(Meeting meeting) {
+        this.meeting = meeting;
     }
 
     public UploadFile(String uploadFileName, String storeFileName) {
