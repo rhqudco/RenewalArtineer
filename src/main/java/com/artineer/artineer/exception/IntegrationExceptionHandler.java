@@ -31,7 +31,7 @@ public class IntegrationExceptionHandler {
         return new ResponseEntity<>(returnStat, HttpStatus.OK);
     }
 
-    @ExceptionHandler(UserMatchedException.class)
+    @ExceptionHandler(UserNotMatchedException.class)
     public void handlerMessageUserMatchedEx(Exception ex, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
