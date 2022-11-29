@@ -76,42 +76,20 @@ public class TestDataInit {
             noticeService.saveNotice(notice);
         }
         for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "abin" + i, "detail", null, 0L);
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "artineer" + i, "detail", null, 0L);
             noticeService.saveNotice(notice);
         }
         for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "jae" + i, "detail", null, 0L);
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "best" + i, "detail", null, 0L);
             noticeService.saveNotice(notice);
         }
         for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "bch" + i, "detail", null, 0L);
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "company" + i, "detail", null, 0L);
             noticeService.saveNotice(notice);
         }
         for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "family" + i, "detail", null, 0L);
+            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "gogo" + i, "detail", null, 0L);
             noticeService.saveNotice(notice);
         }
-        for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "wish" + i, "detail", null, 0L);
-            noticeService.saveNotice(notice);
-        }
-        for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "love" + i, "detail", null, 0L);
-            noticeService.saveNotice(notice);
-        }
-        for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "please" + i, "detail", null, 0L);
-            noticeService.saveNotice(notice);
-        }
-        for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "god" + i, "detail", null, 0L);
-            noticeService.saveNotice(notice);
-        }        for (int i = 1; i <= 40; i++) {
-            Notice notice = Notice.writeNotice(member, LocalDateTime.now(), "cometrue" + i, "detail", null, 0L);
-            noticeService.saveNotice(notice);
-        }
-
-
-
     }
 }

@@ -76,12 +76,6 @@ public class HomeController {
                 .body(resource);
     }
 
-    // test
-    @GetMapping("/indexFile")
-    public String indexFile() {
-        return "fragment/HeaderFooterSave";
-    }
-
     @GetMapping("/about")
     public String about() {
         return "about";
