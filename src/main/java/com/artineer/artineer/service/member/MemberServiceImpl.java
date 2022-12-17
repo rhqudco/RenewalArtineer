@@ -3,6 +3,7 @@ package com.artineer.artineer.service.member;
 import com.artineer.artineer.common.WebSecurityConfig;
 import com.artineer.artineer.controller.dto.member.MemberModifyDto;
 import com.artineer.artineer.domain.Member;
+import com.artineer.artineer.exception.UserNotMatchedException;
 import com.artineer.artineer.repository.member.MemberJpaRepository;
 import com.artineer.artineer.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -96,6 +97,12 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void validationDuplicateMemberId(String memberId) {
         validateDuplicateMemberId(memberId);
+    }
+
+    @Override
+    public Member loadMemberByMemberId(String id) throws UserNotMatchedException {
+        return memberJpaRepository.findById(id)
+                .orElseThrow(() -> new UserNotMatchedException("사용자를 찾을 수 없습니다."));
     }
 
     /*

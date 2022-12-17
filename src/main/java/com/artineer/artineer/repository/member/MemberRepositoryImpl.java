@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,5 +21,12 @@ public class MemberRepositoryImpl implements MemberJpaRepository{
     @Transactional
     public void save(Member member) {
         em.persist(member);
+    }
+
+    @Override
+    public Optional<Member> findById(String id) {
+        return Optional.ofNullable(em.createQuery("select m from Member m where m.id =: id", Member.class)
+                .setParameter("id", id)
+                .getSingleResult());
     }
 }
