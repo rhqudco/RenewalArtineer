@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface MemberJpaRepository {
     void save(Member member);
 
-    Optional<Member> findById(String id);
 }

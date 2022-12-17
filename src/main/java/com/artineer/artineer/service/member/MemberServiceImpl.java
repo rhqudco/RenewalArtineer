@@ -99,11 +99,6 @@ public class MemberServiceImpl implements MemberService{
         validateDuplicateMemberId(memberId);
     }
 
-    @Override
-    public Member loadMemberByMemberId(String id) throws UserNotMatchedException {
-        return memberJpaRepository.findById(id)
-                .orElseThrow(() -> new UserNotMatchedException("사용자를 찾을 수 없습니다."));
-    }
 
     /*
     * 검증 메소드

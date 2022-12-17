@@ -23,10 +23,4 @@ public class MemberRepositoryImpl implements MemberJpaRepository{
         em.persist(member);
     }
 
-    @Override
-    public Optional<Member> findById(String id) {
-        return Optional.ofNullable(em.createQuery("select m from Member m where m.id =: id", Member.class)
-                .setParameter("id", id)
-                .getSingleResult());
-    }
 }

@@ -20,5 +20,4 @@ public interface MemberService {
     void deleteMember(Long memberNo);
     void validationDuplicateMemberId(String id);
 
-    Member loadMemberByMemberId(String id) throws UserNotMatchedException;
 }
